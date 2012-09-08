@@ -56,7 +56,7 @@ Example:
         
         public override void Edit()
         {
-            if (ParameterList[0].Value.StartsWith("line", StringComparison.CurrentCultureIgnoreCase))
+            if (ParameterList.Count > 0 && ParameterList[0].Value != null && ParameterList[0].Value.StartsWith("line", StringComparison.CurrentCultureIgnoreCase))
             {
                 int lines = String.IsNullOrEmpty(SourceData) ? 0 : 1;
                 int currchar = 0;

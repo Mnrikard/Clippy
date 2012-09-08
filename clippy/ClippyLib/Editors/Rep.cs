@@ -66,8 +66,8 @@ Example:
         
         public override void Edit()
         {
-            Regex repper = ClipEscape(ParameterList[0].Value).ToRegex();
-            SourceData = repper.Replace(SourceData, ClipEscape(ParameterList[1].Value));
+            SuperRegex repper = ClipEscape(ParameterList[0].Value).ToSuperRegex();
+            SourceData = repper.SuperReplace(SourceData, ClipEscape(ParameterList[1].Value));
         }
 
         private bool ValidateRegex(string pattern)

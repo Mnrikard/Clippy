@@ -69,6 +69,9 @@ namespace ClippyLib.Editors
                 {
                     string[] fargs = GetArgsFromString(function);
                     manager.GetClipEditor(fargs[0]);
+
+                    manager.ClipEditor.EditorResponse += new EventHandler<EditorResponseEventArgs>(HandleResponseFromClippy);
+
                     manager.ClipEditor.DefineParameters();
                     manager.ClipEditor.SetParameters(fargs);
                     if (!manager.ClipEditor.HasAllParameters)
@@ -78,8 +81,16 @@ namespace ClippyLib.Editors
                     manager.ClipEditor.SourceData = SourceData;
                     manager.ClipEditor.Edit();
                     SourceData = manager.ClipEditor.SourceData;
+
+                    manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
+
                 }
             }
+        }
+
+        private void HandleResponseFromClippy(object sender, EditorResponseEventArgs e)
+        {
+            RespondToExe(e.ResponseString, e.RequiresUserAction);
         }
 
         private List<string> Udf(string[] key)

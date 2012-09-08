@@ -46,6 +46,25 @@ namespace ClippyLib
                 repper = new Regex(spattern, RegexOptions.IgnoreCase);
             return repper;
         }
+        public static SuperRegex ToSuperRegex(this string spattern)
+        {
+            SuperRegex repper;
+            Match pattern = Regex.Match(spattern, "^/(?<pattern>.+)/(?<options>[mi]*)$");
+            if (pattern.Success)
+            {
+                RegexOptions rxOptions = 0;
+                string opts = pattern.Groups["options"].Value.ToLower();
+                if (opts.Contains("m"))
+                    rxOptions |= RegexOptions.Multiline;
+                if (opts.Contains("i"))
+                    rxOptions |= RegexOptions.IgnoreCase;
+
+                repper = new SuperRegex(pattern.Groups["pattern"].Value, rxOptions);
+            }
+            else
+                repper = new SuperRegex(spattern, RegexOptions.IgnoreCase);
+            return repper;
+        }
 
         public static bool IsInteger(this string possibleNumber)
         {
