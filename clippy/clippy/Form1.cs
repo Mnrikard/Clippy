@@ -166,9 +166,16 @@ namespace clippy
                 i++;
             }
 
-            clipManager.ClipEditor.GetClipboardContent();
-            clipManager.ClipEditor.Edit();
-            clipManager.ClipEditor.SetClipboardContent();
+            try
+            {
+                clipManager.ClipEditor.GetClipboardContent();
+                clipManager.ClipEditor.Edit();
+                clipManager.ClipEditor.SetClipboardContent();
+            }
+            catch (UndefinedFunctionException udfex)
+            {
+                MessageBox.Show(udfex.FunctionMessage);
+            }
 
             SaveThisCommand(_currentCommand, parmString.ToString());
 

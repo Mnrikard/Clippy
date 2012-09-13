@@ -29,6 +29,7 @@ namespace ClippyLib
 
         private string SingleRepper(Match m)
         {
+            _currentRepString = _baseRepString;
             if (_baseRepString.Contains("\\u$") || _baseRepString.Contains("\\U$") || _baseRepString.Contains("\\l$") || _baseRepString.Contains("\\L$"))
             {
                 MatchEvaluator repModUp = new MatchEvaluator(this.ReplacementModifierUp);
@@ -36,7 +37,7 @@ namespace ClippyLib
                 MatchEvaluator repModNumUp = new MatchEvaluator(this.ReplacementModifierNumUp);
                 MatchEvaluator repModNumDown = new MatchEvaluator(this.ReplacementModifierNumDown);
                 _currentMatch = m;
-                _currentRepString = Regex.Replace(_baseRepString, @"\\[Uu]\$\{(?<grpname>[^\}]+)\}", repModUp);
+                _currentRepString = Regex.Replace(_currentRepString, @"\\[Uu]\$\{(?<grpname>[^\}]+)\}", repModUp);
                 _currentRepString = Regex.Replace(_currentRepString, @"\\[Ll]\$\{(?<grpname>[^\}]+)\}", repModDown);
                 _currentRepString = Regex.Replace(_currentRepString, @"\\[Uu]\$(?<backtick>\d+)", repModNumUp);
                 _currentRepString = Regex.Replace(_currentRepString, @"\\[Ll]\$(?<backtick>\d+)", repModNumDown);

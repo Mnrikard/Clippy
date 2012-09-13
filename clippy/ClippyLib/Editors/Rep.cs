@@ -57,6 +57,21 @@ Special characters:
 \q    quotation mark
 \t    tab character
 
+Extensions to regex pattern and replacement string
+Regex Pattern:
+    use the pattern ""/^line starts and.+ends$/m"" 
+        to search for the pattern with the MultiLine option, case sensitive
+    use the pattern ""/^line starts and.+ends$/mi"" 
+        to search for the pattern with the MultiLine option, case insensitive
+    use the pattern ""some pattern""
+        by default to search for the case-insensitive pattern
+Replacement String:
+    replace instances of ""my dog lasso"" with ""my dog Lasso"" with
+        rep ""my dog (\w)(\w+)"" ""my dog \u$1$2""
+
+    \u replaces the group with upper case version
+    \l replaces the group with lower case
+
 Example:
     clippy rep ""\d"" ""A""
     will replace every digit in your source data with the letter ""A""

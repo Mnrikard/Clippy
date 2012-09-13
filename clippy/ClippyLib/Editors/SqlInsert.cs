@@ -49,6 +49,7 @@ Example:
                 Sequence = 1,
                 Validator = (a => true),
                 Required = true,
+                DefaultValue = "xxxxxx",
                 Expecting = "A table name"
             });
             _parameterList.Add(new Parameter()
@@ -81,6 +82,8 @@ Example:
             System.Text.StringBuilder output = new System.Text.StringBuilder();
             double currint = 0;
             string topper = String.Empty;
+            int tapout = 1000;
+            int rowcount = 0;
             for (int i = 0; i < lines.Length; i++)
             {
                 string[] cols = Regex.Split(lines[i], Regex.Escape(ClipEscape(ParameterList[1].Value)), RegexOptions.IgnoreCase);
@@ -92,12 +95,16 @@ Example:
                 }
                 else
                 {
-                    if (i % 1000 == 0)
+                    if (rowcount++ == tapout)
+                    {
                         output.Append(topper);
-                    else if (i % 1000 == 1)
                         output.Append(" (");
+                        rowcount = 0;
+                    }
                     else
+                    {
                         output.Append(",(");
+                    }
 
                     for (int j = 0; j < cols.Length; j++)
                     {
