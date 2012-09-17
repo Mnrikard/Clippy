@@ -24,6 +24,7 @@ namespace clippy
         private void UdfEditor_Load(object sender, EventArgs e)
         {
             List<string> udFunctions = GetFunctions();
+            udFunctions.Sort();
             functionList.DataSource = udFunctions;
         }
 
