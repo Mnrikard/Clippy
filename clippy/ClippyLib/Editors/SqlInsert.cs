@@ -91,11 +91,11 @@ Example:
                 {
                     string tablename = ParameterList[0].Value.Replace(".", "].[").Replace("[[", "[").Replace("]]", "]");
                     topper = String.Format("insert into [{0}] ({1})\nvalues\n", tablename, String.Join(", ", cols));
-                    output.Append(topper);
+                    rowcount = 0;
                 }
                 else
                 {
-                    if (rowcount++ == tapout)
+                    if (++rowcount == tapout || i==1)
                     {
                         output.Append(topper);
                         output.Append(" (");

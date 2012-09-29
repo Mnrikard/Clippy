@@ -46,6 +46,7 @@
             this.openSnippetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentCommandsImage = new System.Windows.Forms.PictureBox();
+            this.errorLabel = new System.Windows.Forms.Label();
             this.notifyMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGrid)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -91,7 +92,7 @@
             this.functions.Name = "functions";
             this.functions.Size = new System.Drawing.Size(316, 21);
             this.functions.TabIndex = 1;
-            this.functions.Leave += new System.EventHandler(this.functions_Leave);
+            this.functions.Leave += new System.EventHandler(this.FunctionOnLeave);
             // 
             // parametersGrid
             // 
@@ -194,11 +195,21 @@
             this.recentCommandsImage.TabStop = false;
             this.recentCommandsImage.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // errorLabel
+            // 
+            this.errorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.Location = new System.Drawing.Point(13, 184);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(0, 13);
+            this.errorLabel.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(369, 203);
+            this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.recentCommandsImage);
             this.Controls.Add(this.executeButton);
             this.Controls.Add(this.parametersGrid);
@@ -240,6 +251,7 @@
         private System.Windows.Forms.ToolStripMenuItem openSnippetsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recentCommandsToolStripMenuItem;
         private System.Windows.Forms.PictureBox recentCommandsImage;
+        private System.Windows.Forms.Label errorLabel;
     }
 }
 

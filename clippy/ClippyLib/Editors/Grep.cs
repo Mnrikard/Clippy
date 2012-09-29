@@ -98,7 +98,7 @@ Example:
             if (matchlist.Count == 0)
                 RespondToExe("Pattern did not find a match in the string");
             else
-                SourceData = String.Join(ParameterList[1].Value, matchlist.ToArray());
+                SourceData = String.Join(ClipEscape(ParameterList[1].Value), matchlist.ToArray());
         }       
         
     }

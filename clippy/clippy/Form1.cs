@@ -98,8 +98,11 @@ namespace clippy
 
         #region form events
 
-        private void functions_Leave(object sender, EventArgs e)
+        private void FunctionOnLeave(object sender, EventArgs e)
         {
+            errorLabel.Text = String.Empty;
+            functions.BackColor = Color.White;
+
             string[] arguments = clipManager.GetArgumentsFromString(functions.Text);
             if (arguments.Length == 0)
                 return;
@@ -126,6 +129,14 @@ namespace clippy
             catch (ClippyLib.InvalidParameterException pe)
             {
                 MessageBox.Show(pe.ParameterMessage, "Error creating parameters", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                functions.Focus();
+            }
+            catch (ClippyLib.UndefinedFunctionException udfe)
+            {
+                errorLabel.Text = udfe.FunctionMessage;
+                functions.BackColor = Color.Yellow;
+                functions.Focus();
+                return;
             }
 
             DataTable parms = new DataTable();
