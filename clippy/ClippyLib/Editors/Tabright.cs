@@ -91,7 +91,7 @@ Example:
         /// <param name="tabcount">Number of tabs to assume for base.</param>
         private static string TabRightCold(string text, int tabcount)
         {
-            string tabstr = ClippySettings.Default.tabString;
+            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
             text = Regex.Replace(text, @"\n\s*", String.Empty).Replace("{", "{\n").Replace("}", "\n}\n").Replace(";", ";\n");
             string[] rows = text.Split('\n');
 
@@ -126,7 +126,7 @@ Example:
             bool blockComment = false;
             string prevChar = String.Empty;
             string setPrvChr = String.Empty;
-            string tabstr = ClippySettings.Default.tabString;
+            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
 
             StringReader sr = new StringReader(code);
             StringBuilder codeOut = new StringBuilder();
@@ -309,7 +309,7 @@ Example:
             //special instructions for "select case" statements
             Regex casebound = new Regex(@"^(select case|end select)", RegexOptions.IgnoreCase);
             Regex caseitem = new Regex(@"^case\s", RegexOptions.IgnoreCase);
-            string tabstr = ClippySettings.Default.tabString;
+            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
             bool incase = false;
 
             //get rid of multiline rows

@@ -1,0 +1,5 @@
+C:\SourceCode\clippy\Installer\obj\x86\Release\ResolveAssemblyReference.cache
+C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.Form1.resources
+C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.Properties.Resources.resources
+C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.Screen1.resources
+C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.csproj.GenerateResource.Cache

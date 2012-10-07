@@ -1,0 +1,17 @@
+C:\SourceCode\clippy\clippy\bin\Release\udf.xml
+C:\SourceCode\clippy\clippy\bin\Release\ClippyUtility.exe.config
+C:\SourceCode\clippy\clippy\bin\Release\ClippyUtility.exe
+C:\SourceCode\clippy\clippy\bin\Release\ClippyUtility.pdb
+C:\SourceCode\clippy\clippy\bin\Release\ClippyLib.dll
+C:\SourceCode\clippy\clippy\bin\Release\ClippyLib.pdb
+C:\SourceCode\clippy\clippy\obj\x86\Release\ResolveAssemblyReference.cache
+C:\SourceCode\clippy\clippy\obj\x86\Release\clippy.Form1.resources
+C:\SourceCode\clippy\clippy\obj\x86\Release\clippy.HelpCenter.resources
+C:\SourceCode\clippy\clippy\obj\x86\Release\clippy.OptionsForm.resources
+C:\SourceCode\clippy\clippy\obj\x86\Release\clippy.Properties.Resources.resources
+C:\SourceCode\clippy\clippy\obj\x86\Release\clippy.RecentCommands.resources
+C:\SourceCode\clippy\clippy\obj\x86\Release\clippy.SnippetEditor.resources
+C:\SourceCode\clippy\clippy\obj\x86\Release\clippy.UdfEditor.resources
+C:\SourceCode\clippy\clippy\obj\x86\Release\clippy.csproj.GenerateResource.Cache
+C:\SourceCode\clippy\clippy\obj\x86\Release\ClippyUtility.exe
+C:\SourceCode\clippy\clippy\obj\x86\Release\ClippyUtility.pdb

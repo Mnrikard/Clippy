@@ -77,7 +77,7 @@ namespace clippy
             string[] commands = GetRecentCommandList();
             foreach (string command in commands)
             {
-                if (!String.IsNullOrWhiteSpace(command))
+                if (!String.IsNullOrEmpty(command) && command.Trim().Length > 0)
                 {
                     commandList.Items.Add(command);
                 }

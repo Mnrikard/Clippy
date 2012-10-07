@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ClippyLib.Editors
@@ -56,7 +57,7 @@ Example:
             {
                 ParameterName = "Reverse",
                 Sequence = 2,
-                Validator = (a => (String.IsNullOrWhiteSpace(a) || "reverse".Equals(a.ToLower()))),
+                Validator = (a => (String.IsNullOrEmpty(a) || a.Trim().Length == 0 || "reverse".Equals(a, StringComparison.CurrentCultureIgnoreCase))),
                 DefaultValue = String.Empty,
                 Required = false,
                 Expecting = "reverse or empty string"
@@ -68,42 +69,87 @@ Example:
         //you don't need to override this
         public override void SetParameters(string[] args)
         {
-            base.SetParameters(args);
-
-            if (!ParameterList[1].IsValued)
-                ParameterList[1].Value = ParameterList[1].DefaultValue;
+            for (int i = 0; i < ParameterList.Count; i++)
+            {
+                ParameterList[i].Value = ParameterList[i].DefaultValue;
+            }
+            
+            if (args.Length > 1)
+            {
+                //Console.WriteLine(args[1]);
+                ParameterList[0].Value = args[1];
+                if (args.Length > 2)
+                    ParameterList[1].Value = args[2];
+            }
             
         }
 
-        delegate string EncodingFunction(string input);
-
         public override void Edit()
         {
-            EncodingFunction f;
             bool decode = ParameterList[1].Value.Equals("reverse", StringComparison.CurrentCultureIgnoreCase);
-            if (ParameterList[0].Value.Equals("url", StringComparison.CurrentCultureIgnoreCase))
-            {
-                if(decode)
-                    f = System.Uri.UnescapeDataString;
-                else
-                    f = System.Uri.EscapeDataString;
-            }
-            else
-            {
-                if (decode)
-                    f = System.Web.HttpUtility.HtmlDecode;
-                else
-                    f = System.Web.HttpUtility.HtmlEncode;                
-            }
             try
             {
-                SourceData = f(SourceData);
+                if (ParameterList[0].Value.Equals("url", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    if(decode)
+                        SourceData = SafeUrlDecode(SourceData);
+                    else
+                        SourceData = SafeUrlEncode(SourceData);
+                }
+                else
+                {
+                    if (decode)
+                        SourceData = System.Web.HttpUtility.HtmlDecode(SourceData);
+                    else
+                        SourceData = System.Web.HttpUtility.HtmlEncode(SourceData);
+                }   
             }
             catch
             {
                 RespondToExe("Unable to " + (decode ? "decode" : "encode") + " data");
             }
-        }       
+        }
+
+        private string SafeUrlEncode(string data)
+        {
+            // urls have a size limit, this method chunks out the data and encode it a piece at a time
+            int i = 0;
+            int chunkSize = 255;
+            StringBuilder output = new StringBuilder();
+            while (i < data.Length)
+            {
+                if (i + chunkSize > data.Length)
+                {
+                    output.Append(System.Uri.EscapeDataString(data.Substring(i)));
+                }
+                else
+                {
+                    output.Append(System.Uri.EscapeDataString(data.Substring(i, chunkSize)));
+                }
+                i += chunkSize;
+            }
+            return output.ToString();
+        }
+
+        private string SafeUrlDecode(string data)
+        {
+            int i = 0;
+            int chunkSize = 255;
+            StringBuilder output = new StringBuilder();
+            while (i < data.Length)
+            {
+                if (i + chunkSize > data.Length)
+                {
+                    output.Append(System.Uri.UnescapeDataString(data.Substring(i)));
+                }
+                else
+                {
+                    output.Append(System.Uri.UnescapeDataString(data.Substring(i, chunkSize)));
+                }
+                i += chunkSize;
+            }
+            return output.ToString();
+        }
         
     }
 }

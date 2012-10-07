@@ -1,4 +1,4 @@
-﻿         using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -156,7 +156,7 @@ namespace clippy
 
         void RecentCommandClose(object sender, FormClosingEventArgs e)
         {
-            if (!String.IsNullOrWhiteSpace(((RecentCommands)sender).SelectedCommand))
+            if (!String.IsNullOrEmpty(((RecentCommands)sender).SelectedCommand) && ((RecentCommands)sender).SelectedCommand.Trim().Length > 0)
             {
                 fxCommands.Text = fxCommands.Text.Trim() + "\r\n" + ((RecentCommands)sender).SelectedCommand;
             }

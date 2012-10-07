@@ -60,7 +60,7 @@ Example:
             string[] lines = text.Split('\n');
             int tabcount = 0;
             bool inComment = false;
-            string tabstr = ClippySettings.Default.tabString;
+            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
             for (int line = 0; line < lines.Length; line++)
             {
                 /*

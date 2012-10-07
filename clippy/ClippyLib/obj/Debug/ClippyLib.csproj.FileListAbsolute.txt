@@ -1,0 +1,7 @@
+C:\SourceCode\clippy\ClippyLib\bin\Debug\udf.xml
+C:\SourceCode\clippy\ClippyLib\bin\Debug\ClippyLib.dll.config
+C:\SourceCode\clippy\ClippyLib\bin\Debug\ClippyLib.dll
+C:\SourceCode\clippy\ClippyLib\bin\Debug\ClippyLib.pdb
+C:\SourceCode\clippy\ClippyLib\obj\Debug\ResolveAssemblyReference.cache
+C:\SourceCode\clippy\ClippyLib\obj\Debug\ClippyLib.dll
+C:\SourceCode\clippy\ClippyLib\obj\Debug\ClippyLib.pdb

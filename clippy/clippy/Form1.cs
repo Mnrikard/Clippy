@@ -298,6 +298,12 @@ namespace clippy
             rcnt.FormClosing += new FormClosingEventHandler((a, b) => functions.Text = rcnt.SelectedCommand);
             rcnt.ShowDialog();
         }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HelpCenter hc = new HelpCenter();
+            hc.ShowDialog();
+        }
     }
     //UserActivityHook actHook;
     //        void MainFormLoad(object sender, System.EventArgs e)

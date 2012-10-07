@@ -1,0 +1,10 @@
+C:\SourceCode\clippy\ConsoleClippy\bin\Release\udf.xml
+C:\SourceCode\clippy\ConsoleClippy\bin\Release\snippets.xml
+C:\SourceCode\clippy\ConsoleClippy\bin\Release\ConsoleClippy.exe.config
+C:\SourceCode\clippy\ConsoleClippy\bin\Release\ConsoleClippy.exe
+C:\SourceCode\clippy\ConsoleClippy\bin\Release\ConsoleClippy.pdb
+C:\SourceCode\clippy\ConsoleClippy\bin\Release\ClippyLib.dll
+C:\SourceCode\clippy\ConsoleClippy\bin\Release\ClippyLib.pdb
+C:\SourceCode\clippy\ConsoleClippy\obj\x86\Release\ResolveAssemblyReference.cache
+C:\SourceCode\clippy\ConsoleClippy\obj\x86\Release\ConsoleClippy.exe
+C:\SourceCode\clippy\ConsoleClippy\obj\x86\Release\ConsoleClippy.pdb
