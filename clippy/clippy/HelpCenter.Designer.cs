@@ -32,6 +32,7 @@
             this.functionList = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.helpBox = new System.Windows.Forms.TextBox();
+            this.choicerBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // functionList
@@ -66,14 +67,26 @@
             this.helpBox.Name = "helpBox";
             this.helpBox.ReadOnly = true;
             this.helpBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.helpBox.Size = new System.Drawing.Size(301, 227);
+            this.helpBox.Size = new System.Drawing.Size(301, 209);
             this.helpBox.TabIndex = 2;
+            // 
+            // choicerBtn
+            // 
+            this.choicerBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.choicerBtn.Location = new System.Drawing.Point(188, 269);
+            this.choicerBtn.Name = "choicerBtn";
+            this.choicerBtn.Size = new System.Drawing.Size(125, 23);
+            this.choicerBtn.TabIndex = 3;
+            this.choicerBtn.Text = "That\'s the one I want!";
+            this.choicerBtn.UseVisualStyleBackColor = true;
+            this.choicerBtn.Click += new System.EventHandler(this.choicerBtn_Click);
             // 
             // HelpCenter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(325, 288);
+            this.ClientSize = new System.Drawing.Size(325, 292);
+            this.Controls.Add(this.choicerBtn);
             this.Controls.Add(this.helpBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.functionList);
@@ -91,5 +104,6 @@
         private System.Windows.Forms.ComboBox functionList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox helpBox;
+        private System.Windows.Forms.Button choicerBtn;
     }
 }

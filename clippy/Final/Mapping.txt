@@ -553,16 +553,19 @@ Renamed Types:
 
 [ClippyUtility]clippy.HelpCenter -> [ClippyUtility]A.a
 {
+	[ClippyUtility]clippy.HelpCenter::get_ChosenOne[0]( ) -> A
+	[ClippyUtility]clippy.HelpCenter::set_ChosenOne[1]( System.String ) -> A
 	[ClippyUtility]clippy.HelpCenter::HelpCenterLoad[2]( System.Object, System.EventArgs ) -> A
-	[ClippyUtility]clippy.HelpCenter::LoadFunctions[0]( ) -> A
+	[ClippyUtility]clippy.HelpCenter::LoadFunctions[0]( ) -> a
 	[ClippyUtility]clippy.HelpCenter::FunctionListSelectedIndexChanged[2]( System.Object, System.EventArgs ) -> a
 	[ClippyUtility]clippy.HelpCenter::FunctionListLeave[2]( System.Object, System.EventArgs ) -> B
-	[ClippyUtility]clippy.HelpCenter::DisplayHelp[0]( ) -> a
-	[ClippyUtility]clippy.HelpCenter::DisplayUdf[1]( System.String ) -> A
-	[ClippyUtility]clippy.HelpCenter::get_UdfDocument[0]( ) -> B
+	[ClippyUtility]clippy.HelpCenter::DisplayHelp[0]( ) -> B
+	[ClippyUtility]clippy.HelpCenter::DisplayUdf[1]( System.String ) -> a
+	[ClippyUtility]clippy.HelpCenter::get_UdfDocument[0]( ) -> b
 	[ClippyUtility]clippy.HelpCenter::set_UdfDocument[1]( System.Xml.XmlDocument ) -> A
-	[ClippyUtility]clippy.HelpCenter::GetFunctions[0]( ) -> b
-	[ClippyUtility]clippy.HelpCenter::InitializeComponent[0]( ) -> C
+	[ClippyUtility]clippy.HelpCenter::GetFunctions[0]( ) -> C
+	[ClippyUtility]clippy.HelpCenter::choicerBtn_Click[2]( System.Object, System.EventArgs ) -> b
+	[ClippyUtility]clippy.HelpCenter::InitializeComponent[0]( ) -> c
 
 	[ClippyUtility]clippy.HelpCenter::Dispose[1]( System.Boolean ) skipped:  external base class or interface
 
@@ -572,7 +575,10 @@ Renamed Types:
 	System.Windows.Forms.ComboBox [ClippyUtility]System.Windows.Forms.ComboBox clippy.HelpCenter::functionList -> A
 	System.Windows.Forms.Label [ClippyUtility]System.Windows.Forms.Label clippy.HelpCenter::label1 -> A
 	System.Windows.Forms.TextBox [ClippyUtility]System.Windows.Forms.TextBox clippy.HelpCenter::helpBox -> A
+	System.Windows.Forms.Button [ClippyUtility]System.Windows.Forms.Button clippy.HelpCenter::choicerBtn -> A
+	System.String [ClippyUtility]System.String clippy.HelpCenter::<ChosenOne>k__BackingField -> A
 
+	System.String [ClippyUtility]System.String clippy.HelpCenter::ChosenOne -> dropped
 	System.Xml.XmlDocument [ClippyUtility]System.Xml.XmlDocument clippy.HelpCenter::UdfDocument -> dropped
 }
 
@@ -795,6 +801,14 @@ Renamed Types:
 
 	clippy.RecentCommands [ClippyUtility]clippy.RecentCommands clippy.Form1/<>c__DisplayClass3::rcnt -> A
 	clippy.Form1 [ClippyUtility]clippy.Form1 clippy.Form1/<>c__DisplayClass3::<>4__this -> A
+}
+
+[ClippyUtility]clippy.Form1/<>c__DisplayClass6 -> [ClippyUtility]A.A/I
+{
+	[ClippyUtility]clippy.Form1/<>c__DisplayClass6::<helpToolStripMenuItem_Click>b__5[2]( System.Object, System.Windows.Forms.FormClosingEventArgs ) -> A
+
+	clippy.HelpCenter [ClippyUtility]clippy.HelpCenter clippy.Form1/<>c__DisplayClass6::hc -> A
+	clippy.Form1 [ClippyUtility]clippy.Form1 clippy.Form1/<>c__DisplayClass6::<>4__this -> A
 }
 
 [ClippyLib]ClippyLib.IClipEditor -> [ClippyLib]A.A

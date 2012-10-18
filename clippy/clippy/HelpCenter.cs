@@ -18,6 +18,7 @@ namespace clippy
             clipManager = new EditorManager();
         }
 
+        public string ChosenOne { get; set; }
         
         private void HelpCenterLoad(object sender, EventArgs e)
         {
@@ -122,6 +123,12 @@ namespace clippy
                 }
             }
             return output;
+        }
+
+        private void choicerBtn_Click(object sender, EventArgs e)
+        {
+            ChosenOne = functionList.Text;
+            Close();
         }
     }
 }

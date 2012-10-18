@@ -28,7 +28,7 @@ Syntax: clippy encode [url|html] [reverse]
 
 Encodes/Decodes urls and html
 
-url|html - Encodes either by url or html
+url|html|base64 - Encodes either by url, html or base64
 reverse - Decodes instead of encodes
 
 Example:
@@ -46,12 +46,12 @@ Example:
             _parameterList = new List<Parameter>();
             _parameterList.Add(new Parameter()
             {
-                ParameterName = "Code Type (url|html)",
+                ParameterName = "Code Type (url|html|base64)",
                 Sequence = 1,
-                Validator = (a => ("url".Equals(a.ToLower()) || "html".Equals(a.ToLower()))),
+                Validator = (a => ("url".Equals(a.ToLower()) || "html".Equals(a.ToLower()) || "base64".Equals(a.ToLower()))),
                 DefaultValue = "url",
                 Required = true,
-                Expecting = "url or html"
+                Expecting = "url, html or base64"
             });
             _parameterList.Add(new Parameter()
             {
@@ -95,6 +95,13 @@ Example:
                         SourceData = SafeUrlDecode(SourceData);
                     else
                         SourceData = SafeUrlEncode(SourceData);
+                }
+                else if (ParameterList[0].Value.Equals("base64", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    if (decode)
+                        SourceData = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(SourceData));
+                    else
+                        SourceData = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(SourceData));
                 }
                 else
                 {

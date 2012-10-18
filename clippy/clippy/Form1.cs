@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ClippyLib;
@@ -70,14 +68,16 @@ namespace clippy
         private void openUserFunctionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UdfEditor ude = new UdfEditor();
-            ude.FormClosed += new FormClosedEventHandler((a, b) => LoadFunctions());
-            ude.ShowDialog();
+            ude.FormClosed += (a, b) => LoadFunctions();
+            ude.StartPosition = FormStartPosition.CenterParent;
+            ude.ShowDialog(this);
         }
 
         private void openSnippetsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SnippetEditor se = new SnippetEditor();
-            se.ShowDialog();
+            se.StartPosition = FormStartPosition.CenterParent;
+            se.ShowDialog(this);
         }
 
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -257,8 +257,9 @@ namespace clippy
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OptionsForm ofrm = new OptionsForm();
-            ofrm.FormClosed += new FormClosedEventHandler((a, b) => LoadFunctions());
-            ofrm.ShowDialog();
+            ofrm.FormClosed += (a, b) => LoadFunctions();
+            ofrm.StartPosition = FormStartPosition.CenterParent;
+            ofrm.ShowDialog(this);
         }
 
         private RegistryKey GetRegistryKey(RegistryKey parentKey, string subKeyPath)
@@ -295,14 +296,17 @@ namespace clippy
         private void ShowRecentCommands()
         {
             RecentCommands rcnt = new RecentCommands();
-            rcnt.FormClosing += new FormClosingEventHandler((a, b) => functions.Text = rcnt.SelectedCommand);
-            rcnt.ShowDialog();
+            rcnt.FormClosing += (a, b) => functions.Text = rcnt.SelectedCommand;
+            rcnt.StartPosition = FormStartPosition.CenterParent;
+            rcnt.ShowDialog(this);
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             HelpCenter hc = new HelpCenter();
-            hc.ShowDialog();
+            hc.FormClosing += (a, b) => { if (!String.IsNullOrEmpty(hc.ChosenOne)) { functions.Text = hc.ChosenOne; functions.Focus(); } };
+            hc.StartPosition = FormStartPosition.CenterParent;
+            hc.ShowDialog(this);
         }
     }
     //UserActivityHook actHook;
