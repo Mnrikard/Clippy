@@ -22,7 +22,13 @@ namespace clippy
 
         private void SnippetEditor_Load(object sender, EventArgs e)
         {
+            LoadSnippets();
+        }
+
+        private void LoadSnippets()
+        {
             List<string> udFunctions = GetSnippets();
+            udFunctions.Sort();
             snippetList.DataSource = udFunctions;
         }
 
@@ -130,6 +136,33 @@ namespace clippy
             }
             SnipDocument = _snipDocument;
             this.Close();
+        }
+
+        private void DeleteSnippet(string snippetName)
+        {
+            XmlDocument snipdoc = _snipDocument;
+            XmlNode snip = snipdoc.SelectSingleNode("//Snippet[translate(@Name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + snippetName.ToLower() + "\"]");
+            if (snip != null)
+            {
+                snip.ParentNode.RemoveChild(snip);
+                SnipDocument = _snipDocument;
+            }
+            snippetList.Text = String.Empty;
+            snippetDescription.Text = String.Empty;
+            snippetContent.Text = String.Empty;
+            int position = snippetList.SelectedIndex;
+            LoadSnippets();
+            if(position < snippetList.Items.Count)
+                snippetList.SelectedIndex = position;
+        }
+
+        private void deleter_Click(object sender, EventArgs e)
+        {
+            DialogResult candelete = MessageBox.Show(String.Format("Are you sure you wish to delete " + snippetList.Text), "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (candelete == DialogResult.Yes)
+            {
+                DeleteSnippet(snippetList.Text);
+            }
         }
     }
 }

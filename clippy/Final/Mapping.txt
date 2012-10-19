@@ -19,23 +19,28 @@ Renamed Types:
 	[ClippyLib]ClippyLib.AClipEditor::SetClipboardContent[0]( ) -> F
 	[ClippyLib]ClippyLib.AClipEditor::add_EditorResponse[1]( System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ) -> A
 	[ClippyLib]ClippyLib.AClipEditor::remove_EditorResponse[1]( System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ) -> a
+	[ClippyLib]ClippyLib.AClipEditor::add_PersistentEditorResponse[1]( System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ) -> B
+	[ClippyLib]ClippyLib.AClipEditor::remove_PersistentEditorResponse[1]( System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ) -> b
 	[ClippyLib]ClippyLib.AClipEditor::RespondToExe[1]( System.String ) -> B
 	[ClippyLib]ClippyLib.AClipEditor::RespondToExe[2]( System.String, System.Boolean ) -> A
+	[ClippyLib]ClippyLib.AClipEditor::PersistentRespondToExe[2]( System.String, System.Boolean ) -> a
 	[ClippyLib]ClippyLib.AClipEditor::ClipEscape[1]( System.String ) -> b
 	[ClippyLib]ClippyLib.AClipEditor::SetClipboardContent[1]( System.String ) -> C
 	[ClippyLib]ClippyLib.AClipEditor::OnEditorResponse[1]( ClippyLib.EditorResponseEventArgs ) -> A
-	[ClippyLib]ClippyLib.AClipEditor::<GetNextParameterName>b__0[1]( ClippyLib.Parameter ) -> A
-	[ClippyLib]ClippyLib.AClipEditor::<GetNextParameterName>b__1[1]( ClippyLib.Parameter ) -> a
-	[ClippyLib]ClippyLib.AClipEditor::<SetNextParameter>b__4[1]( ClippyLib.Parameter ) -> B
-	[ClippyLib]ClippyLib.AClipEditor::<SetNextParameter>b__5[1]( ClippyLib.Parameter ) -> b
+	[ClippyLib]ClippyLib.AClipEditor::OnPersistentEditorResponse[1]( ClippyLib.EditorResponseEventArgs ) -> a
+	[ClippyLib]ClippyLib.AClipEditor::<GetNextParameterName>b__2[1]( ClippyLib.Parameter ) -> A
+	[ClippyLib]ClippyLib.AClipEditor::<GetNextParameterName>b__3[1]( ClippyLib.Parameter ) -> a
+	[ClippyLib]ClippyLib.AClipEditor::<SetNextParameter>b__6[1]( ClippyLib.Parameter ) -> B
+	[ClippyLib]ClippyLib.AClipEditor::<SetNextParameter>b__7[1]( ClippyLib.Parameter ) -> b
 
 	System.Collections.Generic.List`1<ClippyLib.Parameter> [ClippyLib]System.Collections.Generic.List`1<ClippyLib.Parameter> ClippyLib.AClipEditor::_parameterList -> A
 	System.EventHandler`1<ClippyLib.EditorResponseEventArgs> [ClippyLib]System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ClippyLib.AClipEditor::EditorResponse -> A
+	System.EventHandler`1<ClippyLib.EditorResponseEventArgs> [ClippyLib]System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ClippyLib.AClipEditor::PersistentEditorResponse -> a
 	System.String [ClippyLib]System.String ClippyLib.AClipEditor::<SourceData>k__BackingField -> A
-	System.Func`2<ClippyLib.Parameter,System.Boolean> [ClippyLib]System.Func`2<ClippyLib.Parameter,System.Boolean> ClippyLib.AClipEditor::CS$<>9__CachedAnonymousMethodDelegate2 -> A
-	System.Func`2<ClippyLib.Parameter,System.Int32> [ClippyLib]System.Func`2<ClippyLib.Parameter,System.Int32> ClippyLib.AClipEditor::CS$<>9__CachedAnonymousMethodDelegate3 -> A
-	System.Func`2<ClippyLib.Parameter,System.Boolean> [ClippyLib]System.Func`2<ClippyLib.Parameter,System.Boolean> ClippyLib.AClipEditor::CS$<>9__CachedAnonymousMethodDelegate6 -> a
-	System.Func`2<ClippyLib.Parameter,System.Int32> [ClippyLib]System.Func`2<ClippyLib.Parameter,System.Int32> ClippyLib.AClipEditor::CS$<>9__CachedAnonymousMethodDelegate7 -> a
+	System.Func`2<ClippyLib.Parameter,System.Boolean> [ClippyLib]System.Func`2<ClippyLib.Parameter,System.Boolean> ClippyLib.AClipEditor::CS$<>9__CachedAnonymousMethodDelegate4 -> A
+	System.Func`2<ClippyLib.Parameter,System.Int32> [ClippyLib]System.Func`2<ClippyLib.Parameter,System.Int32> ClippyLib.AClipEditor::CS$<>9__CachedAnonymousMethodDelegate5 -> A
+	System.Func`2<ClippyLib.Parameter,System.Boolean> [ClippyLib]System.Func`2<ClippyLib.Parameter,System.Boolean> ClippyLib.AClipEditor::CS$<>9__CachedAnonymousMethodDelegate8 -> a
+	System.Func`2<ClippyLib.Parameter,System.Int32> [ClippyLib]System.Func`2<ClippyLib.Parameter,System.Int32> ClippyLib.AClipEditor::CS$<>9__CachedAnonymousMethodDelegate9 -> a
 
 	System.String [ClippyLib]System.String ClippyLib.AClipEditor::EditorName -> dropped
 	System.String [ClippyLib]System.String ClippyLib.AClipEditor::ShortDescription -> dropped
@@ -45,6 +50,7 @@ Renamed Types:
 	System.Boolean [ClippyLib]System.Boolean ClippyLib.AClipEditor::HasAllParameters -> dropped
 
 	System.EventHandler`1<ClippyLib.EditorResponseEventArgs> [ClippyLib]System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ClippyLib.AClipEditor::EditorResponse -> dropped
+	System.EventHandler`1<ClippyLib.EditorResponseEventArgs> [ClippyLib]System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ClippyLib.AClipEditor::PersistentEditorResponse -> dropped
 }
 
 [ClippyLib]ClippyLib.ClippySettings -> [ClippyLib]A.B
@@ -476,11 +482,11 @@ Renamed Types:
 	System.String [ClippyLib]System.String ClippyLib.SuperRegex::_baseRepString -> a
 }
 
-[ClippyLib]ClippyLib.AClipEditor/<>c__DisplayClass9 -> [ClippyLib]A.a/n
+[ClippyLib]ClippyLib.AClipEditor/<>c__DisplayClassb -> [ClippyLib]A.a/n
 {
-	[ClippyLib]ClippyLib.AClipEditor/<>c__DisplayClass9::<SetParameter>b__8[1]( ClippyLib.Parameter ) -> A
+	[ClippyLib]ClippyLib.AClipEditor/<>c__DisplayClassb::<SetParameter>b__a[1]( ClippyLib.Parameter ) -> A
 
-	System.Int32 [ClippyLib]System.Int32 ClippyLib.AClipEditor/<>c__DisplayClass9::parameterSequence -> A
+	System.Int32 [ClippyLib]System.Int32 ClippyLib.AClipEditor/<>c__DisplayClassb::parameterSequence -> A
 }
 
 [ClippyLib]ClippyLib.EditorManager/<>c__DisplayClass1 -> [ClippyLib]A.l/O
@@ -503,6 +509,7 @@ Renamed Types:
 	[ClippyUtility]clippy.Form1::LoadFunctions[0]( ) -> A
 	[ClippyUtility]clippy.Form1::Form1_FormClosing[2]( System.Object, System.Windows.Forms.FormClosingEventArgs ) -> A
 	[ClippyUtility]clippy.Form1::HandleResponseFromClippy[2]( System.Object, ClippyLib.EditorResponseEventArgs ) -> A
+	[ClippyUtility]clippy.Form1::HandlePersistentResponse[2]( System.Object, ClippyLib.EditorResponseEventArgs ) -> a
 	[ClippyUtility]clippy.Form1::restoreToolStripMenuItem_Click[2]( System.Object, System.EventArgs ) -> a
 	[ClippyUtility]clippy.Form1::exitToolStripMenuItem_Click[2]( System.Object, System.EventArgs ) -> B
 	[ClippyUtility]clippy.Form1::openUserFunctionsToolStripMenuItem_Click[2]( System.Object, System.EventArgs ) -> b
@@ -530,6 +537,7 @@ Renamed Types:
 
 	ClippyLib.EditorManager [ClippyUtility]ClippyLib.EditorManager clippy.Form1::clipManager -> A
 	System.String [ClippyUtility]System.String clippy.Form1::_currentCommand -> A
+	clippy.PersistentInformation [ClippyUtility]clippy.PersistentInformation clippy.Form1::_infoBox -> A
 	System.ComponentModel.IContainer [ClippyUtility]System.ComponentModel.IContainer clippy.Form1::components -> A
 	System.Windows.Forms.NotifyIcon [ClippyUtility]System.Windows.Forms.NotifyIcon clippy.Form1::clipNotify -> A
 	System.Windows.Forms.ContextMenuStrip [ClippyUtility]System.Windows.Forms.ContextMenuStrip clippy.Form1::notifyMenu -> A
@@ -603,7 +611,17 @@ Renamed Types:
 	System.Windows.Forms.Button [ClippyUtility]System.Windows.Forms.Button clippy.OptionsForm::saveButton -> B
 }
 
-[ClippyUtility]clippy.RecentCommands -> [ClippyUtility]A.C
+[ClippyUtility]clippy.PersistentInformation -> [ClippyUtility]A.b
+{
+	[ClippyUtility]clippy.PersistentInformation::InitializeComponent[0]( ) -> A
+
+	[ClippyUtility]clippy.PersistentInformation::Dispose[1]( System.Boolean ) skipped:  external base class or interface
+
+	System.ComponentModel.IContainer [ClippyUtility]System.ComponentModel.IContainer clippy.PersistentInformation::components -> A
+	System.Windows.Forms.TextBox [ClippyUtility]System.Windows.Forms.TextBox clippy.PersistentInformation::infoBox -> A
+}
+
+[ClippyUtility]clippy.RecentCommands -> [ClippyUtility]A.c
 {
 	[ClippyUtility]clippy.RecentCommands::get_SelectedCommand[0]( ) -> A
 	[ClippyUtility]clippy.RecentCommands::set_SelectedCommand[1]( System.String ) -> A
@@ -623,15 +641,18 @@ Renamed Types:
 	System.String [ClippyUtility]System.String clippy.RecentCommands::SelectedCommand -> dropped
 }
 
-[ClippyUtility]clippy.SnippetEditor -> [ClippyUtility]A.c
+[ClippyUtility]clippy.SnippetEditor -> [ClippyUtility]A.D
 {
 	[ClippyUtility]clippy.SnippetEditor::SnippetEditor_Load[2]( System.Object, System.EventArgs ) -> A
-	[ClippyUtility]clippy.SnippetEditor::get_SnipDocument[0]( ) -> A
+	[ClippyUtility]clippy.SnippetEditor::LoadSnippets[0]( ) -> A
+	[ClippyUtility]clippy.SnippetEditor::get_SnipDocument[0]( ) -> a
 	[ClippyUtility]clippy.SnippetEditor::set_SnipDocument[1]( System.Xml.XmlDocument ) -> A
-	[ClippyUtility]clippy.SnippetEditor::GetSnippets[0]( ) -> a
+	[ClippyUtility]clippy.SnippetEditor::GetSnippets[0]( ) -> B
 	[ClippyUtility]clippy.SnippetEditor::snippetList_SelectedIndexChanged[2]( System.Object, System.EventArgs ) -> a
 	[ClippyUtility]clippy.SnippetEditor::saveButton_Click[2]( System.Object, System.EventArgs ) -> B
-	[ClippyUtility]clippy.SnippetEditor::InitializeComponent[0]( ) -> B
+	[ClippyUtility]clippy.SnippetEditor::DeleteSnippet[1]( System.String ) -> A
+	[ClippyUtility]clippy.SnippetEditor::deleter_Click[2]( System.Object, System.EventArgs ) -> b
+	[ClippyUtility]clippy.SnippetEditor::InitializeComponent[0]( ) -> b
 
 	[ClippyUtility]clippy.SnippetEditor::Dispose[1]( System.Boolean ) skipped:  external base class or interface
 
@@ -644,21 +665,25 @@ Renamed Types:
 	System.Windows.Forms.ComboBox [ClippyUtility]System.Windows.Forms.ComboBox clippy.SnippetEditor::snippetList -> A
 	System.Windows.Forms.Label [ClippyUtility]System.Windows.Forms.Label clippy.SnippetEditor::label3 -> B
 	System.Windows.Forms.Button [ClippyUtility]System.Windows.Forms.Button clippy.SnippetEditor::saveButton -> A
+	System.Windows.Forms.Button [ClippyUtility]System.Windows.Forms.Button clippy.SnippetEditor::deleter -> a
 
 	System.Xml.XmlDocument [ClippyUtility]System.Xml.XmlDocument clippy.SnippetEditor::SnipDocument -> dropped
 }
 
-[ClippyUtility]clippy.UdfEditor -> [ClippyUtility]A.D
+[ClippyUtility]clippy.UdfEditor -> [ClippyUtility]A.d
 {
 	[ClippyUtility]clippy.UdfEditor::UdfEditor_Load[2]( System.Object, System.EventArgs ) -> A
-	[ClippyUtility]clippy.UdfEditor::get_UdfDocument[0]( ) -> A
+	[ClippyUtility]clippy.UdfEditor::LoadFunctions[0]( ) -> A
+	[ClippyUtility]clippy.UdfEditor::get_UdfDocument[0]( ) -> a
 	[ClippyUtility]clippy.UdfEditor::set_UdfDocument[1]( System.Xml.XmlDocument ) -> A
-	[ClippyUtility]clippy.UdfEditor::GetFunctions[0]( ) -> a
+	[ClippyUtility]clippy.UdfEditor::GetFunctions[0]( ) -> B
 	[ClippyUtility]clippy.UdfEditor::functionList_SelectedIndexChanged[2]( System.Object, System.EventArgs ) -> a
 	[ClippyUtility]clippy.UdfEditor::saveButton_Click[2]( System.Object, System.EventArgs ) -> B
 	[ClippyUtility]clippy.UdfEditor::loadMruButton_Click[2]( System.Object, System.EventArgs ) -> b
 	[ClippyUtility]clippy.UdfEditor::RecentCommandClose[2]( System.Object, System.Windows.Forms.FormClosingEventArgs ) -> A
-	[ClippyUtility]clippy.UdfEditor::InitializeComponent[0]( ) -> B
+	[ClippyUtility]clippy.UdfEditor::DeleteUdf[1]( System.String ) -> A
+	[ClippyUtility]clippy.UdfEditor::deleter_Click[2]( System.Object, System.EventArgs ) -> C
+	[ClippyUtility]clippy.UdfEditor::InitializeComponent[0]( ) -> b
 
 	[ClippyUtility]clippy.UdfEditor::Dispose[1]( System.Boolean ) skipped:  external base class or interface
 
@@ -672,11 +697,12 @@ Renamed Types:
 	System.Windows.Forms.Button [ClippyUtility]System.Windows.Forms.Button clippy.UdfEditor::saveButton -> A
 	System.Windows.Forms.Label [ClippyUtility]System.Windows.Forms.Label clippy.UdfEditor::label3 -> B
 	System.Windows.Forms.Button [ClippyUtility]System.Windows.Forms.Button clippy.UdfEditor::loadMruButton -> a
+	System.Windows.Forms.Button [ClippyUtility]System.Windows.Forms.Button clippy.UdfEditor::deleter -> B
 
 	System.Xml.XmlDocument [ClippyUtility]System.Xml.XmlDocument clippy.UdfEditor::UdfDocument -> dropped
 }
 
-[ClippyUtility]clippy.UserActivityHook -> [ClippyUtility]A.d
+[ClippyUtility]clippy.UserActivityHook -> [ClippyUtility]A.E
 {
 	[ClippyUtility]clippy.UserActivityHook::SetWindowsHookEx[4]( System.Int32, clippy.UserActivityHook/HookProc, System.IntPtr, System.Int32 ) -> A
 	[ClippyUtility]clippy.UserActivityHook::UnhookWindowsHookEx[1]( System.Int32 ) -> A
@@ -738,13 +764,13 @@ Renamed Types:
 	System.Windows.Forms.KeyEventHandler [ClippyUtility]System.Windows.Forms.KeyEventHandler clippy.UserActivityHook::KeyUp -> dropped
 }
 
-[ClippyUtility]clippy.UserActivityHook/POINT -> [ClippyUtility]A.d/E
+[ClippyUtility]clippy.UserActivityHook/POINT -> [ClippyUtility]A.E/e
 {
 	System.Int32 [ClippyUtility]System.Int32 clippy.UserActivityHook/POINT::x -> A
 	System.Int32 [ClippyUtility]System.Int32 clippy.UserActivityHook/POINT::y -> a
 }
 
-[ClippyUtility]clippy.UserActivityHook/MouseHookStruct -> [ClippyUtility]A.d/e
+[ClippyUtility]clippy.UserActivityHook/MouseHookStruct -> [ClippyUtility]A.E/F
 {
 	clippy.UserActivityHook/POINT [ClippyUtility]clippy.UserActivityHook/POINT clippy.UserActivityHook/MouseHookStruct::pt -> A
 	System.Int32 [ClippyUtility]System.Int32 clippy.UserActivityHook/MouseHookStruct::hwnd -> A
@@ -752,7 +778,7 @@ Renamed Types:
 	System.Int32 [ClippyUtility]System.Int32 clippy.UserActivityHook/MouseHookStruct::dwExtraInfo -> B
 }
 
-[ClippyUtility]clippy.UserActivityHook/MouseLLHookStruct -> [ClippyUtility]A.d/F
+[ClippyUtility]clippy.UserActivityHook/MouseLLHookStruct -> [ClippyUtility]A.E/f
 {
 	clippy.UserActivityHook/POINT [ClippyUtility]clippy.UserActivityHook/POINT clippy.UserActivityHook/MouseLLHookStruct::pt -> A
 	System.Int32 [ClippyUtility]System.Int32 clippy.UserActivityHook/MouseLLHookStruct::mouseData -> A
@@ -761,7 +787,7 @@ Renamed Types:
 	System.Int32 [ClippyUtility]System.Int32 clippy.UserActivityHook/MouseLLHookStruct::dwExtraInfo -> b
 }
 
-[ClippyUtility]clippy.UserActivityHook/KeyboardHookStruct -> [ClippyUtility]A.d/f
+[ClippyUtility]clippy.UserActivityHook/KeyboardHookStruct -> [ClippyUtility]A.E/G
 {
 	System.Int32 [ClippyUtility]System.Int32 clippy.UserActivityHook/KeyboardHookStruct::vkCode -> A
 	System.Int32 [ClippyUtility]System.Int32 clippy.UserActivityHook/KeyboardHookStruct::scanCode -> a
@@ -770,7 +796,7 @@ Renamed Types:
 	System.Int32 [ClippyUtility]System.Int32 clippy.UserActivityHook/KeyboardHookStruct::dwExtraInfo -> C
 }
 
-[ClippyUtility]clippy.Properties.Resources -> [ClippyUtility]A.g
+[ClippyUtility]clippy.Properties.Resources -> [ClippyUtility]A.H
 {
 	[ClippyUtility]clippy.Properties.Resources::get_ResourceManager[0]( ) -> A
 	[ClippyUtility]clippy.Properties.Resources::get_Culture[0]( ) -> a
@@ -783,7 +809,7 @@ Renamed Types:
 	System.Globalization.CultureInfo [ClippyUtility]System.Globalization.CultureInfo clippy.Properties.Resources::Culture -> a
 }
 
-[ClippyUtility]clippy.Properties.Settings -> [ClippyUtility]A.H
+[ClippyUtility]clippy.Properties.Settings -> [ClippyUtility]A.h
 {
 	[ClippyUtility]clippy.Properties.Settings::get_Default[0]( ) -> A
 	[ClippyUtility]clippy.Properties.Settings::get_Setting[0]( ) -> a
@@ -795,7 +821,7 @@ Renamed Types:
 	System.String [ClippyUtility]System.String clippy.Properties.Settings::Setting -> A
 }
 
-[ClippyUtility]clippy.Form1/<>c__DisplayClass3 -> [ClippyUtility]A.A/h
+[ClippyUtility]clippy.Form1/<>c__DisplayClass3 -> [ClippyUtility]A.A/I
 {
 	[ClippyUtility]clippy.Form1/<>c__DisplayClass3::<ShowRecentCommands>b__2[2]( System.Object, System.Windows.Forms.FormClosingEventArgs ) -> A
 
@@ -803,7 +829,7 @@ Renamed Types:
 	clippy.Form1 [ClippyUtility]clippy.Form1 clippy.Form1/<>c__DisplayClass3::<>4__this -> A
 }
 
-[ClippyUtility]clippy.Form1/<>c__DisplayClass6 -> [ClippyUtility]A.A/I
+[ClippyUtility]clippy.Form1/<>c__DisplayClass6 -> [ClippyUtility]A.A/i
 {
 	[ClippyUtility]clippy.Form1/<>c__DisplayClass6::<helpToolStripMenuItem_Click>b__5[2]( System.Object, System.Windows.Forms.FormClosingEventArgs ) -> A
 
@@ -830,6 +856,8 @@ Renamed Types:
 	[ClippyLib]ClippyLib.IClipEditor::SetClipboardContent[0]( ) -> F
 	[ClippyLib]ClippyLib.IClipEditor::add_EditorResponse[1]( System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ) -> A
 	[ClippyLib]ClippyLib.IClipEditor::remove_EditorResponse[1]( System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ) -> a
+	[ClippyLib]ClippyLib.IClipEditor::add_PersistentEditorResponse[1]( System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ) -> B
+	[ClippyLib]ClippyLib.IClipEditor::remove_PersistentEditorResponse[1]( System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ) -> b
 
 	System.String [ClippyLib]System.String ClippyLib.IClipEditor::EditorName -> dropped
 	System.String [ClippyLib]System.String ClippyLib.IClipEditor::ShortDescription -> dropped
@@ -839,6 +867,7 @@ Renamed Types:
 	System.Collections.Generic.List`1<ClippyLib.Parameter> [ClippyLib]System.Collections.Generic.List`1<ClippyLib.Parameter> ClippyLib.IClipEditor::ParameterList -> dropped
 
 	System.EventHandler`1<ClippyLib.EditorResponseEventArgs> [ClippyLib]System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ClippyLib.IClipEditor::EditorResponse -> dropped
+	System.EventHandler`1<ClippyLib.EditorResponseEventArgs> [ClippyLib]System.EventHandler`1<ClippyLib.EditorResponseEventArgs> ClippyLib.IClipEditor::PersistentEditorResponse -> dropped
 }
 
 [ClippyLib]ClippyLib.Editors.XmlEdit -> [ClippyLib]A.g
@@ -869,12 +898,12 @@ Renamed Types:
 	[ClippyLib]ClippyLib.Extensions::IsInteger[1]( System.String ) -> B
 }
 
-[ClippyUtility]clippy.Program -> [ClippyUtility]A.b
+[ClippyUtility]clippy.Program -> [ClippyUtility]A.C
 {
 	[ClippyUtility]clippy.Program::Main[0]( ) -> A
 }
 
-[ClippyUtility]clippy.UserActivityHook/HookProc -> [ClippyUtility]A.d/G
+[ClippyUtility]clippy.UserActivityHook/HookProc -> [ClippyUtility]A.E/g
 {
 
 	[ClippyUtility]clippy.UserActivityHook/HookProc::Invoke[3]( System.Int32, System.Int32, System.IntPtr ) skipped:  runtime method
@@ -889,10 +918,11 @@ Renamed Resources:
 clippy.Form1.resources -> A.A.resources
 clippy.HelpCenter.resources -> A.a.resources
 clippy.OptionsForm.resources -> A.B.resources
-clippy.RecentCommands.resources -> A.C.resources
-clippy.SnippetEditor.resources -> A.c.resources
-clippy.UdfEditor.resources -> A.D.resources
-clippy.Properties.Resources.resources -> A.g.resources
+clippy.PersistentInformation.resources -> A.b.resources
+clippy.RecentCommands.resources -> A.c.resources
+clippy.SnippetEditor.resources -> A.D.resources
+clippy.UdfEditor.resources -> A.d.resources
+clippy.Properties.Resources.resources -> A.H.resources
 
 Skipped Resources:
 

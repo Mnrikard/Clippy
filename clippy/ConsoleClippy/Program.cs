@@ -23,7 +23,8 @@ namespace ConsoleClippy
                     args = manager.GetArgumentsFromString(Console.ReadLine());
                 }
                 manager.GetClipEditor(args[0]);
-                manager.ClipEditor.EditorResponse += new EventHandler<EditorResponseEventArgs>(HandleResponseFromClippy);
+                manager.ClipEditor.EditorResponse += HandleResponseFromClippy;
+                manager.ClipEditor.PersistentEditorResponse += HandleResponseFromClippy;
 
                 SetParameters(manager, args);
 
@@ -44,6 +45,7 @@ namespace ConsoleClippy
                 manager.ClipEditor.Edit();
                 manager.ClipEditor.SetClipboardContent();
                 manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
+                manager.ClipEditor.PersistentEditorResponse -= HandleResponseFromClippy;
             }
         }
 

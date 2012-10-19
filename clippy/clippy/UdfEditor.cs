@@ -23,6 +23,11 @@ namespace clippy
 
         private void UdfEditor_Load(object sender, EventArgs e)
         {
+            LoadFunctions();
+        }
+
+        private void LoadFunctions()
+        {
             List<string> udFunctions = GetFunctions();
             udFunctions.Sort();
             functionList.DataSource = udFunctions;
@@ -159,6 +164,34 @@ namespace clippy
             if (!String.IsNullOrEmpty(((RecentCommands)sender).SelectedCommand) && ((RecentCommands)sender).SelectedCommand.Trim().Length > 0)
             {
                 fxCommands.Text = fxCommands.Text.Trim() + "\r\n" + ((RecentCommands)sender).SelectedCommand;
+            }
+        }
+
+        private void DeleteUdf(string functionName)
+        {
+            XmlDocument udfs = _udfDocument;
+            XmlNode command = udfs.SelectSingleNode("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + functionName.ToLower() + "\"]");
+
+            if (command != null)
+            {
+                command.ParentNode.RemoveChild(command);
+                UdfDocument = _udfDocument;
+            }
+            functionList.Text = String.Empty;
+            fxDescription.Text = String.Empty;
+            fxCommands.Text = String.Empty;
+            int position = functionList.SelectedIndex;
+            LoadFunctions();
+            if(position < functionList.Items.Count)
+                functionList.SelectedIndex = position;
+        }
+
+        private void deleter_Click(object sender, EventArgs e)
+        {
+            DialogResult candelete = MessageBox.Show(String.Format("Are you sure you wish to delete " + functionList.Text), "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (candelete == DialogResult.Yes)
+            {
+                DeleteUdf(functionList.Text);
             }
         }
 

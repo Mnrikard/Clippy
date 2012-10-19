@@ -13,6 +13,7 @@ namespace clippy
     {
         private EditorManager clipManager;
         private string _currentCommand;
+        private PersistentInformation _infoBox;
 
         #region .ctor
         public Form1()
@@ -50,6 +51,18 @@ namespace clippy
         private void HandleResponseFromClippy(object sender, EditorResponseEventArgs e)
         {
             MessageBox.Show(e.ResponseString, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);            
+        }
+
+        private void HandlePersistentResponse(object sender, EditorResponseEventArgs e)
+        {
+            if (_infoBox != null)
+            {
+                _infoBox.Close();
+                _infoBox = null;
+            }
+            _infoBox = new PersistentInformation(e.ResponseString);
+            _infoBox.StartPosition = FormStartPosition.CenterParent;
+            _infoBox.Show();
         }
 
         #region menu commands
@@ -121,7 +134,8 @@ namespace clippy
             _currentCommand = arguments[0];
 
             clipManager.GetClipEditor(arguments[0]);
-            clipManager.ClipEditor.EditorResponse += new EventHandler<EditorResponseEventArgs>(HandleResponseFromClippy);
+            clipManager.ClipEditor.EditorResponse += HandleResponseFromClippy;
+            clipManager.ClipEditor.PersistentEditorResponse += HandlePersistentResponse;
             try
             {
                 clipManager.ClipEditor.SetParameters(arguments);
@@ -192,8 +206,17 @@ namespace clippy
 
             clipManager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
             functions.Focus();
+
+            try
+            {
+                _infoBox.Close();
+                _infoBox = null;
+            }
+            catch { }
             this.Close();
         }
+
+
         #endregion
 
         private void SaveThisCommand(string editorName, string parms)

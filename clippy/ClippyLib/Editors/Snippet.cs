@@ -106,7 +106,8 @@ you to choose.
             }
             else
             {
-                RespondToExe(DisplaySnippetsToChoose(),false);
+                string exeMessage = String.Format("Available Snippets:\r\n{0}", DisplaySnippetsToChoose());
+                PersistentRespondToExe(exeMessage, false);
             }
         }
 

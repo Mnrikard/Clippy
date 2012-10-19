@@ -44,10 +44,22 @@ namespace ClippyLib
 
         protected void RespondToExe(string message, bool requiresUserAction)
         {
-            EditorResponseEventArgs e = new EditorResponseEventArgs();
-            e.ResponseString = message;
-            e.RequiresUserAction = requiresUserAction;
+            EditorResponseEventArgs e = new EditorResponseEventArgs()
+            {
+                ResponseString = message,
+                RequiresUserAction = requiresUserAction
+            };
             OnEditorResponse(e);
+        }
+
+        protected void PersistentRespondToExe(string message, bool requiresUserAction)
+        {
+            EditorResponseEventArgs e = new EditorResponseEventArgs()
+            {
+                ResponseString = message,
+                RequiresUserAction = requiresUserAction
+            };
+            OnPersistentEditorResponse(e);
         }
 
 
@@ -146,6 +158,16 @@ namespace ClippyLib
             if (this.EditorResponse != null)
             {
                 this.EditorResponse(this, e);
+            }
+        }
+
+        public event EventHandler<EditorResponseEventArgs> PersistentEditorResponse;
+
+        public virtual void OnPersistentEditorResponse(EditorResponseEventArgs e)
+        {
+            if (this.PersistentEditorResponse != null)
+            {
+                this.PersistentEditorResponse(this, e);
             }
         }
 

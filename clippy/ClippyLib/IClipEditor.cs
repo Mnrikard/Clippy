@@ -26,5 +26,6 @@ namespace ClippyLib
         void SetClipboardContent();
 
         event EventHandler<EditorResponseEventArgs> EditorResponse;
+        event EventHandler<EditorResponseEventArgs> PersistentEditorResponse;
     }
 }

@@ -37,6 +37,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.loadMruButton = new System.Windows.Forms.Button();
+            this.deleter = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // functionList
@@ -115,11 +116,24 @@
             this.loadMruButton.UseVisualStyleBackColor = true;
             this.loadMruButton.Click += new System.EventHandler(this.loadMruButton_Click);
             // 
+            // deleter
+            // 
+            this.deleter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.deleter.BackColor = System.Drawing.Color.Firebrick;
+            this.deleter.Location = new System.Drawing.Point(243, 254);
+            this.deleter.Name = "deleter";
+            this.deleter.Size = new System.Drawing.Size(75, 23);
+            this.deleter.TabIndex = 8;
+            this.deleter.Text = "Delete";
+            this.deleter.UseVisualStyleBackColor = false;
+            this.deleter.Click += new System.EventHandler(this.deleter_Click);
+            // 
             // UdfEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(411, 283);
+            this.Controls.Add(this.deleter);
             this.Controls.Add(this.loadMruButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.saveButton);
@@ -147,5 +161,6 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button loadMruButton;
+        private System.Windows.Forms.Button deleter;
     }
 }
