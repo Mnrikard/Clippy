@@ -219,6 +219,8 @@ namespace clippy
 
         #endregion
 
+        
+
         private void SaveThisCommand(string editorName, string parms)
         {
             RegistryKey hkcu = Registry.CurrentUser;
@@ -226,13 +228,30 @@ namespace clippy
 
             string[] names = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
 
-            for (int i = names.Length - 1; i > 0; i--)
+            string currentValue = editorName.Trim() + " " + parms;
+            List<string> keyValues = new List<string>(27);
+
+            keyValues.Add(currentValue);
+
+            foreach(string name in names)
             {
-                object prevValue = rkClippy.GetValue(names[i-1]);
-                prevValue = prevValue ?? String.Empty;
-                rkClippy.SetValue(names[i], prevValue);
+                object prevValue = rkClippy.GetValue(name) ?? String.Empty;
+                if (prevValue.ToString().Equals(currentValue, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    continue;
+                }
+                keyValues.Add(prevValue.ToString());
             }
-            rkClippy.SetValue("a", editorName.Trim() + " " + parms, RegistryValueKind.String);
+
+            for (int i = keyValues.Count; i < names.Length; i++)
+            {
+                keyValues.Add(String.Empty);
+            }
+
+            for (int i=0;i<names.Length;i++)
+            {
+                rkClippy.SetValue(names[i], keyValues[i], RegistryValueKind.String);
+            }
 
             rkClippy.Close();
             hkcu.Close();

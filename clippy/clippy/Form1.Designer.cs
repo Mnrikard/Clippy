@@ -45,9 +45,9 @@
             this.openUserFunctionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openSnippetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentCommandsImage = new System.Windows.Forms.PictureBox();
             this.errorLabel = new System.Windows.Forms.Label();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGrid)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -88,10 +88,11 @@
             // 
             this.functions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.functions.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.functions.FormattingEnabled = true;
             this.functions.Location = new System.Drawing.Point(13, 25);
             this.functions.Name = "functions";
-            this.functions.Size = new System.Drawing.Size(316, 21);
+            this.functions.Size = new System.Drawing.Size(316, 24);
             this.functions.TabIndex = 1;
             this.functions.Leave += new System.EventHandler(this.FunctionOnLeave);
             // 
@@ -142,7 +143,7 @@
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem1.Text = "E&xit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
@@ -185,6 +186,13 @@
             this.recentCommandsToolStripMenuItem.Text = "&Recent Commands";
             this.recentCommandsToolStripMenuItem.Click += new System.EventHandler(this.recentCommandsToolStripMenuItem_Click);
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+            // 
             // recentCommandsImage
             // 
             this.recentCommandsImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -205,13 +213,6 @@
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size(0, 13);
             this.errorLabel.TabIndex = 6;
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-            this.helpToolStripMenuItem.Text = "&Help";
-            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // Form1
             // 
