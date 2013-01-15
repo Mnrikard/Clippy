@@ -529,6 +529,7 @@ Renamed Types:
 	[ClippyUtility]clippy.Form1::pictureBox1_Click[2]( System.Object, System.EventArgs ) -> F
 	[ClippyUtility]clippy.Form1::ShowRecentCommands[0]( ) -> C
 	[ClippyUtility]clippy.Form1::helpToolStripMenuItem_Click[2]( System.Object, System.EventArgs ) -> f
+	[ClippyUtility]clippy.Form1::menuStrip1_ItemClicked[2]( System.Object, System.Windows.Forms.ToolStripItemClickedEventArgs ) -> A
 	[ClippyUtility]clippy.Form1::InitializeComponent[0]( ) -> c
 	[ClippyUtility]clippy.Form1::<openUserFunctionsToolStripMenuItem_Click>b__0[2]( System.Object, System.Windows.Forms.FormClosedEventArgs ) -> A
 	[ClippyUtility]clippy.Form1::<optionsToolStripMenuItem_Click>b__1[2]( System.Object, System.Windows.Forms.FormClosedEventArgs ) -> a

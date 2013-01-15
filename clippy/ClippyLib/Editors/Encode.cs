@@ -145,15 +145,24 @@ Example:
             StringBuilder output = new StringBuilder();
             while (i < data.Length)
             {
-                if (i + chunkSize > data.Length)
+                int tmpChSz = chunkSize;
+                if (i + tmpChSz > data.Length)
                 {
                     output.Append(System.Uri.UnescapeDataString(data.Substring(i)));
                 }
                 else
                 {
-                    output.Append(System.Uri.UnescapeDataString(data.Substring(i, chunkSize)));
+                    if (data[i + tmpChSz - 2] == '%')
+                    {
+                        tmpChSz -= 2;
+                    }
+                    if (data[i + tmpChSz - 1] == '%')
+                    {
+                        tmpChSz -= 1;
+                    }
+                    output.Append(System.Uri.UnescapeDataString(data.Substring(i, tmpChSz)));
                 }
-                i += chunkSize;
+                i += tmpChSz;
             }
             return output.ToString();
         }
