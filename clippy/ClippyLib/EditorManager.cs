@@ -44,7 +44,7 @@ namespace ClippyLib
                           where e.EditorName.Equals(editorName, StringComparison.CurrentCultureIgnoreCase)
                           select e).FirstOrDefault();
             if (ClipEditor == null)
-                ClipEditor = new UdfEditor();
+                ClipEditor = new UdfEditor(editorName);
             ClipEditor.DefineParameters();
             return ClipEditor;
         }

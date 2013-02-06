@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using Microsoft.Win32;
 
@@ -12,6 +13,8 @@ namespace ClippyLib.Editors
         private string _udfName;
         private XmlDocument _udfSettings;
         private string[] _arguments;
+        private Dictionary<string, string> _udfParameters;
+        private List<Parameter> _xmlDefinedParms;
 
         public override string EditorName
         {
@@ -21,13 +24,48 @@ namespace ClippyLib.Editors
         #region .ctor
         public UdfEditor()
         {
-            _parameterList = new List<Parameter>();
+            _udfParameters = new Dictionary<string, string>();
+            _xmlDefinedParms = new List<Parameter>();
+        }
+        public UdfEditor(string udfName)
+        {
+            _udfName = udfName;
+            _udfParameters = new Dictionary<string, string>();
+            _xmlDefinedParms = new List<Parameter>();
+            Udf(new[] { udfName });
         }
         #endregion
 
         public override void DefineParameters()
         {
-            
+            _parameterList = new List<Parameter>();
+            int i = 1;
+
+            if(_xmlDefinedParms.Count > 0)
+            {
+                foreach(Parameter p in _xmlDefinedParms)
+                {
+                    p.Validator = a => true;
+
+                    _parameterList.Add(p);
+                }
+            }
+            else
+            {
+                foreach (string key in _udfParameters.Keys)
+                {
+                    int numberseq = Int32.Parse(Regex.Match(key, @"^\d+").Value)+1;
+                    _parameterList.Add(new Parameter()
+                    {
+                        ParameterName = key,
+                        Sequence = numberseq,
+                        Validator = (a => true),
+                        DefaultValue = String.Empty,
+                        Required = false,
+                        Expecting = String.Empty
+                    });
+                }
+            }
         }
 
         public override string ShortDescription
@@ -48,6 +86,10 @@ namespace ClippyLib.Editors
             {
                 throw new UndefinedFunctionException("Function \"{0}\" does not exist", args[0]);
             }
+            for (int i = 1; i < _arguments.Length; i++)
+            {
+                SetNextParameter(_arguments[i]);
+            }
         }
 
         public override void Edit()
@@ -65,8 +107,20 @@ namespace ClippyLib.Editors
                     throw new Exception(String.Format("Function:{0} does not exist or is not valid", _udfName));
                 EditorManager manager = new EditorManager();
 
-                foreach (string function in functions)
+                for (int fi = 0; fi < functions.Count; fi++)
                 {
+                    string function = functions[fi];
+                    
+                    for (int i = 1; i < _arguments.Length; i++)
+                    {
+                        function = function.Replace("%" + (i - 1).ToString() + "%", _arguments[i]);
+                    }
+
+                    for (int i = 0; i < ParameterList.Count; i++)
+                    {
+                        function = function.Replace("%" + i.ToString() + "%", ParameterList[i].Value);
+                    }
+                
                     string[] fargs = GetArgsFromString(function);
                     manager.GetClipEditor(fargs[0]);
 
@@ -101,18 +155,78 @@ namespace ClippyLib.Editors
             {
                 _udfSettings = UdfDocument();
             }
-            XmlNodeList cmds = _udfSettings.SelectNodes("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + key[0].ToLower() + "\"]/function");
+            XmlNode cmdNode = _udfSettings.SelectSingleNode("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + key[0].ToLower() + "\"]");
+            XmlNodeList cmdParms = cmdNode.SelectNodes("parameter");
+            XmlNodeList cmds = cmdNode.SelectNodes("function");
             foreach (XmlNode cmd in cmds)
             {
                 string currcmd = cmd.InnerText;
-                for (int i = 1; i < key.Length; i++)
-                {
-                    currcmd = currcmd.Replace("%" + (i - 1).ToString() + "%", key[i]);
-                }
+                //for (int i = 1; i < key.Length; i++)
+                //{
+                //    currcmd = currcmd.Replace("%" + (i - 1).ToString() + "%", key[i]);
+                //}
                 output.Add(currcmd);
+
+                if (cmdParms.Count == 0)
+                {
+                    MatchCollection udfparms = Regex.Matches(currcmd, @"%(\d+)%");
+                    foreach (Match udfparm in udfparms)
+                    {
+                        _udfParameters[DescribeParm(udfparm.Groups[1].Value)] = String.Empty;
+                    }
+                }
             }
+
+
+            foreach(XmlNode parmnd in cmdParms)
+            {
+                _xmlDefinedParms.Add(new Parameter()
+                {
+                    ParameterName = parmnd.Attributes["name"].Value,
+                    Sequence = Int32.Parse(parmnd.Attributes["sequence"].Value),
+                    DefaultValue = parmnd.Attributes["default"] == null ? String.Empty : parmnd.Attributes["default"].Value,
+                    Required = parmnd.Attributes["required"] == null ? false : Boolean.Parse(parmnd.Attributes["required"].Value),
+                    Expecting = parmnd.Attributes["parmdesc"] == null ? String.Empty : parmnd.Attributes["parmdesc"].Value
+                });
+            }
+
+            
             return output;
         }
+
+        
+        private string DescribeParm(string number)
+        {
+            int parmnum;
+            if (!Int32.TryParse(number, out parmnum))
+            {
+                return number;
+            }
+
+            //special cases for teen numbers, and short circuit for lower numbers
+            if (parmnum > 3 && parmnum < 21)
+            {
+                return number + "th parameter";
+            }
+
+            int remn = parmnum % 10;
+            if (remn == 0 || (remn > 3 && remn < 10))
+            {
+                return number + "th parameter";
+            }
+            switch(remn)
+            {
+                case 1:
+                    return number + "st parameter";
+                case 2:
+                    return number + "nd parameter";
+                case 3:
+                    return number + "rd parameter";
+            }
+
+            return number;
+        }
+
 
         private bool CommandExists(string[] key)
         {

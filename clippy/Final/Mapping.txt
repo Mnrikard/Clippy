@@ -348,15 +348,22 @@ Renamed Types:
 	[ClippyLib]ClippyLib.Editors.UdfEditor::DefineParameters[0]( ) -> E
 	[ClippyLib]ClippyLib.Editors.UdfEditor::HandleResponseFromClippy[2]( System.Object, ClippyLib.EditorResponseEventArgs ) -> A
 	[ClippyLib]ClippyLib.Editors.UdfEditor::Udf[1]( System.String[] ) -> a
+	[ClippyLib]ClippyLib.Editors.UdfEditor::DescribeParm[1]( System.String ) -> B
 	[ClippyLib]ClippyLib.Editors.UdfEditor::CommandExists[1]( System.String[] ) -> B
-	[ClippyLib]ClippyLib.Editors.UdfEditor::GetArgsFromString[1]( System.String ) -> B
+	[ClippyLib]ClippyLib.Editors.UdfEditor::GetArgsFromString[1]( System.String ) -> b
 	[ClippyLib]ClippyLib.Editors.UdfEditor::DescribeFunctions[1]( System.Text.StringBuilder ) -> A
 	[ClippyLib]ClippyLib.Editors.UdfEditor::UdfDocument[0]( ) -> f
 	[ClippyLib]ClippyLib.Editors.UdfEditor::GetFunctions[0]( ) -> G
+	[ClippyLib]ClippyLib.Editors.UdfEditor::<DefineParameters>b__1[1]( System.String ) -> C
+	[ClippyLib]ClippyLib.Editors.UdfEditor::<DefineParameters>b__2[1]( System.String ) -> c
 
 	System.String [ClippyLib]System.String ClippyLib.Editors.UdfEditor::_udfName -> A
 	System.Xml.XmlDocument [ClippyLib]System.Xml.XmlDocument ClippyLib.Editors.UdfEditor::_udfSettings -> A
 	System.String[] [ClippyLib]System.String[] ClippyLib.Editors.UdfEditor::_arguments -> A
+	System.Collections.Generic.Dictionary`2<System.String,System.String> [ClippyLib]System.Collections.Generic.Dictionary`2<System.String,System.String> ClippyLib.Editors.UdfEditor::_udfParameters -> A
+	System.Collections.Generic.List`1<ClippyLib.Parameter> [ClippyLib]System.Collections.Generic.List`1<ClippyLib.Parameter> ClippyLib.Editors.UdfEditor::_xmlDefinedParms -> A
+	System.Func`2<System.String,System.Boolean> [ClippyLib]System.Func`2<System.String,System.Boolean> ClippyLib.Editors.UdfEditor::CS$<>9__CachedAnonymousMethodDelegate3 -> A
+	System.Func`2<System.String,System.Boolean> [ClippyLib]System.Func`2<System.String,System.Boolean> ClippyLib.Editors.UdfEditor::CS$<>9__CachedAnonymousMethodDelegate4 -> a
 
 	System.String [ClippyLib]System.String ClippyLib.Editors.UdfEditor::EditorName -> dropped
 	System.String [ClippyLib]System.String ClippyLib.Editors.UdfEditor::ShortDescription -> dropped
@@ -679,16 +686,18 @@ Renamed Types:
 	[ClippyUtility]clippy.UdfEditor::set_UdfDocument[1]( System.Xml.XmlDocument ) -> A
 	[ClippyUtility]clippy.UdfEditor::GetFunctions[0]( ) -> B
 	[ClippyUtility]clippy.UdfEditor::functionList_SelectedIndexChanged[2]( System.Object, System.EventArgs ) -> a
-	[ClippyUtility]clippy.UdfEditor::saveButton_Click[2]( System.Object, System.EventArgs ) -> B
+	[ClippyUtility]clippy.UdfEditor::SaveButtonClick[2]( System.Object, System.EventArgs ) -> B
 	[ClippyUtility]clippy.UdfEditor::loadMruButton_Click[2]( System.Object, System.EventArgs ) -> b
 	[ClippyUtility]clippy.UdfEditor::RecentCommandClose[2]( System.Object, System.Windows.Forms.FormClosingEventArgs ) -> A
 	[ClippyUtility]clippy.UdfEditor::DeleteUdf[1]( System.String ) -> A
 	[ClippyUtility]clippy.UdfEditor::deleter_Click[2]( System.Object, System.EventArgs ) -> C
+	[ClippyUtility]clippy.UdfEditor::CommandListLeave[2]( System.Object, System.EventArgs ) -> c
 	[ClippyUtility]clippy.UdfEditor::InitializeComponent[0]( ) -> b
 
 	[ClippyUtility]clippy.UdfEditor::Dispose[1]( System.Boolean ) skipped:  external base class or interface
 
 	System.Xml.XmlDocument [ClippyUtility]System.Xml.XmlDocument clippy.UdfEditor::_udfDocument -> A
+	System.Boolean [ClippyUtility]System.Boolean clippy.UdfEditor::_containsParms -> A
 	System.ComponentModel.IContainer [ClippyUtility]System.ComponentModel.IContainer clippy.UdfEditor::components -> A
 	System.Windows.Forms.ComboBox [ClippyUtility]System.Windows.Forms.ComboBox clippy.UdfEditor::functionList -> A
 	System.Windows.Forms.Label [ClippyUtility]System.Windows.Forms.Label clippy.UdfEditor::label1 -> A
@@ -699,6 +708,11 @@ Renamed Types:
 	System.Windows.Forms.Label [ClippyUtility]System.Windows.Forms.Label clippy.UdfEditor::label3 -> B
 	System.Windows.Forms.Button [ClippyUtility]System.Windows.Forms.Button clippy.UdfEditor::loadMruButton -> a
 	System.Windows.Forms.Button [ClippyUtility]System.Windows.Forms.Button clippy.UdfEditor::deleter -> B
+	System.Windows.Forms.DataGridView [ClippyUtility]System.Windows.Forms.DataGridView clippy.UdfEditor::udParms -> A
+	System.Windows.Forms.DataGridViewTextBoxColumn [ClippyUtility]System.Windows.Forms.DataGridViewTextBoxColumn clippy.UdfEditor::ParmName -> A
+	System.Windows.Forms.DataGridViewTextBoxColumn [ClippyUtility]System.Windows.Forms.DataGridViewTextBoxColumn clippy.UdfEditor::defval -> a
+	System.Windows.Forms.DataGridViewCheckBoxColumn [ClippyUtility]System.Windows.Forms.DataGridViewCheckBoxColumn clippy.UdfEditor::Required -> A
+	System.Windows.Forms.SplitContainer [ClippyUtility]System.Windows.Forms.SplitContainer clippy.UdfEditor::splitContainer1 -> A
 
 	System.Xml.XmlDocument [ClippyUtility]System.Xml.XmlDocument clippy.UdfEditor::UdfDocument -> dropped
 }

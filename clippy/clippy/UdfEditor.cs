@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Windows.Forms;
 using Microsoft.Win32;
@@ -91,9 +92,20 @@ namespace clippy
             {
                 fxCommands.Text += fx.InnerText + Environment.NewLine;
             }
+
+            XmlNodeList parms = passedInFunc.SelectNodes("parameter");
+            udParms.Rows.Clear();
+            foreach (XmlNode prm in parms)
+            {
+                string pnm = prm.Attributes["name"].Value;
+                string defval = prm.Attributes["default"] == null ? String.Empty : prm.Attributes["default"].Value;
+                bool req = prm.Attributes["required"] == null ? false : Boolean.Parse(prm.Attributes["required"].Value);
+                udParms.Rows.Add(pnm, defval, req);
+            }
+            CommandListLeave(fxCommands, EventArgs.Empty);   
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private void SaveButtonClick(object sender, EventArgs e)
         {
             XmlDocument udfs = UdfDocument;
             XmlNode command = udfs.SelectSingleNode("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + functionList.Text.ToLower() + "\"]");
@@ -120,6 +132,39 @@ namespace clippy
                     fxNd.AppendChild(cdatfx);
                     command.AppendChild(fxNd);
                 }
+
+                if (_containsParms)
+                {
+                    int seq = 1;
+                    foreach (DataGridViewRow dr in udParms.Rows)
+                    {
+                        if (!String.IsNullOrEmpty(dr.Cells["ParmName"].Value.ToString()))
+                        {
+                            string nm = dr.Cells["ParmName"].Value.ToString();
+                            string dv = dr.Cells["defval"].Value.ToString();
+                            bool req = (bool)dr.Cells["Required"].Value;
+
+                            XmlNode paramnd = udfs.CreateElement("parameter");
+                            XmlAttribute pnm = udfs.CreateAttribute("name");
+                            pnm.Value = nm;
+                            paramnd.Attributes.Append(pnm);
+                            XmlAttribute pdv = udfs.CreateAttribute("default");
+                            pdv.Value = dv;
+                            paramnd.Attributes.Append(pdv);
+                            XmlAttribute prq = udfs.CreateAttribute("required");
+                            prq.Value = req.ToString();
+                            paramnd.Attributes.Append(prq);
+                            XmlAttribute pdsc = udfs.CreateAttribute("parmdesc");
+                            paramnd.Attributes.Append(pdsc);
+                            XmlAttribute pseq = udfs.CreateAttribute("sequence");
+                            pseq.Value = seq.ToString();
+                            paramnd.Attributes.Append(pseq);
+                            seq++;
+                            command.AppendChild(paramnd);
+                        }
+                    }
+                }
+                
                 XmlNode cmds = _udfDocument.SelectSingleNode("/commands");
                 cmds.AppendChild(command);
             }
@@ -137,6 +182,9 @@ namespace clippy
                 while(command.SelectSingleNode("function") != null)
                     command.RemoveChild(command.SelectSingleNode("function"));
 
+                while (command.SelectSingleNode("parameter") != null)
+                    command.RemoveChild(command.SelectSingleNode("parameter"));
+
                 string[] fxs = fxCommands.Text.Split('\n');
                 foreach (string fx in fxs)
                 {
@@ -146,6 +194,38 @@ namespace clippy
                     XmlNode fxNd = udfs.CreateElement("function");
                     fxNd.AppendChild(cdatfx);
                     command.AppendChild(fxNd);
+                }
+
+                if (_containsParms)
+                {
+                    int seq = 1;
+                    foreach (DataGridViewRow dr in udParms.Rows)
+                    {
+                        if (dr.Cells["ParmName"] != null && dr.Cells["ParmName"].Value != null && !String.IsNullOrEmpty(dr.Cells["ParmName"].Value.ToString()))
+                        {
+                            string nm = dr.Cells["ParmName"].Value.ToString();
+                            string dv = dr.Cells["defval"].Value.ToString();
+                            bool req = (bool)dr.Cells["Required"].Value;
+
+                            XmlNode paramnd = udfs.CreateElement("parameter");
+                            XmlAttribute pnm = udfs.CreateAttribute("name");
+                            pnm.Value = nm;
+                            paramnd.Attributes.Append(pnm);
+                            XmlAttribute pdv = udfs.CreateAttribute("default");
+                            pdv.Value = dv;
+                            paramnd.Attributes.Append(pdv);
+                            XmlAttribute prq = udfs.CreateAttribute("required");
+                            prq.Value = req.ToString();
+                            paramnd.Attributes.Append(prq);
+                            XmlAttribute pdsc = udfs.CreateAttribute("parmdesc");
+                            paramnd.Attributes.Append(pdsc);
+                            XmlAttribute pseq = udfs.CreateAttribute("sequence");
+                            pseq.Value = seq.ToString();
+                            paramnd.Attributes.Append(pseq);
+                            seq++;
+                            command.AppendChild(paramnd);
+                        }
+                    }
                 }
             }
             UdfDocument = _udfDocument;
@@ -192,6 +272,27 @@ namespace clippy
             if (candelete == DialogResult.Yes)
             {
                 DeleteUdf(functionList.Text);
+            }
+        }
+
+        private bool _containsParms = false;
+        private void CommandListLeave(object sender, EventArgs e)
+        {
+            if (Regex.IsMatch(fxCommands.Text, @"%\d+%"))
+            {                
+                _containsParms = true;
+                if (splitContainer1.Panel2Collapsed)
+                {
+                    splitContainer1.Panel2Collapsed = false;
+                }
+            }
+            else
+            {
+                _containsParms = false;
+                if (!splitContainer1.Panel2Collapsed)
+                {
+                    splitContainer1.Panel2Collapsed = true;
+                }
             }
         }
 

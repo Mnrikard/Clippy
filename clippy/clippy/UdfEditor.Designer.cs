@@ -38,6 +38,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.loadMruButton = new System.Windows.Forms.Button();
             this.deleter = new System.Windows.Forms.Button();
+            this.udParms = new System.Windows.Forms.DataGridView();
+            this.ParmName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.defval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Required = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.udParms)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // functionList
@@ -80,22 +89,23 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.fxCommands.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fxCommands.Location = new System.Drawing.Point(13, 109);
+            this.fxCommands.Location = new System.Drawing.Point(3, 3);
             this.fxCommands.Multiline = true;
             this.fxCommands.Name = "fxCommands";
-            this.fxCommands.Size = new System.Drawing.Size(386, 139);
+            this.fxCommands.Size = new System.Drawing.Size(394, 174);
             this.fxCommands.TabIndex = 4;
+            this.fxCommands.Leave += new System.EventHandler(this.CommandListLeave);
             // 
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(324, 254);
+            this.saveButton.Location = new System.Drawing.Point(329, 376);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 5;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.saveButton.Click += new System.EventHandler(this.SaveButtonClick);
             // 
             // label3
             // 
@@ -109,7 +119,7 @@
             // loadMruButton
             // 
             this.loadMruButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.loadMruButton.Location = new System.Drawing.Point(16, 254);
+            this.loadMruButton.Location = new System.Drawing.Point(16, 376);
             this.loadMruButton.Name = "loadMruButton";
             this.loadMruButton.Size = new System.Drawing.Size(111, 23);
             this.loadMruButton.TabIndex = 7;
@@ -121,7 +131,7 @@
             // 
             this.deleter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.deleter.BackColor = System.Drawing.Color.Firebrick;
-            this.deleter.Location = new System.Drawing.Point(243, 254);
+            this.deleter.Location = new System.Drawing.Point(248, 376);
             this.deleter.Name = "deleter";
             this.deleter.Size = new System.Drawing.Size(75, 23);
             this.deleter.TabIndex = 8;
@@ -129,16 +139,66 @@
             this.deleter.UseVisualStyleBackColor = false;
             this.deleter.Click += new System.EventHandler(this.deleter_Click);
             // 
+            // udParms
+            // 
+            this.udParms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.udParms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.udParms.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ParmName,
+            this.defval,
+            this.Required});
+            this.udParms.Location = new System.Drawing.Point(7, 7);
+            this.udParms.Name = "udParms";
+            this.udParms.Size = new System.Drawing.Size(385, 70);
+            this.udParms.TabIndex = 9;
+            // 
+            // ParmName
+            // 
+            this.ParmName.HeaderText = "Parm Name";
+            this.ParmName.Name = "ParmName";
+            // 
+            // defval
+            // 
+            this.defval.HeaderText = "Default Value";
+            this.defval.Name = "defval";
+            // 
+            // Required
+            // 
+            this.Required.HeaderText = "Required";
+            this.Required.Name = "Required";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(12, 106);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.fxCommands);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.udParms);
+            this.splitContainer1.Size = new System.Drawing.Size(400, 261);
+            this.splitContainer1.SplitterDistance = 180;
+            this.splitContainer1.TabIndex = 10;
+            // 
             // UdfEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 283);
+            this.ClientSize = new System.Drawing.Size(416, 405);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.deleter);
             this.Controls.Add(this.loadMruButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.fxCommands);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.fxDescription);
             this.Controls.Add(this.label1);
@@ -147,6 +207,11 @@
             this.Name = "UdfEditor";
             this.Text = "Function Editor";
             this.Load += new System.EventHandler(this.UdfEditor_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.udParms)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,5 +228,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button loadMruButton;
         private System.Windows.Forms.Button deleter;
+        private System.Windows.Forms.DataGridView udParms;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ParmName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn defval;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Required;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
