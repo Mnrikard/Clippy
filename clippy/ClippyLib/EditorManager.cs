@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ClippyLib.Editors;
+using Microsoft.Win32;
 
 namespace ClippyLib
 {
@@ -82,5 +83,6 @@ namespace ClippyLib
         {
             return UdfEditor.GetArgsFromString(arglist);
         }
+                
     }
 }

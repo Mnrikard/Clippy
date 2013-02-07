@@ -1,5 +1,6 @@
 ﻿using System;
 using ClippyLib;
+using System.Linq;
 
 namespace ConsoleClippy
 {
@@ -46,7 +47,17 @@ namespace ConsoleClippy
                 manager.ClipEditor.SetClipboardContent();
                 manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
                 manager.ClipEditor.PersistentEditorResponse -= HandleResponseFromClippy;
+
+                SaveThisCommand(args[0], manager.ClipEditor);
             }
+        }
+
+        private static void SaveThisCommand(string commandName, IClipEditor editor)
+        {
+            string[] parms = (from Parameter p in editor.ParameterList
+                              orderby p.Sequence
+                              select "\"" + p.Value.Replace("\"","\\q")+"\"").ToArray();
+            RecentCommands.SaveThisCommand(commandName, String.Join(" ", parms));
         }
 
         private static void SetParameters(EditorManager manager, string[] args)

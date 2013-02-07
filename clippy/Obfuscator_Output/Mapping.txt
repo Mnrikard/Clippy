@@ -1,5 +1,18 @@
 Renamed Types:
 
+[ConsoleClippy]ConsoleClippy.Program -> [ConsoleClippy]A.A
+{
+	[ConsoleClippy]ConsoleClippy.Program::Main[1]( System.String[] ) -> A
+	[ConsoleClippy]ConsoleClippy.Program::SaveThisCommand[2]( System.String, ClippyLib.IClipEditor ) -> A
+	[ConsoleClippy]ConsoleClippy.Program::SetParameters[2]( ClippyLib.EditorManager, System.String[] ) -> A
+	[ConsoleClippy]ConsoleClippy.Program::HandleResponseFromClippy[2]( System.Object, ClippyLib.EditorResponseEventArgs ) -> A
+	[ConsoleClippy]ConsoleClippy.Program::<SaveThisCommand>b__0[1]( ClippyLib.Parameter ) -> A
+	[ConsoleClippy]ConsoleClippy.Program::<SaveThisCommand>b__1[1]( ClippyLib.Parameter ) -> a
+
+	System.Func`2<ClippyLib.Parameter,System.Int32> [ConsoleClippy]System.Func`2<ClippyLib.Parameter,System.Int32> ConsoleClippy.Program::CS$<>9__CachedAnonymousMethodDelegate2 -> A
+	System.Func`2<ClippyLib.Parameter,System.String> [ConsoleClippy]System.Func`2<ClippyLib.Parameter,System.String> ConsoleClippy.Program::CS$<>9__CachedAnonymousMethodDelegate3 -> A
+}
+
 [ClippyLib]ClippyLib.AClipEditor -> [ClippyLib]A.a
 {
 	[ClippyLib]ClippyLib.AClipEditor::Edit[0]( ) -> A
@@ -475,7 +488,7 @@ Renamed Types:
 	System.String [ClippyLib]System.String ClippyLib.Editors.Rep::LongDescription -> dropped
 }
 
-[ClippyLib]ClippyLib.SuperRegex -> [ClippyLib]A.N
+[ClippyLib]ClippyLib.SuperRegex -> [ClippyLib]A.n
 {
 	[ClippyLib]ClippyLib.SuperRegex::SuperReplace[2]( System.String, System.String ) -> A
 	[ClippyLib]ClippyLib.SuperRegex::SingleRepper[1]( System.Text.RegularExpressions.Match ) -> A
@@ -489,21 +502,21 @@ Renamed Types:
 	System.String [ClippyLib]System.String ClippyLib.SuperRegex::_baseRepString -> a
 }
 
-[ClippyLib]ClippyLib.AClipEditor/<>c__DisplayClassb -> [ClippyLib]A.a/n
+[ClippyLib]ClippyLib.AClipEditor/<>c__DisplayClassb -> [ClippyLib]A.a/O
 {
 	[ClippyLib]ClippyLib.AClipEditor/<>c__DisplayClassb::<SetParameter>b__a[1]( ClippyLib.Parameter ) -> A
 
 	System.Int32 [ClippyLib]System.Int32 ClippyLib.AClipEditor/<>c__DisplayClassb::parameterSequence -> A
 }
 
-[ClippyLib]ClippyLib.EditorManager/<>c__DisplayClass1 -> [ClippyLib]A.l/O
+[ClippyLib]ClippyLib.EditorManager/<>c__DisplayClass1 -> [ClippyLib]A.l/o
 {
 	[ClippyLib]ClippyLib.EditorManager/<>c__DisplayClass1::<GetClipEditor>b__0[1]( ClippyLib.IClipEditor ) -> A
 
 	System.String [ClippyLib]System.String ClippyLib.EditorManager/<>c__DisplayClass1::editorName -> A
 }
 
-[ClippyLib]ClippyLib.EditorManager/<>c__DisplayClass7 -> [ClippyLib]A.l/o
+[ClippyLib]ClippyLib.EditorManager/<>c__DisplayClass7 -> [ClippyLib]A.l/P
 {
 	[ClippyLib]ClippyLib.EditorManager/<>c__DisplayClass7::<Help>b__5[1]( ClippyLib.IClipEditor ) -> A
 
@@ -531,7 +544,6 @@ Renamed Types:
 	[ClippyUtility]clippy.Form1::RestoreForm[0]( ) -> B
 	[ClippyUtility]clippy.Form1::MinimizeForm[0]( ) -> b
 	[ClippyUtility]clippy.Form1::optionsToolStripMenuItem_Click[2]( System.Object, System.EventArgs ) -> E
-	[ClippyUtility]clippy.Form1::GetRegistryKey[2]( Microsoft.Win32.RegistryKey, System.String ) -> A
 	[ClippyUtility]clippy.Form1::recentCommandsToolStripMenuItem_Click[2]( System.Object, System.EventArgs ) -> e
 	[ClippyUtility]clippy.Form1::pictureBox1_Click[2]( System.Object, System.EventArgs ) -> F
 	[ClippyUtility]clippy.Form1::ShowRecentCommands[0]( ) -> C
@@ -898,19 +910,19 @@ Renamed Types:
 	System.String [ClippyLib]System.String ClippyLib.Editors.XmlEdit::LongDescription -> dropped
 }
 
-[ConsoleClippy]ConsoleClippy.Program -> [ConsoleClippy]A.A
-{
-	[ConsoleClippy]ConsoleClippy.Program::Main[1]( System.String[] ) -> A
-	[ConsoleClippy]ConsoleClippy.Program::SetParameters[2]( ClippyLib.EditorManager, System.String[] ) -> A
-	[ConsoleClippy]ConsoleClippy.Program::HandleResponseFromClippy[2]( System.Object, ClippyLib.EditorResponseEventArgs ) -> A
-}
-
 [ClippyLib]ClippyLib.Extensions -> [ClippyLib]A.L
 {
 	[ClippyLib]ClippyLib.Extensions::Times[2]( System.String, System.Int32 ) -> A
 	[ClippyLib]ClippyLib.Extensions::ToRegex[1]( System.String ) -> A
 	[ClippyLib]ClippyLib.Extensions::ToSuperRegex[1]( System.String ) -> a
 	[ClippyLib]ClippyLib.Extensions::IsInteger[1]( System.String ) -> B
+}
+
+[ClippyLib]ClippyLib.RecentCommands -> [ClippyLib]A.N
+{
+	[ClippyLib]ClippyLib.RecentCommands::SaveThisCommand[2]( System.String, System.String ) -> A
+	[ClippyLib]ClippyLib.RecentCommands::GetRecentCommandList[0]( ) -> A
+	[ClippyLib]ClippyLib.RecentCommands::GetRegistryKey[2]( Microsoft.Win32.RegistryKey, System.String ) -> A
 }
 
 [ClippyUtility]clippy.Program -> [ClippyUtility]A.C
