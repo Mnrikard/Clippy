@@ -56,7 +56,7 @@ namespace ConsoleClippy
         {
             string[] parms = (from Parameter p in editor.ParameterList
                               orderby p.Sequence
-                              select "\"" + p.Value.Replace("\"","\\q")+"\"").ToArray();
+                              select "\"" + (p.Value ?? p.DefaultValue ?? String.Empty).Replace("\"","\\q")+"\"").ToArray();
             RecentCommands.SaveThisCommand(commandName, String.Join(" ", parms));
         }
 
