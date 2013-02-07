@@ -156,6 +156,11 @@ namespace ClippyLib.Editors
                 _udfSettings = UdfDocument();
             }
             XmlNode cmdNode = _udfSettings.SelectSingleNode("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + key[0].ToLower() + "\"]");
+            if (cmdNode == null)
+            {
+                return output;
+            }
+
             XmlNodeList cmdParms = cmdNode.SelectNodes("parameter");
             XmlNodeList cmds = cmdNode.SelectNodes("function");
             foreach (XmlNode cmd in cmds)

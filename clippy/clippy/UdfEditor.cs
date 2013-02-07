@@ -122,55 +122,13 @@ namespace clippy
                 desc.InnerText = fxDescription.Text;
                 command.AppendChild(desc);
 
-                string[] fxs = fxCommands.Text.Split('\n');
-                foreach (string fx in fxs)
-                {
-                    if (String.IsNullOrEmpty(fx.Trim()))
-                        continue;
-                    XmlCDataSection cdatfx = udfs.CreateCDataSection(fx.Trim());
-                    XmlNode fxNd = udfs.CreateElement("function");
-                    fxNd.AppendChild(cdatfx);
-                    command.AppendChild(fxNd);
-                }
-
-                if (_containsParms)
-                {
-                    int seq = 1;
-                    foreach (DataGridViewRow dr in udParms.Rows)
-                    {
-                        if (!String.IsNullOrEmpty(dr.Cells["ParmName"].Value.ToString()))
-                        {
-                            string nm = dr.Cells["ParmName"].Value.ToString();
-                            string dv = dr.Cells["defval"].Value.ToString();
-                            bool req = (bool)dr.Cells["Required"].Value;
-
-                            XmlNode paramnd = udfs.CreateElement("parameter");
-                            XmlAttribute pnm = udfs.CreateAttribute("name");
-                            pnm.Value = nm;
-                            paramnd.Attributes.Append(pnm);
-                            XmlAttribute pdv = udfs.CreateAttribute("default");
-                            pdv.Value = dv;
-                            paramnd.Attributes.Append(pdv);
-                            XmlAttribute prq = udfs.CreateAttribute("required");
-                            prq.Value = req.ToString();
-                            paramnd.Attributes.Append(prq);
-                            XmlAttribute pdsc = udfs.CreateAttribute("parmdesc");
-                            paramnd.Attributes.Append(pdsc);
-                            XmlAttribute pseq = udfs.CreateAttribute("sequence");
-                            pseq.Value = seq.ToString();
-                            paramnd.Attributes.Append(pseq);
-                            seq++;
-                            command.AppendChild(paramnd);
-                        }
-                    }
-                }
+                
                 
                 XmlNode cmds = _udfDocument.SelectSingleNode("/commands");
                 cmds.AppendChild(command);
             }
             else
-            {
-                
+            {                
                 XmlNode desc = command.SelectSingleNode("description");
                 if (desc == null)
                 {
@@ -185,46 +143,47 @@ namespace clippy
                 while (command.SelectSingleNode("parameter") != null)
                     command.RemoveChild(command.SelectSingleNode("parameter"));
 
-                string[] fxs = fxCommands.Text.Split('\n');
-                foreach (string fx in fxs)
-                {
-                    if (String.IsNullOrEmpty(fx.Trim()))
-                        continue;
-                    XmlCDataSection cdatfx = udfs.CreateCDataSection(fx.Trim());
-                    XmlNode fxNd = udfs.CreateElement("function");
-                    fxNd.AppendChild(cdatfx);
-                    command.AppendChild(fxNd);
-                }
+            }
 
-                if (_containsParms)
+            string[] fxs = fxCommands.Text.Split('\n');
+            foreach (string fx in fxs)
+            {
+                if (String.IsNullOrEmpty(fx.Trim()))
+                    continue;
+                XmlCDataSection cdatfx = udfs.CreateCDataSection(fx.Trim());
+                XmlNode fxNd = udfs.CreateElement("function");
+                fxNd.AppendChild(cdatfx);
+                command.AppendChild(fxNd);
+            }
+
+            if (_containsParms)
+            {
+                int seq = 1;
+                foreach (DataGridViewRow dr in udParms.Rows)
                 {
-                    int seq = 1;
-                    foreach (DataGridViewRow dr in udParms.Rows)
+                    if (dr.Cells["ParmName"] != null && dr.Cells["ParmName"].Value != null && !String.IsNullOrEmpty(dr.Cells["ParmName"].Value.ToString()))
                     {
-                        if (dr.Cells["ParmName"] != null && dr.Cells["ParmName"].Value != null && !String.IsNullOrEmpty(dr.Cells["ParmName"].Value.ToString()))
-                        {
-                            string nm = dr.Cells["ParmName"].Value.ToString();
-                            string dv = dr.Cells["defval"].Value.ToString();
-                            bool req = (bool)dr.Cells["Required"].Value;
+                        string nm = dr.Cells["ParmName"].Value.ToString();
+                        string dv = dr.Cells["defval"] == null || dr.Cells["defval"].Value == null ? String.Empty : dr.Cells["defval"].Value.ToString();
+                        bool req = dr.Cells["Required"] == null || dr.Cells["Required"].Value == null ? false : (bool)dr.Cells["Required"].Value;
 
-                            XmlNode paramnd = udfs.CreateElement("parameter");
-                            XmlAttribute pnm = udfs.CreateAttribute("name");
-                            pnm.Value = nm;
-                            paramnd.Attributes.Append(pnm);
-                            XmlAttribute pdv = udfs.CreateAttribute("default");
-                            pdv.Value = dv;
-                            paramnd.Attributes.Append(pdv);
-                            XmlAttribute prq = udfs.CreateAttribute("required");
-                            prq.Value = req.ToString();
-                            paramnd.Attributes.Append(prq);
-                            XmlAttribute pdsc = udfs.CreateAttribute("parmdesc");
-                            paramnd.Attributes.Append(pdsc);
-                            XmlAttribute pseq = udfs.CreateAttribute("sequence");
-                            pseq.Value = seq.ToString();
-                            paramnd.Attributes.Append(pseq);
-                            seq++;
-                            command.AppendChild(paramnd);
-                        }
+                        XmlNode paramnd = udfs.CreateElement("parameter");
+                        XmlAttribute pnm = udfs.CreateAttribute("name");
+                        pnm.Value = nm;
+                        paramnd.Attributes.Append(pnm);
+                        XmlAttribute pdv = udfs.CreateAttribute("default");
+                        pdv.Value = dv;
+                        paramnd.Attributes.Append(pdv);
+                        XmlAttribute prq = udfs.CreateAttribute("required");
+                        prq.Value = req.ToString();
+                        paramnd.Attributes.Append(prq);
+                        XmlAttribute pdsc = udfs.CreateAttribute("parmdesc");
+                        paramnd.Attributes.Append(pdsc);
+                        XmlAttribute pseq = udfs.CreateAttribute("sequence");
+                        pseq.Value = seq.ToString();
+                        paramnd.Attributes.Append(pseq);
+                        seq++;
+                        command.AppendChild(paramnd);
                     }
                 }
             }
