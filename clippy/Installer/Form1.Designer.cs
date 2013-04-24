@@ -28,25 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button3 = new System.Windows.Forms.Button();
+            this.installButton = new System.Windows.Forms.Button();
             this.saveToPath = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.browseUdfBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.udfFolder = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.browseSaveBtn = new System.Windows.Forms.Button();
             this.installFolder = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.runAtStartup = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // button3
+            // installButton
             // 
-            this.button3.Location = new System.Drawing.Point(245, 124);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(125, 26);
-            this.button3.TabIndex = 15;
-            this.button3.Text = "Install";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.installButton.Location = new System.Drawing.Point(245, 124);
+            this.installButton.Name = "installButton";
+            this.installButton.Size = new System.Drawing.Size(125, 26);
+            this.installButton.TabIndex = 15;
+            this.installButton.Text = "Install";
+            this.installButton.UseVisualStyleBackColor = true;
+            this.installButton.Click += new System.EventHandler(this.InstallClick);
             // 
             // saveToPath
             // 
@@ -58,15 +59,15 @@
             this.saveToPath.Text = "Include clippy in path environment variable";
             this.saveToPath.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // browseUdfBtn
             // 
-            this.button2.Location = new System.Drawing.Point(295, 66);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Browse";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.browseUdfBtn.Location = new System.Drawing.Point(295, 66);
+            this.browseUdfBtn.Name = "browseUdfBtn";
+            this.browseUdfBtn.Size = new System.Drawing.Size(75, 23);
+            this.browseUdfBtn.TabIndex = 13;
+            this.browseUdfBtn.Text = "Browse";
+            this.browseUdfBtn.UseVisualStyleBackColor = true;
+            this.browseUdfBtn.Click += new System.EventHandler(this.BrowseForUdfLocation);
             // 
             // label2
             // 
@@ -84,15 +85,15 @@
             this.udfFolder.Size = new System.Drawing.Size(285, 20);
             this.udfFolder.TabIndex = 11;
             // 
-            // button1
+            // browseSaveBtn
             // 
-            this.button1.Location = new System.Drawing.Point(295, 25);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Browse";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.browseSaveBtn.Location = new System.Drawing.Point(295, 25);
+            this.browseSaveBtn.Name = "browseSaveBtn";
+            this.browseSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.browseSaveBtn.TabIndex = 10;
+            this.browseSaveBtn.Text = "Browse";
+            this.browseSaveBtn.UseVisualStyleBackColor = true;
+            this.browseSaveBtn.Click += new System.EventHandler(this.BrowseForSaveLocation);
             // 
             // installFolder
             // 
@@ -110,22 +111,33 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Where to save clippy:";
             // 
+            // runAtStartup
+            // 
+            this.runAtStartup.AutoSize = true;
+            this.runAtStartup.Location = new System.Drawing.Point(6, 117);
+            this.runAtStartup.Name = "runAtStartup";
+            this.runAtStartup.Size = new System.Drawing.Size(95, 17);
+            this.runAtStartup.TabIndex = 16;
+            this.runAtStartup.Text = "Run at Startup";
+            this.runAtStartup.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(382, 165);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.runAtStartup);
+            this.Controls.Add(this.installButton);
             this.Controls.Add(this.saveToPath);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.browseUdfBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.udfFolder);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.browseSaveBtn);
             this.Controls.Add(this.installFolder);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Install Clippy";
-            this.Load += new System.EventHandler(this.Screen1_Load);
+            this.Load += new System.EventHandler(this.ScreenLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,14 +145,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button installButton;
         private System.Windows.Forms.CheckBox saveToPath;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button browseUdfBtn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox udfFolder;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button browseSaveBtn;
         private System.Windows.Forms.TextBox installFolder;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox runAtStartup;
 
     }
 }

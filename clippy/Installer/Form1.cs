@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Collections.Generic;
+using IWshRuntimeLibrary;
 
 namespace Installer
 {
@@ -13,7 +14,7 @@ namespace Installer
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void BrowseForSaveLocation(object sender, EventArgs e)
         {
             using (FolderBrowserDialog dlg = new FolderBrowserDialog())
             {
@@ -30,12 +31,12 @@ namespace Installer
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void BrowseForUdfLocation(object sender, EventArgs e)
         {
             using (FolderBrowserDialog dlg = new FolderBrowserDialog())
             {
                 dlg.RootFolder = Environment.SpecialFolder.MyDocuments;
-                dlg.Description = "Select a folder to install Clippy";
+                dlg.Description = "Select a folder to store commonly updated files";
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     udfFolder.Text = dlg.SelectedPath;
@@ -43,17 +44,17 @@ namespace Installer
             }
         }
 
-        private void Screen1_Load(object sender, EventArgs e)
+        private void ScreenLoad(object sender, EventArgs e)
         {
-            udfFolder.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            installFolder.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            udfFolder.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"Clippy");
+            installFolder.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"Clippy");
             if (String.IsNullOrEmpty(installFolder.Text))
             {
-                installFolder.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                installFolder.Text = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void InstallClick(object sender, EventArgs e)
         {
             CreateSpecialFolder(udfFolder.Text);
             CreateSpecialFolder(installFolder.Text);
@@ -65,11 +66,11 @@ namespace Installer
 
             foreach (string file in Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "installbin")))
             {
-                File.Copy(file, Path.Combine(installFolder.Text, Path.GetFileName(file)));
+                System.IO.File.Copy(file, Path.Combine(installFolder.Text, Path.GetFileName(file)), true);
             }
             foreach (string file in Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "installuser")))
             {
-                File.Copy(file, Path.Combine(udfFolder.Text, Path.GetFileName(file)));
+                System.IO.File.Copy(file, Path.Combine(udfFolder.Text, Path.GetFileName(file)), true);
             }
 
             if (saveToPath.Checked)
@@ -83,6 +84,17 @@ namespace Installer
                 }
                 Environment.SetEnvironmentVariable("PATH", currentPath, EnvironmentVariableTarget.User);
             }
+
+            if (runAtStartup.Checked)
+            {
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup),"clippy.lnk");
+                WshShell shell = new WshShell();
+                IWshShortcut link = (IWshShortcut)shell.CreateShortcut(path);
+                link.TargetPath = Path.Combine(installFolder.Text, "ClippyUtility.exe");
+                
+                link.Save();
+            }
+
             this.Close();
         }
 
