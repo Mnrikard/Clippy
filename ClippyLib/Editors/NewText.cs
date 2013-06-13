@@ -106,6 +106,7 @@ ItemType:
         			{
         				SourceData = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         			}
+        			break;
         		case "/.":
         			SourceData = GetRandomSlashDot();
         			break;
