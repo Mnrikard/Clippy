@@ -321,6 +321,13 @@ namespace clippy
             hc.StartPosition = FormStartPosition.CenterParent;
             hc.ShowDialog(this);
         }
+        
+        void AboutClippyToolStripMenuItemClick(object sender, System.EventArgs e)
+        {
+        	About abt = new About();
+        	abt.StartPosition = FormStartPosition.CenterParent;
+        	abt.ShowDialog();
+        }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {

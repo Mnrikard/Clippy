@@ -10,8 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClippy", "ConsoleCli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Installer", "Installer\Installer.csproj", "{4F8A3F26-7218-4181-93CA-798D763EF150}"
 EndProject
-Project("{CFEE4113-1246-4D54-95CB-156813CB8593}") = "ClippyInstaller", "ClippyInstaller\ClippyInstaller.wixproj", "{99351D10-49E9-47F5-B200-7CB5D53ACC03}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manip", "Manip\Manip.csproj", "{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}"
 EndProject
 Global
@@ -64,18 +62,6 @@ Global
 		{4F8A3F26-7218-4181-93CA-798D763EF150}.Release|Mixed Platforms.Build.0 = Release|x86
 		{4F8A3F26-7218-4181-93CA-798D763EF150}.Release|x86.ActiveCfg = Release|x86
 		{4F8A3F26-7218-4181-93CA-798D763EF150}.Release|x86.Build.0 = Release|x86
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|x86.Build.0 = Debug|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|x86.Build.0 = Release|Any CPU
-		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|x86.ActiveCfg = Release|Any CPU
 		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
