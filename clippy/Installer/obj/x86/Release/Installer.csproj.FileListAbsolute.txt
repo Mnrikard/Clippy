@@ -1,12 +1,12 @@
+C:\SourceCode\clippy\Installer\bin\Release\Installer.exe
+C:\SourceCode\clippy\Installer\bin\Release\Installer.pdb
 C:\SourceCode\clippy\Installer\obj\x86\Release\ResolveAssemblyReference.cache
+C:\SourceCode\clippy\Installer\obj\x86\Release\Interop.IWshRuntimeLibrary.dll
+C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.csproj.ResolveComReference.cache
 C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.Form1.resources
 C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.Properties.Resources.resources
 C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.Screen1.resources
-C:\SourceCode\clippy\Installer\bin\Release\Installer.exe
-C:\SourceCode\clippy\Installer\bin\Release\Installer.pdb
 C:\SourceCode\clippy\Installer\obj\x86\Release\GenerateResource.read.1.tlog
 C:\SourceCode\clippy\Installer\obj\x86\Release\GenerateResource.write.1.tlog
 C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.exe
 C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.pdb
-C:\SourceCode\clippy\Installer\obj\x86\Release\Interop.IWshRuntimeLibrary.dll
-C:\SourceCode\clippy\Installer\obj\x86\Release\Installer.csproj.ResolveComReference.cache

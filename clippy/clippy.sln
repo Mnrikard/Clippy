@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
+# SharpDevelop 4.3
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clippy", "clippy\clippy.csproj", "{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClippyLib", "ClippyLib\ClippyLib.csproj", "{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}"
@@ -8,6 +9,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClippy", "ConsoleClippy\ConsoleClippy.csproj", "{0C5D6673-5856-4060-9404-E96B4FBEEB9F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Installer", "Installer\Installer.csproj", "{4F8A3F26-7218-4181-93CA-798D763EF150}"
+EndProject
+Project("{CFEE4113-1246-4D54-95CB-156813CB8593}") = "ClippyInstaller", "ClippyInstaller\ClippyInstaller.wixproj", "{99351D10-49E9-47F5-B200-7CB5D53ACC03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manip", "Manip\Manip.csproj", "{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +64,30 @@ Global
 		{4F8A3F26-7218-4181-93CA-798D763EF150}.Release|Mixed Platforms.Build.0 = Release|x86
 		{4F8A3F26-7218-4181-93CA-798D763EF150}.Release|x86.ActiveCfg = Release|x86
 		{4F8A3F26-7218-4181-93CA-798D763EF150}.Release|x86.Build.0 = Release|x86
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|x86.Build.0 = Debug|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|x86.Build.0 = Release|Any CPU
+		{99351D10-49E9-47F5-B200-7CB5D53ACC03}.Release|x86.ActiveCfg = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|x86.Build.0 = Debug|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|x86.Build.0 = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

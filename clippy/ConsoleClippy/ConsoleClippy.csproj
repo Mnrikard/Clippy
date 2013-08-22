@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="COPYING" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="snippets.xml">

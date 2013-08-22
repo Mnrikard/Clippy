@@ -11,8 +11,6 @@ C:\SourceCode\clippy\clippy\obj\x86\Debug\clippy.Properties.Resources.resources
 C:\SourceCode\clippy\clippy\obj\x86\Debug\clippy.RecentCommands.resources
 C:\SourceCode\clippy\clippy\obj\x86\Debug\clippy.SnippetEditor.resources
 C:\SourceCode\clippy\clippy\obj\x86\Debug\clippy.UdfEditor.resources
-C:\SourceCode\clippy\clippy\obj\x86\Debug\GenerateResource.read.1.tlog
-C:\SourceCode\clippy\clippy\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\SourceCode\clippy\clippy\obj\x86\Debug\ClippyUtility.exe
 C:\SourceCode\clippy\clippy\obj\x86\Debug\ClippyUtility.pdb
 C:\SourceCode\clippy\clippy\obj\x86\Debug\clippy.HelpCenter.resources

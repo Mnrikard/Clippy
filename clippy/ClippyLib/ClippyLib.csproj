@@ -52,6 +52,7 @@
     <Compile Include="Editors\ColumnAlign.cs" />
     <Compile Include="Editors\Capitalize.cs" />
     <Compile Include="Editors\Chunk.cs" />
+    <Compile Include="Editors\NewText.cs" />
     <Compile Include="Editors\Tabright.cs" />
     <Compile Include="Editors\Count.cs" />
     <Compile Include="Editors\Encode.cs" />
@@ -88,6 +89,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>ClippySettings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="COPYING" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

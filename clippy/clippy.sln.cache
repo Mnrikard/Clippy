@@ -5,17 +5,24 @@
     <_SolutionProjectCacheVersion>3.5</_SolutionProjectCacheVersion>
   </PropertyGroup>
   <ItemGroup>
+    <_SolutionProjectProjects Include="ClippyInstaller\ClippyInstaller.wixproj" />
     <_SolutionProjectProjects Include="ClippyLib\ClippyLib.csproj" />
     <_SolutionProjectProjects Include="clippy\clippy.csproj" />
     <_SolutionProjectProjects Include="ConsoleClippy\ConsoleClippy.csproj" />
+    <_SolutionProjectProjects Include="Installer\Installer.csproj" />
   </ItemGroup>
   <ItemGroup Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') ">
     <SkipLevel1 Include="clippy" />
     <SkipLevel1 Include="ConsoleClippy" />
+    <BuildLevel0 Include="ClippyInstaller\ClippyInstaller.wixproj">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel0>
     <BuildLevel0 Include="ClippyLib\ClippyLib.csproj">
       <Configuration>Debug</Configuration>
       <Platform>AnyCPU</Platform>
     </BuildLevel0>
+    <SkipLevel0 Include="Installer" />
   </ItemGroup>
   <ItemGroup Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') ">
     <BuildLevel1 Include="clippy\clippy.csproj">
@@ -26,9 +33,17 @@
       <Configuration>Debug</Configuration>
       <Platform>x86</Platform>
     </BuildLevel1>
+    <BuildLevel0 Include="ClippyInstaller\ClippyInstaller.wixproj">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel0>
     <BuildLevel0 Include="ClippyLib\ClippyLib.csproj">
       <Configuration>Debug</Configuration>
       <Platform>AnyCPU</Platform>
+    </BuildLevel0>
+    <BuildLevel0 Include="Installer\Installer.csproj">
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
     </BuildLevel0>
   </ItemGroup>
   <ItemGroup Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') ">
@@ -41,14 +56,27 @@
       <Platform>x86</Platform>
     </BuildLevel1>
     <SkipLevel0 Include="ClippyLib" />
+    <BuildLevel0 Include="ClippyInstaller\ClippyInstaller.wixproj">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel0>
+    <BuildLevel0 Include="Installer\Installer.csproj">
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
+    </BuildLevel0>
   </ItemGroup>
   <ItemGroup Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') ">
     <SkipLevel1 Include="clippy" />
     <SkipLevel1 Include="ConsoleClippy" />
+    <BuildLevel0 Include="ClippyInstaller\ClippyInstaller.wixproj">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel0>
     <BuildLevel0 Include="ClippyLib\ClippyLib.csproj">
       <Configuration>Release</Configuration>
       <Platform>AnyCPU</Platform>
     </BuildLevel0>
+    <SkipLevel0 Include="Installer" />
   </ItemGroup>
   <ItemGroup Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') ">
     <BuildLevel1 Include="clippy\clippy.csproj">
@@ -59,9 +87,17 @@
       <Configuration>Release</Configuration>
       <Platform>x86</Platform>
     </BuildLevel1>
+    <BuildLevel0 Include="ClippyInstaller\ClippyInstaller.wixproj">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel0>
     <BuildLevel0 Include="ClippyLib\ClippyLib.csproj">
       <Configuration>Release</Configuration>
       <Platform>AnyCPU</Platform>
+    </BuildLevel0>
+    <BuildLevel0 Include="Installer\Installer.csproj">
+      <Configuration>Release</Configuration>
+      <Platform>x86</Platform>
     </BuildLevel0>
   </ItemGroup>
   <ItemGroup Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') ">
@@ -74,6 +110,14 @@
       <Platform>x86</Platform>
     </BuildLevel1>
     <SkipLevel0 Include="ClippyLib" />
+    <BuildLevel0 Include="ClippyInstaller\ClippyInstaller.wixproj">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel0>
+    <BuildLevel0 Include="Installer\Installer.csproj">
+      <Configuration>Release</Configuration>
+      <Platform>x86</Platform>
+    </BuildLevel0>
   </ItemGroup>
   <UsingTask TaskName="Microsoft.Build.Tasks.CreateTemporaryVCProject" AssemblyName="Microsoft.Build.Tasks.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <UsingTask TaskName="Microsoft.Build.Tasks.ResolveVCProjectOutput" AssemblyName="Microsoft.Build.Tasks.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
@@ -103,6 +147,8 @@
         <ProjectConfiguration Project="{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}">Debug|x86</ProjectConfiguration>
         <ProjectConfiguration Project="{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}">Debug|AnyCPU</ProjectConfiguration>
         <ProjectConfiguration Project="{0C5D6673-5856-4060-9404-E96B4FBEEB9F}">Debug|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{4F8A3F26-7218-4181-93CA-798D763EF150}">Debug|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{99351D10-49E9-47F5-B200-7CB5D53ACC03}">Debug|AnyCPU</ProjectConfiguration>
       </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -112,6 +158,8 @@
         <ProjectConfiguration Project="{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}">Debug|x86</ProjectConfiguration>
         <ProjectConfiguration Project="{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}">Debug|AnyCPU</ProjectConfiguration>
         <ProjectConfiguration Project="{0C5D6673-5856-4060-9404-E96B4FBEEB9F}">Debug|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{4F8A3F26-7218-4181-93CA-798D763EF150}">Debug|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{99351D10-49E9-47F5-B200-7CB5D53ACC03}">Debug|AnyCPU</ProjectConfiguration>
       </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -121,6 +169,8 @@
         <ProjectConfiguration Project="{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}">Debug|x86</ProjectConfiguration>
         <ProjectConfiguration Project="{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}">Debug|AnyCPU</ProjectConfiguration>
         <ProjectConfiguration Project="{0C5D6673-5856-4060-9404-E96B4FBEEB9F}">Debug|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{4F8A3F26-7218-4181-93CA-798D763EF150}">Debug|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{99351D10-49E9-47F5-B200-7CB5D53ACC03}">Debug|AnyCPU</ProjectConfiguration>
       </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -130,6 +180,8 @@
         <ProjectConfiguration Project="{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}">Release|x86</ProjectConfiguration>
         <ProjectConfiguration Project="{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}">Release|AnyCPU</ProjectConfiguration>
         <ProjectConfiguration Project="{0C5D6673-5856-4060-9404-E96B4FBEEB9F}">Release|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{4F8A3F26-7218-4181-93CA-798D763EF150}">Release|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{99351D10-49E9-47F5-B200-7CB5D53ACC03}">Release|AnyCPU</ProjectConfiguration>
       </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -139,6 +191,8 @@
         <ProjectConfiguration Project="{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}">Release|x86</ProjectConfiguration>
         <ProjectConfiguration Project="{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}">Release|AnyCPU</ProjectConfiguration>
         <ProjectConfiguration Project="{0C5D6673-5856-4060-9404-E96B4FBEEB9F}">Release|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{4F8A3F26-7218-4181-93CA-798D763EF150}">Release|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{99351D10-49E9-47F5-B200-7CB5D53ACC03}">Release|AnyCPU</ProjectConfiguration>
       </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -148,6 +202,8 @@
         <ProjectConfiguration Project="{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}">Release|x86</ProjectConfiguration>
         <ProjectConfiguration Project="{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}">Release|AnyCPU</ProjectConfiguration>
         <ProjectConfiguration Project="{0C5D6673-5856-4060-9404-E96B4FBEEB9F}">Release|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{4F8A3F26-7218-4181-93CA-798D763EF150}">Release|x86</ProjectConfiguration>
+        <ProjectConfiguration Project="{99351D10-49E9-47F5-B200-7CB5D53ACC03}">Release|AnyCPU</ProjectConfiguration>
       </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -303,12 +359,117 @@
     <MSBuild Projects="ConsoleClippy\ConsoleClippy.csproj" Targets="Publish" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') " />
     <MSBuild Projects="ConsoleClippy\ConsoleClippy.csproj" Targets="Publish" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') " />
   </Target>
+  <Target Name="Installer" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(InstallerBuildOutput)">
+    <Message Text="The project &quot;Installer&quot; is not selected for building in solution configuration &quot;Debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="Installer\Installer.csproj" Properties="Configuration=Debug; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') ">
+      <Output TaskParameter="TargetOutputs" ItemName="InstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="Installer\Installer.csproj" Properties="Configuration=Debug; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') ">
+      <Output TaskParameter="TargetOutputs" ItemName="InstallerBuildOutput" />
+    </MSBuild>
+    <Message Text="The project &quot;Installer&quot; is not selected for building in solution configuration &quot;Release|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="Installer\Installer.csproj" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') ">
+      <Output TaskParameter="TargetOutputs" ItemName="InstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="Installer\Installer.csproj" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') ">
+      <Output TaskParameter="TargetOutputs" ItemName="InstallerBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Installer:Clean" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <Message Text="The project &quot;Installer&quot; is not selected for building in solution configuration &quot;Debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Clean" Properties="Configuration=Debug; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Clean" Properties="Configuration=Debug; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') " />
+    <Message Text="The project &quot;Installer&quot; is not selected for building in solution configuration &quot;Release|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Clean" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Clean" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') " />
+  </Target>
+  <Target Name="Installer:Rebuild" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(InstallerBuildOutput)">
+    <Message Text="The project &quot;Installer&quot; is not selected for building in solution configuration &quot;Debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Rebuild" Properties="Configuration=Debug; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') ">
+      <Output TaskParameter="TargetOutputs" ItemName="InstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Rebuild" Properties="Configuration=Debug; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') ">
+      <Output TaskParameter="TargetOutputs" ItemName="InstallerBuildOutput" />
+    </MSBuild>
+    <Message Text="The project &quot;Installer&quot; is not selected for building in solution configuration &quot;Release|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Rebuild" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') ">
+      <Output TaskParameter="TargetOutputs" ItemName="InstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Rebuild" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') ">
+      <Output TaskParameter="TargetOutputs" ItemName="InstallerBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Installer:Publish" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <Message Text="The project &quot;Installer&quot; is not selected for building in solution configuration &quot;Debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Publish" Properties="Configuration=Debug; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Publish" Properties="Configuration=Debug; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') " />
+    <Message Text="The project &quot;Installer&quot; is not selected for building in solution configuration &quot;Release|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Publish" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') " />
+    <MSBuild Projects="Installer\Installer.csproj" Targets="Publish" Properties="Configuration=Release; Platform=x86; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') " />
+  </Target>
+  <Target Name="ClippyInstaller" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(ClippyInstallerBuildOutput)">
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="ClippyInstaller:Clean" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Clean" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Clean" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Clean" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Clean" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Clean" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Clean" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') " />
+  </Target>
+  <Target Name="ClippyInstaller:Rebuild" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(ClippyInstallerBuildOutput)">
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Rebuild" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Rebuild" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Rebuild" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Rebuild" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Rebuild" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Rebuild" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') ">
+      <Output TaskParameter="TargetOutputs" ItemName="ClippyInstallerBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="ClippyInstaller:Publish" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Publish" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Publish" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Publish" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Publish" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Publish" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') " />
+    <MSBuild Projects="ClippyInstaller\ClippyInstaller.wixproj" Targets="Publish" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') " />
+  </Target>
   <Target Name="Build" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(CollectedBuildOutput)">
     <MSBuild Condition="@(BuildLevel0) != ''" Projects="@(BuildLevel0)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)">
       <Output TaskParameter="TargetOutputs" ItemName="CollectedBuildOutput" />
     </MSBuild>
     <Message Text="The project &quot;%(SkipLevel0.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel0) != ''" />
     <Warning Text="The project configuration for project &quot;%(MissingConfigLevel0.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel0) != ''" />
+    <CallTarget Targets="ClippyInstaller" RunEachTargetSeparately="true" />
     <MSBuild Condition="@(BuildLevel1) != ''" Projects="@(BuildLevel1)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)">
       <Output TaskParameter="TargetOutputs" ItemName="CollectedBuildOutput" />
     </MSBuild>
@@ -319,6 +480,7 @@
     <MSBuild Condition="@(BuildLevel0) != ''" Projects="@(BuildLevel0)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" Targets="Clean" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" />
     <Message Text="The project &quot;%(SkipLevel0.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel0) != ''" />
     <Warning Text="The project configuration for project &quot;%(MissingConfigLevel0.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel0) != ''" />
+    <CallTarget Targets="ClippyInstaller:Clean" RunEachTargetSeparately="true" />
     <MSBuild Condition="@(BuildLevel1) != ''" Projects="@(BuildLevel1)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" Targets="Clean" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" />
     <Message Text="The project &quot;%(SkipLevel1.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel1) != ''" />
     <Warning Text="The project configuration for project &quot;%(MissingConfigLevel1.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel1) != ''" />
@@ -330,6 +492,7 @@
     </MSBuild>
     <Message Text="The project &quot;%(SkipLevel0.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel0) != ''" />
     <Warning Text="The project configuration for project &quot;%(MissingConfigLevel0.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel0) != ''" />
+    <CallTarget Targets="ClippyInstaller:Rebuild" RunEachTargetSeparately="true" />
     <MSBuild Condition="@(BuildLevel1) != ''" Projects="@(BuildLevel1)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" Targets="Rebuild" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)">
       <Output TaskParameter="TargetOutputs" ItemName="CollectedBuildOutput" />
     </MSBuild>
@@ -340,6 +503,7 @@
     <MSBuild Condition="@(BuildLevel0) != ''" Projects="@(BuildLevel0)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" Targets="Publish" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" />
     <Message Text="The project &quot;%(SkipLevel0.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel0) != ''" />
     <Warning Text="The project configuration for project &quot;%(MissingConfigLevel0.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel0) != ''" />
+    <CallTarget Targets="ClippyInstaller:Publish" RunEachTargetSeparately="true" />
     <MSBuild Condition="@(BuildLevel1) != ''" Projects="@(BuildLevel1)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" Targets="Publish" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" />
     <Message Text="The project &quot;%(SkipLevel1.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel1) != ''" />
     <Warning Text="The project configuration for project &quot;%(MissingConfigLevel1.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel1) != ''" />
