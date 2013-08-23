@@ -15,15 +15,7 @@ namespace list
 		public static void Main(string[] args)
 		{
 			var cd = Environment.CurrentDirectory;
-			Ls ls = new Ls(cd);			
-			Console.CancelKeyPress += (a,b) => {
-				System.IO.Directory.SetCurrentDirectory(ls.CurrentDirectory);
-				Console.WriteLine("|");
-				Console.WriteLine(ls.CurrentDirectory);
-				Console.WriteLine("|");
-				System.Environment.Exit(0);
-			};
-			
+			Ls ls = new Ls(cd);
 			ls.RepaintConsole();
 		}
 	}

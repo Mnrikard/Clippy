@@ -146,26 +146,104 @@ namespace list
 					ProcessMovement(1,0);
 					break;
 				}
+				else if(key.Key == ConsoleKey.PageDown)
+				{
+					ProcessMovement(Console.WindowHeight-1,0);
+				}
+				else if(key.Key == ConsoleKey.PageUp)
+				{
+					ProcessMovement((Console.WindowHeight*-1)+1,0);
+				}				
 				else if(key.Key == ConsoleKey.Enter)
 				{
 					ProcessWord(word);
 					break;
 				}
+				else if(key.Modifiers == ConsoleModifiers.Control && key.Key == ConsoleKey.Q)
+				{
+					Environment.SetEnvironmentVariable("tempListDir",CurrentDirectory,EnvironmentVariableTarget.User);
+					Console.Clear();
+					System.Environment.Exit(0);
+				}
 				else
 				{
-					if(key.Key == ConsoleKey.Backspace)
+					if(key.Key == ConsoleKey.Home)
+					{
+						word = String.Empty;
+					}
+					else if(key.Key == ConsoleKey.End)
+					{
+						word = CurrentDirectory;
+					}
+					else if(key.Key == ConsoleKey.Tab)
+					{
+						word = FindDirLikeWord(word);
+					}
+					else if(key.Key == ConsoleKey.Backspace)
+					{
 						word = word.Substring(0,word.Length-1);
+					}
 					else
+					{
 						word += key.KeyChar.ToString();
+					}
 					
-					Console.SetCursorPosition(0,Console.WindowHeight-1);
-					Console.Write(new String(' ',Console.WindowWidth-1));
-					Console.SetCursorPosition(0,Console.WindowHeight-1);
-					Console.Write(word);
-					Console.SetCursorPosition(word.Length,Console.WindowHeight-1);
+					WriteLastLine(word);
 			
 				}
 			}
+		}
+		
+		private void WriteLastLine(string word)
+		{
+			Console.SetCursorPosition(0,Console.WindowHeight-1);
+			Console.Write(new String(' ',Console.WindowWidth-1));
+			Console.SetCursorPosition(0,Console.WindowHeight-1);
+			Console.Write(word);
+			Console.SetCursorPosition(word.Length,Console.WindowHeight-1);
+		}
+		
+		private string FindDirLikeWord(string word)
+		{
+			string pth = Path.GetDirectoryName(word);
+			string wordTemplate = Path.GetFileName(word);
+			
+			string[] dirList = Directory.GetDirectories(pth, wordTemplate+"*");
+			if(dirList.Length == 0) return pth;
+			
+			string chosenDir = Path.Combine(pth,dirList[0]);
+			WriteLastLine(chosenDir);
+			int currDir = 0;
+			
+			while(true)
+			{
+				ConsoleKeyInfo key = Console.ReadKey();	
+				
+				if(key.Key == ConsoleKey.Tab)
+				{
+					currDir++;
+					if(currDir >= dirList.Length) currDir=0;
+					chosenDir = Path.Combine(pth,dirList[currDir]);
+					WriteLastLine(chosenDir);
+				}
+				else if(key.Key == ConsoleKey.Backspace)
+				{
+					return pth;
+				}
+				else if(key.KeyChar == '\\')
+				{
+					return chosenDir+"\\";
+				}
+				else if(key.Key == ConsoleKey.Enter)
+				{
+					return chosenDir;
+				}
+				else
+				{
+					WriteLastLine(chosenDir);
+				}
+			}
+			
 		}
 		
 		private int? _curRow = null;
@@ -188,6 +266,21 @@ namespace list
 			_curCol += colMove;
 			_curRow += rowMove;
 			
+			
+			if(_curCol < 0) 
+			{
+				_curRow--;
+				_curCol = Columns-1;
+			}
+			if(_curRow < 0) _curRow = maxRow;
+			
+			if(_curCol >= Columns)
+			{
+				_curRow++;
+				_curCol=0;
+			}
+			if(_curRow > maxRow) _curRow=0;
+			
 			//special logic for the last row, if it has fewer columns
 			
 			if(_curRow == maxRow && _curCol > maxColLastRow)
@@ -195,11 +288,12 @@ namespace list
 				_curCol = maxColLastRow;
 			}
 			
-			if(_curRow > maxRow || _curCol >= Columns)
+			/*if(_curRow > maxRow || _curCol >= Columns)
 			{
 				_curRow = 0;
 				_curCol = 0;
 			}
+			*/
 			
 			DisplayItems();
 			ReadInput();
