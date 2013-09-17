@@ -5,3 +5,7 @@ C:\SourceCode\clippy\ClippyLib\bin\Release\ClippyLib.pdb
 C:\SourceCode\clippy\ClippyLib\obj\Release\ResolveAssemblyReference.cache
 C:\SourceCode\clippy\ClippyLib\obj\Release\ClippyLib.dll
 C:\SourceCode\clippy\ClippyLib\obj\Release\ClippyLib.pdb
+C:\SourceCode\clippy\deploy\udf.xml
+C:\SourceCode\clippy\deploy\ClippyLib.dll.config
+C:\SourceCode\clippy\deploy\ClippyLib.dll
+C:\SourceCode\clippy\deploy\ClippyLib.pdb
