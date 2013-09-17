@@ -321,6 +321,10 @@ namespace list
 				CurrentDirectory = newDir;
 				RepaintConsole();
 			}
+			if(File.Exists(newDir))
+			{
+				using(StreamReader 
+			}
 		}
 		
 		
