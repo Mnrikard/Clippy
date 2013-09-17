@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commands>
+	<!--
+/*
+ * 
+ * Copyright 2012 Matthew Rikard
+ * This file is part of Clippy.
+ * 
+ *  Clippy is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Clippy is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Clippy.  If not, see <http://www.gnu.org/licenses/>.
+ *
+*/
+
+
+-->
+  <command key="NumList">
+    <description>Lists all numeric values in a string.</description>
+    <function>rep "\D+" ","</function>
+    <function>rep "([\d,]{80,90},)" "$1\n"</function>
+  </command>
+  
+  <command key="HtmlEncode">
+    <description>Encodes to html</description>
+    <function>encode html</function>
+  </command>
+
+  <command key="HtmlDecode">
+    <description>Decodes html</description>
+    <function>encode html reverse</function>
+  </command>
+
+  <command key="UrlEncode">
+    <description>Encodes to Url</description>
+    <function>encode url</function>
+  </command>
+
+  <command key="UrlDecode">
+    <description>Decodes url</description>
+    <function>encode url reverse</function>
+  </command>
+  
+  <command key="dechunk">
+		<description>Removes new line characters</description>
+		<function>rep "\n" ""</function>
+	</command>
+	
+	<command key="temp">
+		<description>modify this one as needed for short term goals</description>
+		<function><![CDATA[rep "Trace\.WriteLine\((.+),\s*\Werror\W" "logger.Error($1"]]></function>
+		<function><![CDATA[rep "Trace\.WriteLine\((.+),\s*\Winfo\W" "logger.Info($1"]]></function>
+		<function><![CDATA[rep "Trace\.WriteLine\((.+),\s*\Wdebug\W" "logger.Debug($1"]]></function>
+	</command>
+	
+	<command key="dedim">
+		<description>Removes multiple "Dim" statements and replaces with commas</description>
+		<function>rep "\n\s*Dim " ","</function>
+	</command>
+	
+	<!--<command key="formatjs">
+		<description>Formats JavaScript text</description>
+		<function>rep "\n" ""</function>
+		<function>rep "\t" ""</function>
+		<function>tabright</function>	
+	</command>-->
+	
+	<command key="list">
+		<description>Changes from new-line, to comma delimited</description>
+		<function>rep "\n" ","</function>
+		<function>rep ",," ""</function>
+	</command>
+	
+	<command key="caselist">
+		<description>separates each case number with a comma</description>
+		<function>rep "\D+" ","</function>
+		<function>rep "[,]+" ","</function>
+		<function>rep "^," ""</function>
+		<function>rep ",$" ""</function>
+		<function>rep "^(.)" "($1"</function>
+		<function>rep "(.)$" "$1)"</function>		
+	</command>
+	
+	<command key="casetable">
+		<description>Inserts case nums into a table variable</description>
+		<function>rep "\D+" ","</function>
+		<function>rep "[,]+" ","</function>
+		<function>rep "," "),("</function>
+		<function>rep "^," ""</function>
+		<function>rep ",$" ""</function>
+		<function>rep "^(.)" "declare @caseids table(id int)\ninsert into @caseids values ($1"</function>
+		<function>rep "(.)$" "$1)"</function>
+	</command>
+	
+	<command key="buildMail">
+		<description>Copy text from commit batch files, paste in build team emails</description>
+		<function>grep "(svn commit.+|Committed revision.+)"</function>
+		<function>rep " -m .+" ""</function><!-- get rid of message -->
+		<function>rep "[ 	]+\n" "\n"</function><!-- trim trailing spaces -->
+		<function>rep "[ 	]+$" ""</function><!-- trim trailing spaces -->
+		<function>rep "svn commit " ""</function>
+		<function>rep "\u0022" ""</function>
+		<function>svn -1</function>
+		<function>rep "(committed)%20(revision)%20" "$1 $2 "</function>
+	</command>
+	
+	<command key="stacktrace">
+		<description>Formats the stack trace to what it would normally print out</description>
+		<function>rep "    at " "\n    at "</function>
+	</command>
+	
+	<command key="messagelog">
+		<description>Formats the messages coming in from the equest plus web service</description>
+		<function>xml</function>
+		<function>rep "]\s*ID\s*\[(.+?)\]" "\n]\nID: $1"</function>
+		<function>rep "\s*PASSWORD\s*\[(.*?)\]" "\nPASSWORD: $1"</function>
+		<function>rep "\s*CO\s+PARM\s*\[(.*?)\]" "\nCOPARM: $1"</function>
+		<function>rep "\s*ALTERNATE\s*\[(.*?)\]" "\nALTERNATE: $1"</function>
+		<function>rep "\s*IPADDRESS\s*\[(.*?)\]" "\nIPADDRESS: $1"</function>
+		<function>rep "\s*URL\s*\[(.*?)\]" "\nURL: $1"</function>
+		<function>rep "\s*SERVER\s*\[(.*?)\]" "\nSERVER: $1"</function>
+	</command>
+	
+	<!--<command key="formatvb">
+		<description>Fixes issues with clip tabright vb</description>
+		<function>rep "_\s*\n\s*" " "</function>
+		<function>rep "else\s*('.+)" "else\n$1"</function>
+		<function>rep "then\s*('.+)" "Then\n$1"</function>
+		<function>tabright vb</function>
+		<function>rep "(\t|    )Select\s+Case" "Select Case"</function>
+	</command>-->
+	
+	<!--<command key="numlines">
+		<description>Counts the number of lines</description>
+		<function>rep "[^\n]" ""</function>
+		<function>len</function>
+	</command>-->
+	
+	<command key="singlelinevb">
+		<description>Takes lines ending with _ and combines them</description>
+		<function>rep "_\s*\n\s*" " "</function>
+	</command>
+	
+	<command key="smash">
+		<description>Truncates multiple new-lines into one</description>
+		<function>rep "\n\s*" "\n"</function>
+	</command>
+	
+	<command key="strlist">
+		<description>Same as "list" but adds apostrophes around the list items</description>
+		<function>rep "\n" "','"</function>
+		<function>rep "[,]+" ","</function>
+		<function>rep "^,'" ""</function>
+		<function>rep "','$" ""</function>
+		<function>rep "^(.)" "('$1"</function>
+		<function>rep "(.)$" "$1')"</function>
+	</command>
+	
+	<command key="trimlines">
+		<description>Replaces tabs and spaces before and after new lines</description>
+		<function>rep "[ 	]+\n" "\n"</function>
+		<function>rep "[ 	]+$" ""</function>
+	</command>
+
+	<command key="xls2xml">		
+		<description>Converts copied Excel cells to HTML table</description>
+		<function><![CDATA[rep "\t" "</td><td>"]]></function>
+		<function><![CDATA[rep "\n" "</td></tr>\n\t<tr><td>"]]></function>
+		<function><![CDATA[rep "<td></td>" "<td>&nbsp;</td>"]]></function>
+		<function><![CDATA[rep "<tr><td></td></tr>\n\t" ""]]></function>
+		<function><![CDATA[rep "\n\t<tr><td>$" "\n</table>"]]></function>
+		<function><![CDATA[rep "^(.)" "<table>\n\t<tr><td>$1"]]></function>
+	</command>
+	
+	<command key="docu.net">
+		<description>Beautifies .NET XML documentation (C# only)</description>
+		<!-- single line summaries down to one line-->
+		<function>rep "&lt;summary&gt;\s+///(.+)\s+/// &lt;/summary&gt;" "&lt;summary&gt; $1 &lt;/summary&gt;"</function>
+		<!-- multi line comments need para tags-->
+		<function>rep "/// ([^&lt;].+)" "/// &lt;para&gt;$1&lt;/para&gt;"</function>
+	</command>
+	
+	<command key="connstring">
+		<description>Generates a connection string, pass in Data Source, Initial Catalog</description>
+		<function>rep "(.|\n)+" "Data Source=%0%;Initial Catalog=%1%;Integrated Security=True;"</function>
+	</command>
+	
+	<command key="tablepermission">
+		<description>Generates GRANTs on DBO objects, Pass in object name</description>
+		<function>rep ".+" "GRANT SELECT ON [dbo].[%0%] TO [DBRole_GISWEBUsers] AS [dbo]\nGO\n\nGRANT INSERT ON [dbo].[%0%] TO [DBRole_GISWEBUsers] AS [dbo]\nGO\n\nGRANT UPDATE ON [dbo].[%0%] TO [DBRole_GISWEBUsers] AS [dbo]\nGO\n\nGRANT DELETE ON [dbo].[%0%] TO [DBRole_GISWEBUsers] AS [dbo]\nGO\n"</function>
+	</command>
+
+	<command key="svnbatch">
+		<description>Copy the contents of SlnRead and run this to convert it to a batch file to download all the proj directories</description>
+		<function>rep "\\" "/"</function>
+		<function>rep "c:/Development" "http://sourcecontrol/svn/Gis/Development"</function>
+		<function>rep "\n" "\nsvn co '"</function>
+		<function>rep "\n" "' \n"</function>
+		<function>rep "(Core Applications/[^/]+).+" "$1"</function>
+		<function>rep "(Core Components/[^/]+).+" "$1"</function>
+		<function>rep "(Interfaces/[^/]+).+" "$1"</function>
+		<function>rep "^(.)" "svn co '$1"</function>
+		<function>rep "svn co '$" ""</function>
+		<function>sort</function>
+		<function>dedup</function>
+
+	</command>
+<!--
+To customize commands, list them here.
+1.  Check to see that the command name you wish to use isn't already used
+    by running clip [desiredcommand]
+	you should see the select command option if all is clear
+2.  Create a new <command> node with the attribute of key equal to your
+    desired command name
+3.  Add child <function> nodes to the <command> node with predefined 
+    clip functions
+4.  To allow for parameters, use %n% (example: %0% %1% for the 
+       first and second parameters)
+5.  Save and run.
+
+Examples:  
+<command key="removeitem">
+    <function>rep "%0%" ""</function>	   
+</command>
+//removes the first given parameter with an empty string
+
+<command key="xls2xml">
+	<function><![CDATA[rep "\t" "</td><td>"]]></function>
+	<function><![CDATA[rep "\n" "</tr>\n\t<tr>"]]></function>
+	<function><![CDATA[rep "<td></td>" "<td>&nbsp;</td>"]]></function>
+	<function><![CDATA[rep "<tr></tr>\n\t" ""]]></function>
+	<function><![CDATA[rep "\n\t<tr>$" "</table>"]]></function>
+</command>
+//converts copied excel rows to a html table
+-->
+
+  
+</commands>
