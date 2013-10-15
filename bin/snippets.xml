@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Snippets>
+  <Snippet Name="XElement">
+    <Description>Standard XElement</Description>
+    <Content><![CDATA[XElement xel = new XElement();
+]]></Content>
+  </Snippet>
+  <Snippet Name="somenew">
+    <Description>some new</Description>
+    <Content><![CDATA[xxx
+yyy
+zzz]]></Content>
+  </Snippet>
+  <Snippet Name="connstr">
+    <Description>Connection String</Description>
+    <Content><![CDATA[Data Source=xxServerxx;Initial Catalog=xxDatabasexx;Integrated Security=True;Application Name=xxAppNamexx
+]]></Content>
+  </Snippet>
+</Snippets>
