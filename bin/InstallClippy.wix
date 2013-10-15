@@ -53,11 +53,11 @@
 				</Directory>
 			</Directory>
 			
-			<Directory Id="MyDocumentsFolder" Name="MyDocs">
-				<Directory Id="ClippyDocs" Name="Clippy">
+			<Directory Id="CommonAppDataFolder" Name="CommonData">
+				<Directory Id="ClippyUserFiles" Name="Clippy">
 				
-					<Component Id="ClippyDocs" Guid="C9863587-437C-4B86-AECC-6F39AC71F0AC">
-						<RemoveFolder Id="ClippyDocs" On="uninstall" />
+					<Component Id="ClippyUserFiles" Guid="C9863587-437C-4B86-AECC-6F39AC71F0AC">
+						<RemoveFolder Id="ClippyUserFiles" On="uninstall" />
 						<RegistryValue Root='HKCU' Key='Software\Rikard\Clippy' Type='string' Value='' KeyPath='yes' />
 					</Component>
 					<Component Id="Snippets" Guid="DFEB8C36-CFA4-4DE2-B327-5738E36069B6" >
@@ -67,10 +67,10 @@
 						<File Id="UdfXml" Name="udf.xml" DiskId='1' Source="udf.xml" KeyPath="yes" />						
 					</Component>
 					
-					<Component Id="RegistryEntries" Guid="">
+					<Component Id="RegistryEntries" Guid="A40A0C6C-6268-4FE9-9755-D2B0EB40DF1B">
 						<RegistryKey Id='ClippyRegInstallDir' Root='HKCU' Key='Software\Rikard\Clippy' Action='createAndRemoveOnUninstall'>
-							<RegistryValue Type='string' Name='snippetsLocation' Value='[ClippyDocs]\[SnippetsXml]'/>
-							<RegistryValue Type='string' Name='udfLocation' Value='[ClippyDocs]\[UdfXml]'/>
+							<RegistryValue Type='string' Name='snippetsLocation' Value='[ClippyUserFiles]snippets.xml'/>
+							<RegistryValue Type='string' Name='udfLocation' Value='[ClippyUserFiles]udf.xml'/>
 						</RegistryKey>
 					</Component>
 				</Directory>
@@ -96,7 +96,7 @@
 			<ComponentRef Id='MainExecutableConConfig' />
 			<ComponentRef Id='ManipExecutable' />
 			<ComponentRef Id='ManipExecutableConfig' />
-			<ComponentRef Id='ClippyDocs' />
+			<ComponentRef Id='ClippyUserFiles' />
 			<ComponentRef Id='Snippets' />
 			<ComponentRef Id='Udf' />
 			<ComponentRef Id='ProgramMenuDir' />
