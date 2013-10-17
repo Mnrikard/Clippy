@@ -25,11 +25,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ConsoleClippy")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Clippy")]
+[assembly: AssemblyDescription("Console version of Clippy")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Rikard Software LLC")]
-[assembly: AssemblyProduct("ConsoleClippy")]
+[assembly: AssemblyProduct("Clippy")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -58,15 +58,39 @@ namespace clippy
             {
                 if (_snipDocument == null)
                 {
-                    RegistryKey hkcu = Registry.CurrentUser;
-                    RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
-                    object udfLocation = rkUdfLocation.GetValue("snippetsLocation");
-                    XmlDocument xdoc = new XmlDocument();
-                    xdoc.Load(udfLocation.ToString());
-                    _snipDocument = xdoc;
+    	            _snipDocument = new XmlDocument();
+            
+            		RegistryKey hkcu = Registry.CurrentUser;
+		            RegistryKey rkSnipLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
+            
+		            if(rkSnipLocation == null)
+		            {
+		            	_snipDocument.LoadXml("<Snippets />");
+		            	MessageBox.Show("The snippets file has not been defined.  Go to Tools > Options to set up","Snippets file not set", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		            	Close();
+		            	return _snipDocument;
+		            }
+            
+		            object snipLocation = rkSnipLocation.GetValue("snippetsLocation");
+		            if(snipLocation == null)
+		            {
+		            	_snipDocument.LoadXml("<Snippets />");
+		            	MessageBox.Show("The snippets file has not been defined.  Go to Tools > Options to set up","Snippets file not set", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		            	Close();
+		            	return _snipDocument;
+        		    }
+		            
+		            if(!System.IO.File.Exists(snipLocation.ToString()))
+		            {
+		            	_snipDocument.LoadXml("<Snippets />");
+		            	return _snipDocument;
+		            }
+		            
+		            _snipDocument.Load(snipLocation.ToString());		            
                 }
                 return _snipDocument;
             }
+            
             set
             {
                 RegistryKey hkcu = Registry.CurrentUser;

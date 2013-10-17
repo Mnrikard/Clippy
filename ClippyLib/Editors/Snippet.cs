@@ -57,14 +57,42 @@ you to choose.
             }
         }
 
-        private static XmlDocument SnippetsXml()
+        public static XmlDocument SnippetsXml()
         {
+        	XmlDocument xdoc;
+        	GetSnippetsDoc(out xdoc);
+        	return xdoc;
+        }
+        
+        public static bool GetSnippetsDoc(out XmlDocument xdoc)
+        {
+            xdoc = new XmlDocument();
+            
             RegistryKey hkcu = Registry.CurrentUser;
-            RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
-            object snipLocation = rkUdfLocation.GetValue("snippetsLocation");
-            XmlDocument xdoc = new XmlDocument();
+            RegistryKey rkSnipLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
+            
+            if(rkSnipLocation == null)
+            {
+            	xdoc.LoadXml("<Snippets />");
+            	return false;
+            }
+            
+            object snipLocation = rkSnipLocation.GetValue("snippetsLocation");
+            if(snipLocation == null)
+            {
+            	xdoc.LoadXml("<Snippets />");
+            	return false;
+            }
+            
+            if(!System.IO.File.Exists(snipLocation.ToString()))
+            {
+            	xdoc.LoadXml("<Snippets />");
+            	return true;
+            }
+            
             xdoc.Load(snipLocation.ToString());
-            return xdoc;
+            return true;
+            
         }
 
         private List<string> _snippetNames = null;

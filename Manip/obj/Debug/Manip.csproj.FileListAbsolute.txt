@@ -1,0 +1,9 @@
+C:\GitRepo\Clippy\Manip\bin\Debug\udf.xml
+C:\GitRepo\Clippy\Manip\bin\Debug\Manip.exe.config
+C:\GitRepo\Clippy\Manip\bin\Debug\Manip.exe
+C:\GitRepo\Clippy\Manip\bin\Debug\Manip.pdb
+C:\GitRepo\Clippy\Manip\bin\Debug\ClippyLib.dll
+C:\GitRepo\Clippy\Manip\bin\Debug\ClippyLib.pdb
+C:\GitRepo\Clippy\Manip\obj\Debug\ResolveAssemblyReference.cache
+C:\GitRepo\Clippy\Manip\obj\Debug\Manip.exe
+C:\GitRepo\Clippy\Manip\obj\Debug\Manip.pdb

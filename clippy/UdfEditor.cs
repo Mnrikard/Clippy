@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -60,12 +61,39 @@ namespace clippy
             {
                 if (_udfDocument == null)
                 {
+                    _udfDocument = new XmlDocument();
+
                     RegistryKey hkcu = Registry.CurrentUser;
                     RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
+                    
+                    if(rkUdfLocation == null)
+                    {
+                    	_udfDocument.LoadXml("<commands />");
+                    	MessageBox.Show("Your User Functions file location has not been set.\r\nOpen Tools > Options to set this file location","Error finding UDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    	Close();
+                    	return _udfDocument;
+                    }
+                    
                     object udfLocation = rkUdfLocation.GetValue("udfLocation");
-                    XmlDocument xdoc = new XmlDocument();
-                    xdoc.Load(udfLocation.ToString());
-                    _udfDocument = xdoc;
+                    
+                    if(udfLocation == null)
+                    {
+                    	_udfDocument.LoadXml("<commands />");
+                    	MessageBox.Show("Your User Functions file location has not been set.\r\nOpen Tools > Options to set this file location","Error finding UDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    	Close();
+                    	return _udfDocument;
+                    }
+                    
+                    if(!File.Exists(udfLocation.ToString()))
+                    {
+                    	using(FileStream fs = File.Create(udfLocation.ToString()))
+                    	{
+                    		using(StreamWriter sw = new StreamWriter(fs))
+                    			sw.Write("<commands />");
+                    	}
+                    }
+                    
+                    _udfDocument.Load(udfLocation.ToString());
                 }
                 return _udfDocument;
             }

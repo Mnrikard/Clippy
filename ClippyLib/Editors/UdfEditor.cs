@@ -114,50 +114,50 @@ namespace ClippyLib.Editors
         public override void Edit()
         {
             bool isHelp = _arguments[0].Equals("help", StringComparison.CurrentCultureIgnoreCase);
+            
+            EditorManager manager = new EditorManager();
+                
             if (isHelp)
             {
-                EditorManager manager = new EditorManager();
                 RespondToExe(manager.Help(_arguments));
+                return;
             }
-            else
+
+            List<string> functions = Udf(_arguments);
+            if (functions.Count == 0 && !isHelp)
+                throw new Exception(String.Format("Function:{0} does not exist or is not valid", _udfName));
+            
+            for (int fi = 0; fi < functions.Count; fi++)
             {
-                List<string> functions = Udf(_arguments);
-                if (functions.Count == 0 && !isHelp)
-                    throw new Exception(String.Format("Function:{0} does not exist or is not valid", _udfName));
-                EditorManager manager = new EditorManager();
-
-                for (int fi = 0; fi < functions.Count; fi++)
-                {
-                    string function = functions[fi];
-                    
-                    for (int i = 1; i < _arguments.Length; i++)
-                    {
-                        function = function.Replace("%" + (i - 1).ToString() + "%", _arguments[i]);
-                    }
-
-                    for (int i = 0; i < ParameterList.Count; i++)
-                    {
-                        function = function.Replace("%" + i.ToString() + "%", ParameterList[i].Value);
-                    }
+                string function = functions[fi];
                 
-                    string[] fargs = GetArgsFromString(function);
-                    manager.GetClipEditor(fargs[0]);
-
-                    manager.ClipEditor.EditorResponse += new EventHandler<EditorResponseEventArgs>(HandleResponseFromClippy);
-
-                    manager.ClipEditor.DefineParameters();
-                    manager.ClipEditor.SetParameters(fargs);
-                    if (!manager.ClipEditor.HasAllParameters)
-                    {
-                        throw new Exception(String.Format("Not all parameters are passed in the user defined function {0}, function: {1}", _udfName, function));
-                    }
-                    manager.ClipEditor.SourceData = SourceData;
-                    manager.ClipEditor.Edit();
-                    SourceData = manager.ClipEditor.SourceData;
-
-                    manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
-
+                for (int i = 1; i < _arguments.Length; i++)
+                {
+                    function = function.Replace("%" + (i - 1).ToString() + "%", _arguments[i]);
                 }
+
+                for (int i = 0; i < ParameterList.Count; i++)
+                {
+                    function = function.Replace("%" + i.ToString() + "%", ParameterList[i].Value);
+                }
+            
+                string[] fargs = GetArgsFromString(function);
+                manager.GetClipEditor(fargs[0]);
+
+                manager.ClipEditor.EditorResponse += new EventHandler<EditorResponseEventArgs>(HandleResponseFromClippy);
+
+                manager.ClipEditor.DefineParameters();
+                manager.ClipEditor.SetParameters(fargs);
+                if (!manager.ClipEditor.HasAllParameters)
+                {
+                    throw new Exception(String.Format("Not all parameters are passed in the user defined function {0}, function: {1}", _udfName, function));
+                }
+                manager.ClipEditor.SourceData = SourceData;
+                manager.ClipEditor.Edit();
+                SourceData = manager.ClipEditor.SourceData;
+
+                manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
+
             }
         }
 
@@ -331,15 +331,44 @@ namespace ClippyLib.Editors
                 output.AppendFormat("{0}  -  {1}\r\n", keyNameNode.Value, description);
             }
         }
-
-        private static XmlDocument UdfDocument()
+        
+        public static bool GetUdfDocument(out XmlDocument xdoc)
         {
-            RegistryKey hkcu = Registry.CurrentUser;
+        	RegistryKey hkcu = Registry.CurrentUser;
             RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
+            
+            if(rkUdfLocation == null)
+            {
+            	xdoc = GetNullUdf();
+            	return false;
+            }
+            
             object udfLocation = rkUdfLocation.GetValue("udfLocation");
-            XmlDocument xdoc = new XmlDocument();
+            
+            if(udfLocation == null || !System.IO.File.Exists(udfLocation.ToString()))
+            {
+            	xdoc = GetNullUdf();
+            	return false;
+            }
+            
+            xdoc = new XmlDocument();
             xdoc.Load(udfLocation.ToString());
+            return true;
+        }
+
+        public static XmlDocument UdfDocument()
+        {
+            XmlDocument xdoc;
+            GetUdfDocument(out xdoc);
             return xdoc;
+        }
+        
+        private static XmlDocument GetNullUdf()
+        {
+        	XmlDocument xdoc = new XmlDocument();
+        	xdoc.LoadXml("<commands />");
+
+        	return xdoc;
         }
 
         public static List<string> GetFunctions()

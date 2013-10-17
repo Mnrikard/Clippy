@@ -1,0 +1,7 @@
+C:\GitRepo\Clippy\ClippyLib\bin\Release\udf.xml
+C:\GitRepo\Clippy\ClippyLib\bin\Release\ClippyLib.dll.config
+C:\GitRepo\Clippy\ClippyLib\bin\Release\ClippyLib.dll
+C:\GitRepo\Clippy\ClippyLib\bin\Release\ClippyLib.pdb
+C:\GitRepo\Clippy\ClippyLib\obj\Release\ResolveAssemblyReference.cache
+C:\GitRepo\Clippy\ClippyLib\obj\Release\ClippyLib.dll
+C:\GitRepo\Clippy\ClippyLib\obj\Release\ClippyLib.pdb
