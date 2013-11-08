@@ -119,7 +119,7 @@ namespace Manip
         {
             Console.WriteLine(e.ResponseString);
             if(e.RequiresUserAction)
-                Console.ReadKey();
+                Console.Read();
         }
     }
 }

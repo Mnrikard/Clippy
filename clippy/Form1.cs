@@ -205,6 +205,11 @@ namespace clippy
                     MessageBox.Show(pe.ParameterMessage, "Error with passed parameter: \"" + parmValue + "\"", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                catch (IndexOutOfRangeException)
+                {
+                	MessageBox.Show("Error with command, possibly not a function of clippy", "Error with command", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 parmString.AppendFormat(" \"{0}\"",parmValue.Replace("\"","\\q").Replace("\t","\\t"));
                 i++;
             }
@@ -332,6 +337,16 @@ namespace clippy
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+        
+        void FuncKeyUp(object sender, KeyEventArgs e)
+        {
+        	if(e.KeyCode == Keys.Enter)
+        	{
+        		e.Handled=true;
+        		FunctionOnLeave(sender, EventArgs.Empty);
+        		executeButton.PerformClick();
+        	}
         }
     }
     //UserActivityHook actHook;

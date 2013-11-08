@@ -1,105 +1,105 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
 
-	<Product Name='Clippy' Id='*' UpgradeCode='CDC506D2-D00F-48E7-BDC1-834F50568573' Language='1033' Codepage='1252' Version='2.0.1' Manufacturer='Rikard Software'>
-	
-		<Package Id='*' Keywords='Installer' Description="Clippy 2.0 Installer"
-			Manufacturer='Rikard Software'
-			InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
-		
-		<Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
-		<Upgrade Id="0B305855-66A0-4B0B-B22F-42F616163A63">  
-			<UpgradeVersion
-				Minimum="1.0.0.0" Maximum="99.0.0.0"
-				Property="PREVIOUSVERSIONSINSTALLED"
-				IncludeMinimum="yes" IncludeMaximum="no" />
-		</Upgrade> 
-		
-		<InstallExecuteSequence>
-			<RemoveExistingProducts Before="InstallInitialize" /> 
-		</InstallExecuteSequence>
+    <Product Name='Clippy' Id='*' UpgradeCode='CDC506D2-D00F-48E7-BDC1-834F50568573' Language='1033' Codepage='1252' Version='2.0.1' Manufacturer='Rikard Software'>
+    
+        <Package Id='*' Keywords='Installer' Description="Clippy 2.0 Installer"
+            Manufacturer='Rikard Software'
+            InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+        
+        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+        <Upgrade Id="8DD638F6-F945-43AF-8AC2-66EACCCC5077">  
+            <UpgradeVersion
+                Minimum="1.0.0.0" Maximum="99.0.0.0"
+                Property="PREVIOUSVERSIONSINSTALLED"
+                IncludeMinimum="yes" IncludeMaximum="no" />
+        </Upgrade> 
+        
+        <InstallExecuteSequence>
+            <RemoveExistingProducts Before="InstallInitialize" /> 
+        </InstallExecuteSequence>
 
-		
-		
-		<Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1' />
-		<Property Id='DiskPrompt' Value="Clippy 2.0 Installation [1]" />
-		
-		<Directory Id='TARGETDIR' Name='SourceDir'>
-			<Directory Id="StartupFolder" Name="StartUp" />
-			<Directory Id='ProgramFilesFolder' Name='PFiles'>
-				<Directory Id='INSTALLDIR' Name='Clippy'>
-				
-					<Component Id='MainExecutableBat' Guid='2D5B29A4-C6EE-492F-8AFB-85D7C7700D7C'>
-						<File Id='ClippyBat' Name='Clippy.bat' DiskId='1' Source='Clippy.bat' KeyPath='yes' />
-					</Component>
-					
-					<Component Id='Library' Guid='ECDF99F5-AF7D-4551-B9F1-D388989AD5C8'>
-						<File Id='ClippyLib' Name='ClippyLib.dll' DiskId='1' Source='ClippyLib.dll' KeyPath='yes' />
-					</Component>
-					
-					<Component Id='MainExecutable' Guid='667DB9FC-F40C-44FB-B4E1-1E2997FDDB96'>
-						<File Id='ClippyUtilityExe' Name='ClippyUtility.exe' DiskId='1' Source='ClippyUtility.exe' KeyPath='yes'>
-							<Shortcut Id="startupClippy" Directory="StartupFolder" Name="Clippy"
-								WorkingDirectory='INSTALLDIR' Icon="ClippyUtility.exe" IconIndex="0" Advertise="yes" />
-						</File>
-					</Component>
-					
-					<Component Id='MainExecutableConfig' Guid='D33F11D6-46B8-4E1D-8D77-CCC935069B03'>
-						<File Id='ClippyUtilityConfig' Name='ClippyUtility.exe.config' DiskId='1' Source='ClippyUtility.exe.config' KeyPath='yes' />
-					</Component>
-					
-					<Component Id='MainExecutableConsole' Guid='7C52A500-0BB2-4191-95E8-2592C15AB578'>
-						<File Id='ConsoleClippyExe' Name='Clippy.exe' DiskId='1' Source='Clippy.exe' KeyPath='yes' />
-					</Component>
-					
-					<Component Id='MainExecutableConConfig' Guid='3D68F12D-088A-4FAB-85C0-5E1217764C8A'>
-						<File Id='ConsoleClippyConfig' Name='Clippy.exe.config' DiskId='1' Source='Clippy.exe.config' KeyPath='yes' />
-					</Component>
-					
-					<Component Id='ManipExecutable' Guid='F6AF1C36-639B-4448-ACE9-1C3B379E6FC6'>
-						<File Id='ManipeExe' Name='Manip.exe' DiskId='1' Source='Manip.exe' KeyPath='yes' />
-					</Component>
-					
-					<Component Id='ManipExecutableConfig' Guid='A3099896-5E41-487F-8789-2A7CF4AEDD4A'>
-						<File Id='ManipConfig' Name='Manip.exe.config' DiskId='1' Source='Manip.exe.config' KeyPath='yes' />
-					</Component>
-					
-					<Component Id='PathVar' Guid='F20ECD11-BA97-43A0-93C1-AE7E1C598E20'>
-						<CreateFolder/>
-						<Environment Id="PATH" Name="PATH" Value="[INSTALLDIR]" Permanent="yes" Part="last" Action="set" System="yes" />
-					</Component>
-					
-				</Directory>
-			</Directory>
-			
-			
-			<Directory Id="ProgramMenuFolder" Name="Programs">
-				<Directory Id="ProgramMenuDir" Name="Clippy">
-					<Component Id="ProgramMenuDir" Guid="0410A894-DD4D-4B87-BF98-AD6F569B1D63">
-						<RemoveFolder Id='ProgramMenuDir' On='uninstall' />
-						<RegistryValue Root='HKCU' Key='Software\Rikard\Clippy' Type='string' Value='' KeyPath='yes' />
-					</Component>
-				</Directory>
-			</Directory>
-		</Directory>
-		
-		
-		<Feature Id='Complete' Level='1'>
-			<ComponentRef Id='MainExecutableBat' />
-			<ComponentRef Id='Library' />
-			<ComponentRef Id='MainExecutable' />
-			<ComponentRef Id='MainExecutableConfig' />
-			<ComponentRef Id='MainExecutableConsole' />
-			<ComponentRef Id='MainExecutableConConfig' />
-			<ComponentRef Id='ManipExecutable' />
-			<ComponentRef Id='ManipExecutableConfig' />
-			<ComponentRef Id='PathVar' />
-			<ComponentRef Id='ProgramMenuDir' />			
-		</Feature>
-		
-		<Icon Id="ClippyUtility.exe" SourceFile="ClippyUtility.exe" />
-		
-	</Product>
-	  
+        
+        
+        <Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1' />
+        <Property Id='DiskPrompt' Value="Clippy 2.0 Installation [1]" />
+        
+        <Directory Id='TARGETDIR' Name='SourceDir'>
+            <Directory Id="StartupFolder" Name="StartUp" />
+            <Directory Id='ProgramFilesFolder' Name='PFiles'>
+                <Directory Id='INSTALLDIR' Name='Clippy'>
+                
+                    <Component Id='MainExecutableBat' Guid='2D5B29A4-C6EE-492F-8AFB-85D7C7700D7C'>
+                        <File Id='ClippyBat' Name='Clippy.bat' DiskId='1' Source='Clippy.bat' KeyPath='yes' />
+                    </Component>
+                    
+                    <Component Id='Library' Guid='ECDF99F5-AF7D-4551-B9F1-D388989AD5C8'>
+                        <File Id='ClippyLib' Name='ClippyLib.dll' DiskId='1' Source='ClippyLib.dll' KeyPath='yes' />
+                    </Component>
+                    
+                    <Component Id='MainExecutable' Guid='667DB9FC-F40C-44FB-B4E1-1E2997FDDB96'>
+                        <File Id='ClippyUtilityExe' Name='ClippyUtility.exe' DiskId='1' Source='ClippyUtility.exe' KeyPath='yes'>
+                            <Shortcut Id="startupClippy" Directory="StartupFolder" Name="Clippy"
+                                WorkingDirectory='INSTALLDIR' Icon="ClippyUtility.exe" IconIndex="0" Advertise="yes" />
+                        </File>
+                    </Component>
+                    
+                    <Component Id='MainExecutableConfig' Guid='D33F11D6-46B8-4E1D-8D77-CCC935069B03'>
+                        <File Id='ClippyUtilityConfig' Name='ClippyUtility.exe.config' DiskId='1' Source='ClippyUtility.exe.config' KeyPath='yes' />
+                    </Component>
+                    
+                    <Component Id='MainExecutableConsole' Guid='7C52A500-0BB2-4191-95E8-2592C15AB578'>
+                        <File Id='ConsoleClippyExe' Name='Clippy.exe' DiskId='1' Source='Clippy.exe' KeyPath='yes' />
+                    </Component>
+                    
+                    <Component Id='MainExecutableConConfig' Guid='3D68F12D-088A-4FAB-85C0-5E1217764C8A'>
+                        <File Id='ConsoleClippyConfig' Name='Clippy.exe.config' DiskId='1' Source='Clippy.exe.config' KeyPath='yes' />
+                    </Component>
+                    
+                    <Component Id='ManipExecutable' Guid='F6AF1C36-639B-4448-ACE9-1C3B379E6FC6'>
+                        <File Id='ManipeExe' Name='Manip.exe' DiskId='1' Source='Manip.exe' KeyPath='yes' />
+                    </Component>
+                    
+                    <Component Id='ManipExecutableConfig' Guid='A3099896-5E41-487F-8789-2A7CF4AEDD4A'>
+                        <File Id='ManipConfig' Name='Manip.exe.config' DiskId='1' Source='Manip.exe.config' KeyPath='yes' />
+                    </Component>
+                    
+                    <Component Id='PathVar' Guid='F20ECD11-BA97-43A0-93C1-AE7E1C598E20'>
+                        <CreateFolder/>
+                        <Environment Id="PATH" Name="PATH" Value="[INSTALLDIR]" Permanent="yes" Part="last" Action="set" System="yes" />
+                    </Component>
+                    
+                </Directory>
+            </Directory>
+            
+            
+            <Directory Id="ProgramMenuFolder" Name="Programs">
+                <Directory Id="ProgramMenuDir" Name="Clippy">
+                    <Component Id="ProgramMenuDir" Guid="0410A894-DD4D-4B87-BF98-AD6F569B1D63">
+                        <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+                        <RegistryValue Root='HKCU' Key='Software\Rikard\Clippy' Type='string' Value='' KeyPath='yes' />
+                    </Component>
+                </Directory>
+            </Directory>
+        </Directory>
+        
+        
+        <Feature Id='Complete' Level='1'>
+            <ComponentRef Id='MainExecutableBat' />
+            <ComponentRef Id='Library' />
+            <ComponentRef Id='MainExecutable' />
+            <ComponentRef Id='MainExecutableConfig' />
+            <ComponentRef Id='MainExecutableConsole' />
+            <ComponentRef Id='MainExecutableConConfig' />
+            <ComponentRef Id='ManipExecutable' />
+            <ComponentRef Id='ManipExecutableConfig' />
+            <ComponentRef Id='PathVar' />
+            <ComponentRef Id='ProgramMenuDir' />            
+        </Feature>
+        
+        <Icon Id="ClippyUtility.exe" SourceFile="ClippyUtility.exe" />
+        
+    </Product>
+      
  </Wix>
  

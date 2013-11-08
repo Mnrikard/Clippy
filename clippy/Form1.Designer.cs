@@ -100,6 +100,7 @@
         	this.functions.Size = new System.Drawing.Size(316, 24);
         	this.functions.TabIndex = 1;
         	this.functions.Leave += new System.EventHandler(this.FunctionOnLeave);
+        	this.functions.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FuncKeyUp);
         	// 
         	// parametersGrid
         	// 

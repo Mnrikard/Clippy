@@ -125,7 +125,7 @@ namespace ClippyLib.Editors
 
             List<string> functions = Udf(_arguments);
             if (functions.Count == 0 && !isHelp)
-                throw new Exception(String.Format("Function:{0} does not exist or is not valid", _udfName));
+                throw new UndefinedFunctionException(String.Format("Function:{0} does not exist or is not valid", _udfName));
             
             for (int fi = 0; fi < functions.Count; fi++)
             {
