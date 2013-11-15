@@ -31,8 +31,11 @@ namespace Manip
 {
     class Program
     {
+    	
+    	
         static void Main(string[] args)
         {
+        	EditorManager manager = new EditorManager();
         	StringBuilder contentb = new StringBuilder();
         	string line;
         	while((line = Console.In.ReadLine()) != null)
@@ -41,7 +44,6 @@ namespace Manip
         	}
         	string content = contentb.ToString();
         	
-            EditorManager manager = new EditorManager();
             if (args.Length > 0 && (args[0].Equals("help", StringComparison.CurrentCultureIgnoreCase) || args[0].Equals("/?", StringComparison.CurrentCultureIgnoreCase)))
             {
                 Console.WriteLine(manager.Help(args));
@@ -82,7 +84,7 @@ namespace Manip
 
             }
             
-            Console.Write(content);
+            Console.WriteLine(content);
         }
 
 
@@ -117,9 +119,7 @@ namespace Manip
 
         static void HandleResponseFromClippy(object sender, EditorResponseEventArgs e)
         {
-            Console.WriteLine(e.ResponseString);
-            if(e.RequiresUserAction)
-                Console.Read();
+            ((AClipEditor)sender).SourceData = e.ResponseString;
         }
     }
 }
