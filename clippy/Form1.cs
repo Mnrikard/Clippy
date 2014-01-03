@@ -47,6 +47,7 @@ namespace clippy
             //MainFormLoad(sender, e);
             LoadFunctions();
             functions.Focus();
+            RestoreForm();
         }
 
         private void LoadFunctions()
@@ -187,6 +188,11 @@ namespace clippy
                 parms.Rows.Add(dr);
             }
             parametersGrid.DataSource = parms;
+			
+            if(clipManager.ClipEditor.ParameterList.Count == 0)
+            {
+            	executeButton.Focus();
+            }
         }
 
         private void executeButton_Click(object sender, EventArgs e)
@@ -240,10 +246,11 @@ namespace clippy
         }
 
 
-        #endregion
+        
+		#endregion
 
         
-
+		
         private void SaveThisCommand(string editorName, string parms)
         {
             ClippyLib.RecentCommands.SaveThisCommand(editorName, parms);

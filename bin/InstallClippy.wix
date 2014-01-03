@@ -8,7 +8,7 @@
             InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
         
         <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
-        <Upgrade Id="7B8DD5F2-7CFD-4E7D-B6BE-BE368E55D00E">  
+        <Upgrade Id="E087A5B5-9CE8-4184-B3AB-28AC0BEAE1C2">
             <UpgradeVersion
                 Minimum="1.0.0.0" Maximum="99.0.0.0"
                 Property="PREVIOUSVERSIONSINSTALLED"
@@ -41,6 +41,8 @@
                         <File Id='ClippyUtilityExe' Name='ClippyUtility.exe' DiskId='1' Source='ClippyUtility.exe' KeyPath='yes'>
                             <Shortcut Id="startupClippy" Directory="StartupFolder" Name="Clippy"
                                 WorkingDirectory='INSTALLDIR' Icon="ClippyUtility.exe" IconIndex="0" Advertise="yes" />
+                            <Shortcut Id="StartMenuClippy" Directory="ProgramMenuDir" Name="Clippy"
+                                WorkingDirectory='INSTALLDIR' Icon="ClippyUtility.exe" IconIndex="0" Advertise="yes" />    
                         </File>
                     </Component>
                     
