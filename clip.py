@@ -1,7 +1,6 @@
-"""For those of you interested in history, this was the "second" version of clippy, where clippy got its name clip.py
-the first version was written in perl
-
-I have since lost the perl file.  If I ever find it again, I'll put it here for posterity.
+"""For those of you interested in history, this was the "second" version of clippy but the first full version, so still version 1. 
+This is where clippy got its name: clip.py
+The first version was written in perl.  I have since lost the perl file.  If I ever find it again, I'll put it here for posterity.
 """
 
 __author__ = "Matthew Rikard"
