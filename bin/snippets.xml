@@ -1,25 +1,227 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Snippets>
-  <Snippet Name="for">
-    <Description>Generates a for loop</Description>
-    <Content>
-      <![CDATA[
-for(int i=0;i<arr.Length;i++)
-{
-    //do something here
-}]]>      
-    </Content>
+  <Snippet Name="connstr">
+    <Description>Generates a connection string</Description>
+    <Content><![CDATA[Data Source=xxserverxx;Initial Catalog=xxdbxx;Integrated Security=True;Application Name=xxappnmxx;]]></Content>
   </Snippet>
+  <Snippet Name="dropproc">
+    <Description>drops a procedure</Description>
+    <Content><![CDATA[USE [__databasename__]
+GO
 
-  <Snippet Name="while">
-    <Description>Generates a while loop</Description>
-    <Content>
-      <![CDATA[
-while(somecondition)
-{
-    //do something here
-}]]>
-    </Content>
+IF  EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[__procname__]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[__procname__]
+GO
+
+]]></Content>
   </Snippet>
-  
+  <Snippet Name="strict">
+    <Description>Strict XHTML</Description>
+    <Content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>xxxx</title>
+  </head>
+  <body>
+
+  </body>
+</html>]]></Content>
+  </Snippet>
+  <Snippet Name="cursor">
+    <Description>TSQL cursor</Description>
+    <Content><![CDATA[Declare /* Cursor Name */ CURSOR FAST_FORWARD FOR 
+	/* select statement */
+
+OPEN /* Cursor Name */
+FETCH NEXT FROM /* Cursor Name */ 
+INTO @vars 
+
+WHILE @@FETCH_STATUS = 0 
+BEGIN 
+	--row specific functions
+	FETCH NEXT FROM /* Cursor Name */ 
+	INTO @vars 
+END 
+CLOSE /* Cursor Name */ 
+DEALLOCATE /* Cursor Name */
+]]></Content>
+  </Snippet>
+  <Snippet Name="sqlUrlDecode">
+    <Description>decodes urls for sql</Description>
+    <Content><![CDATA[select 
+CAST(
+replace(
+    replace(
+    replace(
+    replace(
+        replace(
+            replace(
+                replace(
+                    replace(
+                        replace(
+                            replace(
+                                replace(
+                                    replace(
+                                        replace(
+                                            replace(
+                                                replace(
+                                                    replace(
+                                                        replace(
+                                                            replace(
+                                                                replace(
+                                                                    replace(
+                                                                        replace(
+                                                                            replace(
+                                                                                replace(
+                                                                                    replace(REplace(Request,'login=gis&password=oaAYKJy9&content=',''),'+',' ')
+                                                                                ,'%3C','<')
+                                                                            ,'%3E','>')
+                                                                        ,'%20',' ')
+                                                                    ,'%3D','=')
+                                                                ,'%22','"')
+                                                            ,'%0D',CHAR(13))
+                                                        ,'%0A',CHAR(10))
+                                                    ,'%40','@')
+                                                ,'%23','#')
+                                            ,'%24','$')
+                                        ,'%5E','^')
+                                    ,'%26','&')
+                                ,'%7B','{')
+                            ,'%7D','}')
+                        ,'%5B','[')
+                    ,'%5D',']')
+                ,'%5C','\')
+            ,'%7C','|')
+        ,'%2F','/')
+    ,'%2C',',')
+,'%3F','?')
+,'%3A',':')
+,'%25','%')
+as xml)]]></Content>
+  </Snippet>
+  <Snippet Name="sqlrethrow">
+    <Description>rethrow for sql</Description>
+    <Content><![CDATA[BEGIN CATCH
+    ROLLBACK TRANSACTION
+    
+    DECLARE @ErrorMessage NVARCHAR(4000);
+    DECLARE @ErrorSeverity INT;
+    DECLARE @ErrorState INT;
+
+    SELECT 
+        @ErrorMessage = ERROR_MESSAGE(),
+        @ErrorSeverity = ERROR_SEVERITY(),
+        @ErrorState = ERROR_STATE();
+
+    RAISERROR (@ErrorMessage, -- Message text.
+               @ErrorSeverity, -- Severity.
+               @ErrorState -- State.
+               );
+END CATCH]]></Content>
+  </Snippet>
+  <Snippet Name="sqlcs">
+    <Description>Standard database c#</Description>
+    <Content><![CDATA[            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@parm", parmValue);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            //do something
+                        }
+                        dr.Close();
+                    }
+                }
+
+                conn.Close();
+            }]]></Content>
+  </Snippet>
+  <Snippet Name="fkConstraint">
+    <Description>Generates a foreign key constraint</Description>
+    <Content><![CDATA[IF EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_FKTable_PKTable')
+    ALTER TABLE [dbo].[PKTable_base] DROP CONSTRAINT [FK_FKTable_PKTable]
+GO
+
+ALTER TABLE [dbo].[FKTable_base] WITH CHECK ADD CONSTRAINT [FK_FKTable_PKTable] FOREIGN KEY([FKey])
+REFERENCES [dbo].[PKTable_base] ([PKey])
+GO
+
+ALTER TABLE [dbo].[FKTable_base] CHECK CONSTRAINT [FK_FKTable_PKTable]
+GO
+]]></Content>
+  </Snippet>
+  <Snippet Name="dropfkConstraint">
+    <Description>drops a foreign key constraint</Description>
+    <Content><![CDATA[
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FKeyName]') AND parent_object_id = OBJECT_ID(N'[dbo].[TblName_base]'))
+ALTER TABLE [dbo].[TblName_base] DROP CONSTRAINT [FKeyName]
+GO
+]]></Content>
+  </Snippet>
+  <Snippet Name="openfiledialog">
+    <Description>.net c# open file dialog</Description>
+    <Content><![CDATA[Stream myStream = null;
+OpenFileDialog d = new OpenFileDialog();
+
+d.InitialDirectory = "c:\\" ;
+d.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*" ;
+d.FilterIndex = 2 ;
+d.RestoreDirectory = true ;
+
+if(d.ShowDialog() == DialogResult.OK)
+{
+    try
+    {
+        if ((myStream = d.OpenFile()) != null)
+        {
+            using (myStream)
+            {
+                // Insert code to read the stream here.
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Error");
+    }
+}]]></Content>
+  </Snippet>
+  <Snippet Name="savefiledialog">
+    <Description>CS to save file</Description>
+    <Content><![CDATA[Stream myStream ;
+SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"  ;
+saveFileDialog1.FilterIndex = 2 ;
+saveFileDialog1.RestoreDirectory = true ;
+
+if(saveFileDialog1.ShowDialog() == DialogResult.OK)
+{
+    if((myStream = saveFileDialog1.OpenFile()) != null)
+    {
+        // Code to write the stream goes here.
+        myStream.Close();
+    }
+}]]></Content>
+  </Snippet>
+  <Snippet Name="csEvent">
+    <Description>C# event boilerplate</Description>
+    <Content><![CDATA[public event EventHandler Start;
+
+protected virtual void OnStart(EventArgs e)
+{
+    if(this.Start != null)
+    {
+        this.Start(this, e);
+    }
+}]]></Content>
+  </Snippet>
 </Snippets>
