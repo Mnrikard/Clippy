@@ -1,4 +1,5 @@
 Clippy
 ======
 
-Utility for manipulating the text on your clipboard.  Console and GUI based.
+Utility for manipulating the text on your clipboard. 
+Console and GUI based.
