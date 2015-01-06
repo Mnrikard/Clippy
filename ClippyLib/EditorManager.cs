@@ -45,6 +45,7 @@ namespace ClippyLib
             Editors.Add(new Grep());
             Editors.Add(new NewText());
             Editors.Add(new Rep());
+            Editors.Add(new StringRep());
             Editors.Add(new Reverse());
             Editors.Add(new Snippet());
             Editors.Add(new SqlInsert());

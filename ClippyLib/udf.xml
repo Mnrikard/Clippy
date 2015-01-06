@@ -1,246 +1,284 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <commands>
-	<!--
-/*
- * 
- * Copyright 2012 Matthew Rikard
- * This file is part of Clippy.
- * 
- *  Clippy is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  Clippy is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with Clippy.  If not, see <http://www.gnu.org/licenses/>.
- *
-*/
-
-
--->
-  <command key="NumList">
-    <description>Lists all numeric values in a string.</description>
+  <command key="numtable">
+    <description>Inserts numbers into a table variable</description>
     <function>rep "\D+" ","</function>
-    <function>rep "([\d,]{80,90},)" "$1\n"</function>
+    <function>rep "[,]+" ","</function>
+    <function>rep "," "),("</function>
+    <function>rep "^," ""</function>
+    <function>rep ",$" ""</function>
+    <function>rep "^(.)" "declare @caseids table(id int)\ninsert into @caseids values ($1"</function>
+    <function>rep "(.)$" "$1)"</function>
   </command>
-  
-  <command key="HtmlEncode">
-    <description>Encodes to html</description>
-    <function>encode html</function>
+  <command key="connstring">
+    <description>Generates a connection string, pass in Data Source, Initial Catalog and Application Name</description>
+    <function><![CDATA[snippet connstr]]></function>
+    <function><![CDATA[rep "xxserverxx" "%0%"]]></function>
+    <function><![CDATA[rep "xxdbxx" "%1%"]]></function>
+    <function><![CDATA[rep "xxappnmxx" "%2%"]]></function>
+    <function><![CDATA[rep "Application Name=%[2]%" "Application Name=xxxxxx"]]></function>
+    <parameter name="Server" default="tcp:ProdDb3sup,1757" required="True" parmdesc="" sequence="1" />
+    <parameter name="Database" default="ClientInterfaces" required="True" parmdesc="" sequence="2" />
+    <parameter name="App Name" default="xxxxxx" required="False" parmdesc="" sequence="3" />
   </command>
-
+  <command key="dechunk">
+    <description>Removes new line characters</description>
+    <function>rep "\n+" ""</function>
+  </command>
+  <command key="dedim">
+    <description>Removes multiple "Dim" statements and replaces with commas</description>
+    <function>rep "\n\s*Dim " ","</function>
+  </command>
+  <command key="docu.net">
+    <description>Beautifies .NET XML documentation (C# only)</description>
+    <!-- single line summaries down to one line-->
+    <!-- multi line comments need para tags-->
+    <function><![CDATA[rep "<summary>\s+///\s*(?<documentation>.+?)\s+/// </summary>" "<summary> ${documentation} </summary>"]]></function>
+    <function><![CDATA[rep "(?<!/// <summary>\s+)/// ([^<].+)" "/// <para>$1</para>"]]></function>
+  </command>
+  <command key="getdate">
+    <description>Replaces literal date values in queries with getdate</description>
+    <function><![CDATA[rep "'\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d{3,6}'" "GETDATE()"]]></function>
+  </command>
   <command key="HtmlDecode">
     <description>Decodes html</description>
     <function>encode html reverse</function>
   </command>
-
+  <command key="HtmlEncode">
+    <description>Encodes to html</description>
+    <function>encode html</function>
+  </command>
+  <command key="list">
+    <description>Replaces new lines with commas</description>
+    <function><![CDATA[rep "\n+" ","]]></function>
+  </command>
+  <command key="NumList">
+    <description>Lists all numeric values in a string.</description>
+    <function><![CDATA[rep "\D+" ","]]></function>
+    <function><![CDATA[rep "[,]+" ","]]></function>
+    <function><![CDATA[rep "^," ""]]></function>
+    <function><![CDATA[rep ",$" ""]]></function>
+    <function><![CDATA[rep "^(.)" "($1"]]></function>
+    <function><![CDATA[rep "(.)$" "$1)"]]></function>
+    <function><![CDATA[rep "([\d,]{80,90},)" "$1\n"]]></function>
+  </command>
+  <command key="singlelinevb">
+    <description>Takes lines ending with _ and combines them</description>
+    <function>rep "_\s*\n\s*" " "</function>
+  </command>
+  <command key="smash">
+    <description>Truncates multiple new-lines into one</description>
+    <function>rep "\n\s*" "\n"</function>
+  </command>
+  <command key="spacetotab">
+    <description>Converts tabs to 4 spaces</description>
+    <function><![CDATA[rep "(?<=[\s])    " "\t"]]></function>
+    <function>rep "$    " "\t"</function>
+  </command>
+  <command key="stacktrace">
+    <description>Formats the stack trace to what it would normally print out</description>
+    <function>rep "    at " "\n    at "</function>
+  </command>
+  <command key="strlist">
+    <description>Same as "list" but adds apostrophes around the list items</description>
+    <function><![CDATA[rep "\n" "','"]]></function>
+    <function><![CDATA[rep "[,]+" ","]]></function>
+    <function><![CDATA[rep "^,'" ""]]></function>
+    <function><![CDATA[rep "','$" ""]]></function>
+    <function><![CDATA[rep "^(.)" "('$1"]]></function>
+    <function><![CDATA[rep "(.)$" "$1')"]]></function>
+    <function><![CDATA[rep ".{80,140}," "$0\n"]]></function>
+  </command>
+  <command key="trimlines">
+    <description>Removes whitespace at the end of the line</description>
+    <function><![CDATA[rep "/[ \t]+$/m" ""]]></function>
+  </command>
+  <command key="UrlDecode">
+    <description>Decodes url</description>
+    <function><![CDATA[rep "\+" "%20"]]></function>
+    <function><![CDATA[encode url reverse]]></function>
+  </command>
   <command key="UrlEncode">
     <description>Encodes to Url</description>
     <function>encode url</function>
   </command>
-
-  <command key="UrlDecode">
-    <description>Decodes url</description>
-    <function>encode url reverse</function>
+  <command key="xls2xml">
+    <description>Converts copied Excel cells to HTML table</description>
+    <function><![CDATA[rep "\t" "</td><td>"]]></function>
+    <function><![CDATA[rep "\n" "</td></tr>\n\t<tr><td>"]]></function>
+    <function><![CDATA[rep "<td></td>" "<td>&nbsp;</td>"]]></function>
+    <function><![CDATA[rep "<tr><td></td></tr>\n\t" ""]]></function>
+    <function><![CDATA[rep "\n\t<tr><td>$" "\n</table>"]]></function>
+    <function><![CDATA[rep "^(.)" "<table>\n\t<tr><td>$1"]]></function>
   </command>
-  
-  <command key="dechunk">
-		<description>Removes new line characters</description>
-		<function>rep "\n" ""</function>
-	</command>
-	
-	<command key="temp">
-		<description>modify this one as needed for short term goals</description>
-		<function><![CDATA[rep "Trace\.WriteLine\((.+),\s*\Werror\W" "logger.Error($1"]]></function>
-		<function><![CDATA[rep "Trace\.WriteLine\((.+),\s*\Winfo\W" "logger.Info($1"]]></function>
-		<function><![CDATA[rep "Trace\.WriteLine\((.+),\s*\Wdebug\W" "logger.Debug($1"]]></function>
-	</command>
-	
-	<command key="dedim">
-		<description>Removes multiple "Dim" statements and replaces with commas</description>
-		<function>rep "\n\s*Dim " ","</function>
-	</command>
-	
-	<!--<command key="formatjs">
-		<description>Formats JavaScript text</description>
-		<function>rep "\n" ""</function>
-		<function>rep "\t" ""</function>
-		<function>tabright</function>	
-	</command>-->
-	
-	<command key="list">
-		<description>Changes from new-line, to comma delimited</description>
-		<function>rep "\n" ","</function>
-		<function>rep ",," ""</function>
-	</command>
-	
-	<command key="caselist">
-		<description>separates each case number with a comma</description>
-		<function>rep "\D+" ","</function>
-		<function>rep "[,]+" ","</function>
-		<function>rep "^," ""</function>
-		<function>rep ",$" ""</function>
-		<function>rep "^(.)" "($1"</function>
-		<function>rep "(.)$" "$1)"</function>		
-	</command>
-	
-	<command key="casetable">
-		<description>Inserts case nums into a table variable</description>
-		<function>rep "\D+" ","</function>
-		<function>rep "[,]+" ","</function>
-		<function>rep "," "),("</function>
-		<function>rep "^," ""</function>
-		<function>rep ",$" ""</function>
-		<function>rep "^(.)" "declare @caseids table(id int)\ninsert into @caseids values ($1"</function>
-		<function>rep "(.)$" "$1)"</function>
-	</command>
-	
-	<command key="buildMail">
-		<description>Copy text from commit batch files, paste in build team emails</description>
-		<function>grep "(svn commit.+|Committed revision.+)"</function>
-		<function>rep " -m .+" ""</function><!-- get rid of message -->
-		<function>rep "[ 	]+\n" "\n"</function><!-- trim trailing spaces -->
-		<function>rep "[ 	]+$" ""</function><!-- trim trailing spaces -->
-		<function>rep "svn commit " ""</function>
-		<function>rep "\u0022" ""</function>
-		<function>svn -1</function>
-		<function>rep "(committed)%20(revision)%20" "$1 $2 "</function>
-	</command>
-	
-	<command key="stacktrace">
-		<description>Formats the stack trace to what it would normally print out</description>
-		<function>rep "    at " "\n    at "</function>
-	</command>
-	
-	<command key="messagelog">
-		<description>Formats the messages coming in from the equest plus web service</description>
-		<function>xml</function>
-		<function>rep "]\s*ID\s*\[(.+?)\]" "\n]\nID: $1"</function>
-		<function>rep "\s*PASSWORD\s*\[(.*?)\]" "\nPASSWORD: $1"</function>
-		<function>rep "\s*CO\s+PARM\s*\[(.*?)\]" "\nCOPARM: $1"</function>
-		<function>rep "\s*ALTERNATE\s*\[(.*?)\]" "\nALTERNATE: $1"</function>
-		<function>rep "\s*IPADDRESS\s*\[(.*?)\]" "\nIPADDRESS: $1"</function>
-		<function>rep "\s*URL\s*\[(.*?)\]" "\nURL: $1"</function>
-		<function>rep "\s*SERVER\s*\[(.*?)\]" "\nSERVER: $1"</function>
-	</command>
-	
-	<!--<command key="formatvb">
-		<description>Fixes issues with clip tabright vb</description>
-		<function>rep "_\s*\n\s*" " "</function>
-		<function>rep "else\s*('.+)" "else\n$1"</function>
-		<function>rep "then\s*('.+)" "Then\n$1"</function>
-		<function>tabright vb</function>
-		<function>rep "(\t|    )Select\s+Case" "Select Case"</function>
-	</command>-->
-	
-	<!--<command key="numlines">
-		<description>Counts the number of lines</description>
-		<function>rep "[^\n]" ""</function>
-		<function>len</function>
-	</command>-->
-	
-	<command key="singlelinevb">
-		<description>Takes lines ending with _ and combines them</description>
-		<function>rep "_\s*\n\s*" " "</function>
-	</command>
-	
-	<command key="smash">
-		<description>Truncates multiple new-lines into one</description>
-		<function>rep "\n\s*" "\n"</function>
-	</command>
-	
-	<command key="strlist">
-		<description>Same as "list" but adds apostrophes around the list items</description>
-		<function>rep "\n" "','"</function>
-		<function>rep "[,]+" ","</function>
-		<function>rep "^,'" ""</function>
-		<function>rep "','$" ""</function>
-		<function>rep "^(.)" "('$1"</function>
-		<function>rep "(.)$" "$1')"</function>
-	</command>
-	
-	<command key="trimlines">
-		<description>Replaces tabs and spaces before and after new lines</description>
-		<function>rep "[ 	]+\n" "\n"</function>
-		<function>rep "[ 	]+$" ""</function>
-	</command>
-
-	<command key="xls2xml">		
-		<description>Converts copied Excel cells to HTML table</description>
-		<function><![CDATA[rep "\t" "</td><td>"]]></function>
-		<function><![CDATA[rep "\n" "</td></tr>\n\t<tr><td>"]]></function>
-		<function><![CDATA[rep "<td></td>" "<td>&nbsp;</td>"]]></function>
-		<function><![CDATA[rep "<tr><td></td></tr>\n\t" ""]]></function>
-		<function><![CDATA[rep "\n\t<tr><td>$" "\n</table>"]]></function>
-		<function><![CDATA[rep "^(.)" "<table>\n\t<tr><td>$1"]]></function>
-	</command>
-	
-	<command key="docu.net">
-		<description>Beautifies .NET XML documentation (C# only)</description>
-		<!-- single line summaries down to one line-->
-		<function>rep "&lt;summary&gt;\s+///(.+)\s+/// &lt;/summary&gt;" "&lt;summary&gt; $1 &lt;/summary&gt;"</function>
-		<!-- multi line comments need para tags-->
-		<function>rep "/// ([^&lt;].+)" "/// &lt;para&gt;$1&lt;/para&gt;"</function>
-	</command>
-	
-	<command key="connstring">
-		<description>Generates a connection string, pass in Data Source, Initial Catalog</description>
-		<function>rep "(.|\n)+" "Data Source=%0%;Initial Catalog=%1%;Integrated Security=True;"</function>
-	</command>
-	
-	<command key="tablepermission">
-		<description>Generates GRANTs on DBO objects, Pass in object name</description>
-		<function>rep ".+" "GRANT SELECT ON [dbo].[%0%] TO [DBRole_GISWEBUsers] AS [dbo]\nGO\n\nGRANT INSERT ON [dbo].[%0%] TO [DBRole_GISWEBUsers] AS [dbo]\nGO\n\nGRANT UPDATE ON [dbo].[%0%] TO [DBRole_GISWEBUsers] AS [dbo]\nGO\n\nGRANT DELETE ON [dbo].[%0%] TO [DBRole_GISWEBUsers] AS [dbo]\nGO\n"</function>
-	</command>
-
-	<command key="svnbatch">
-		<description>Copy the contents of SlnRead and run this to convert it to a batch file to download all the proj directories</description>
-		<function>rep "\\" "/"</function>
-		<function>rep "c:/Development" "http://sourcecontrol/svn/Gis/Development"</function>
-		<function>rep "\n" "\nsvn co '"</function>
-		<function>rep "\n" "' \n"</function>
-		<function>rep "(Core Applications/[^/]+).+" "$1"</function>
-		<function>rep "(Core Components/[^/]+).+" "$1"</function>
-		<function>rep "(Interfaces/[^/]+).+" "$1"</function>
-		<function>rep "^(.)" "svn co '$1"</function>
-		<function>rep "svn co '$" ""</function>
-		<function>sort</function>
-		<function>dedup</function>
-
-	</command>
-<!--
-To customize commands, list them here.
-1.  Check to see that the command name you wish to use isn't already used
-    by running clip [desiredcommand]
-	you should see the select command option if all is clear
-2.  Create a new <command> node with the attribute of key equal to your
-    desired command name
-3.  Add child <function> nodes to the <command> node with predefined 
-    clip functions
-4.  To allow for parameters, use %n% (example: %0% %1% for the 
-       first and second parameters)
-5.  Save and run.
-
-Examples:  
-<command key="removeitem">
-    <function>rep "%0%" ""</function>	   
-</command>
-//removes the first given parameter with an empty string
-
-<command key="xls2xml">
-	<function><![CDATA[rep "\t" "</td><td>"]]></function>
-	<function><![CDATA[rep "\n" "</tr>\n\t<tr>"]]></function>
-	<function><![CDATA[rep "<td></td>" "<td>&nbsp;</td>"]]></function>
-	<function><![CDATA[rep "<tr></tr>\n\t" ""]]></function>
-	<function><![CDATA[rep "\n\t<tr>$" "</table>"]]></function>
-</command>
-//converts copied excel rows to a html table
--->
-
-  
+  <command key="GuidList">
+    <description>Gets a list of Guid's separated by commas, enclosed in apostrophes</description>
+    <function><![CDATA[grep "[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}" "','"]]></function>
+    <function><![CDATA[dedup "','"]]></function>
+    <function><![CDATA[rep "^((.|\n)+)$" "('$1')"]]></function>
+    <function><![CDATA[rep "(?# 3 guids)[\da-f\-',]{116}," "$0\n"]]></function>
+  </command>
+  <command key="csparams">
+    <description>exposes your privates (c#)</description>
+    <function><![CDATA[rep "(private|internal)\s+(?<dattyp>[\w\.]+)\s+_(?<r1>\w)(?<rr>\w+).+" "public ${dattyp} \u${r1}${rr}\n{\n    get { return _${r1}${rr}; }\n    set { _${r1}${rr} = value; }\n}\n"]]></function>
+  </command>
+  <command key="dropsp">
+    <description>Drops a stored procedure, pass in database name</description>
+    <function><![CDATA[rep "([\d\D]+)" "USE [%0%]\nGO\n\nIF  EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[$1]') AND type in (N'P', N'PC'))\nDROP PROCEDURE [dbo].[$1]\nGO\n"]]></function>
+    <parameter name="Database" default=" " required="True" parmdesc="" sequence="1" />
+  </command>
+  <command key="droptrig">
+    <description>drops a trigger, pass in the database name</description>
+    <function><![CDATA[rep "([\d\D]+)" "USE [%0%]\nGO\n\nIF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[$1]'))\nDROP TRIGGER [dbo].[$1]\nGO\n"]]></function>
+    <parameter name="Database" default=" " required="True" parmdesc="" sequence="1" />
+  </command>
+  <command key="combineDateTime">
+    <description>Combines two sql columns containing date and time respectively</description>
+    <function><![CDATA[rep "^.+\n" ""]]></function>
+    <function><![CDATA[rep " \d\d:\d\d:\d\d.[\d]{3,6}\t" ""]]></function>
+    <function><![CDATA[rep "190\d-\d\d-\d\d " " "]]></function>
+  </command>
+  <command key="jsfunc">
+    <description>Converts a function &lt;name&gt; to &lt;name&gt; = function</description>
+    <function><![CDATA[Rep  "function\s+(?<fname>[\d\D]+?)\(" "${fname} = function("]]></function>
+  </command>
+  <command key="sqlcase">
+    <description>upper cases certain key words in sql</description>
+    <function><![CDATA[rep "\t" "    "]]></function>
+    <function><![CDATA[rep "\b(abs|after|all|alter|and|as|avg|begin|between|by|nonclustered|clustered|cascade|case|cast|catch|ceiling|charindex|close|coalesce|column|commit|constraint|contains|continue|convert|count|create|cube|cursor|dateadd|datediff|datename|datepart|day|deallocate|declare|default|delete|desc|distinct|drop|else|end|escape|except|exec|execute|exists|exit|fetch|first|floor|for|from|function|get|getdate|go|goto|grant|group|grouping|having|host_id|host_name|hour|identity|if|in|index|inner|insert|into|is|isdate|isnull|join|key|left|len|length|like|lower|ltrim|max|min|minute|mod|modify|month|newid|next|nolock|not|null|off|on|or|order|out|outer|output|partition|power|raw|references|replace|return|returns|right|rollback|rollup|round|row|row_number|rows|rtrim|second|select|set|soundex|sqrt|substring|sum|sysdatetime|table|then|to|transaction|trigger|truncate|try|union|update|upper|use|values|view|when|where|with|while|year)\b" "\u$1"]]></function>
+  </command>
+  <command key="suser">
+    <description>replaces geninfo\username with suser_name()</description>
+    <function><![CDATA[rep "'geninfo\\\\.+?'" "SUSER_NAME()"]]></function>
+  </command>
+  <command key="len">
+    <description>Gets the character count from a string</description>
+    <function><![CDATA[count char]]></function>
+  </command>
+  <command key="unwrap">
+    <description>removes wrapping from console output (defined as 80 chars per line)</description>
+    <function><![CDATA[rep "([^\n]{80})\n([^\n])" "$1$2"]]></function>
+  </command>
+  <command key="unxml">
+    <description>Removes new line characters and preceeding whitespace</description>
+    <function><![CDATA[rep "\n\s*" ""]]></function>
+    <function><![CDATA[trimlines]]></function>
+  </command>
+  <command key="hulksmash">
+    <description>raaaarrrrrrr - Truncates multiple lines into one</description>
+    <function><![CDATA[rep "\s*\n\s*" ""]]></function>
+  </command>
+  <command key="removeFormat">
+    <description>Removes formatting before inserting (color)</description>
+    <function><![CDATA[rep "(\d)" "$1"]]></function>
+  </command>
+  <command key="datetimesmash">
+    <description>sql to combine a date and a time field</description>
+    <function><![CDATA[rep "[\d\D]+" "cast(cast(%0% as Date) as DateTime) + cast(cast(%1% as Time) as DateTime)"]]></function>
+    <parameter name="date" default=" " required="True" parmdesc="" sequence="1" />
+    <parameter name="time" default=" " required="True" parmdesc="" sequence="2" />
+  </command>
+  <command key="marryTables">
+    <description>Adds foreign key constraint</description>
+    <function><![CDATA[snippet fkConstraint]]></function>
+    <function><![CDATA[rep "FKTable" "%0%"]]></function>
+    <function><![CDATA[rep "PKTable" "%1%"]]></function>
+    <function><![CDATA[rep "PKey" "%2%"]]></function>
+    <function><![CDATA[rep "FKey" "%3%"]]></function>
+    <parameter name="Foreign Key Table" default=" " required="True" parmdesc="" sequence="1" />
+    <parameter name="Primary Key Table" default=" " required="True" parmdesc="" sequence="2" />
+    <parameter name="Primary Key Column" default=" " required="True" parmdesc="" sequence="3" />
+    <parameter name="Foreign Key Column" default=" " required="True" parmdesc="" sequence="4" />
+  </command>
+  <command key="DropFKeys">
+    <description>Converts a ConstructRelationship to a DestructRelationship</description>
+    <function><![CDATA[REP "SET ANSI_PADDING ON\s+GO" ""]]></function>
+    <function><![CDATA[REP "ALTER TABLE \[DBO\]\.\[(?<tbl>[^\]]+)\] WITH CHECK ADD CONSTRAINT \[(?<cx>[^\]]+)\].+\nREFERENCES.+\nGO+" "IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[${cx}]') AND parent_object_id = OBJECT_ID(N'[dbo].[${tbl}]'))\nALTER TABLE [dbo].[${tbl}] DROP CONSTRAINT [${cx}]\nGO"]]></function>
+    <function><![CDATA[REP "ALTER TABLE \[DBO\]\.\[(?<tbl>[^\]]+)\] WITH CHECK ADD CONSTRAINT \[(?<cx>[^\]]+)\] CHECK.+\nGO" "IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[${cx}]') AND parent_object_id = OBJECT_ID(N'[dbo].[${tbl}]'))\nALTER TABLE [dbo].[${tbl}] DROP CONSTRAINT [${cx}]\nGO"]]></function>
+    <function><![CDATA[REP "ALTER TABLE .+? CHECK CONSTRAINT.+" ""]]></function>
+    <function><![CDATA[REP "\nGO\s+GO\n" "\nGO\n"]]></function>
+    <function><![CDATA[rep "(use .+\nGO\n)" "$1\nSET ANSI_PADDING ON\nGO\n"]]></function>
+    <function><![CDATA[rep "GO\n\n\s+" "GO\n\n"]]></function>
+  </command>
+  <command key="sprocme">
+    <description>turns a query to a stored procedure.  Pass in DB and Sproc Name</description>
+    <function><![CDATA[sqlcase]]></function>
+    <function><![CDATA[rep "([\d\D]+)" "USE [%0%]\nGO\n\nIF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[%1%]') AND type in (N'P', N'PC'))\nDROP PROCEDURE [dbo].[%1%]\nGO\n\nUSE [%0%]\nGO\n\nSET ANSI_NULLS ON\nGO\n\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE PROCEDURE [dbo].[%1%]\n@VARS\nAS\nBEGIN\n\n$1\n\nEND\nGO\n\nGRANT EXECUTE ON [dbo].[%1%] TO [DBRole_GISWEBUsers] AS [dbo]\nGO\n"]]></function>
+    <parameter name="Database" default=" " required="True" parmdesc="" sequence="1" />
+    <parameter name="Procedure Name" default="" required="True" parmdesc="" sequence="2" />
+  </command>
+  <command key="sqlparms">
+    <description>Adds C# parameters for sql</description>
+    <function><![CDATA[grep "@\w+" "\n"]]></function>
+    <function><![CDATA[rep "@(\w+)" "cmd.Parameters.AddWithValue(\q@$1\q, $1);"]]></function>
+  </command>
+  <command key="grepc">
+    <description>Greps and returns a count</description>
+    <function><![CDATA[grep %0%]]></function>
+    <function><![CDATA[count lines]]></function>
+    <parameter name="Pattern" default="" required="True" parmdesc="" sequence="1" />
+  </command>
+  <command key="newid">
+    <description>Creates a new GUID</description>
+    <function><![CDATA[newtext "id"]]></function>
+  </command>
+  <command key="grepd">
+    <description>grep distinct</description>
+    <function><![CDATA[grep "%0%"]]></function>
+    <function><![CDATA[dedup]]></function>
+    <parameter name="Pattern" default="" required="True" parmdesc="" sequence="1" />
+    <parameter name="Delimiter" default="\n" required="False" parmdesc="" sequence="2" />
+  </command>
+  <command key="curDate">
+    <description>Inserts the current date to the clipboard - Alias for NewText dt</description>
+    <function><![CDATA[NewText dt]]></function>
+  </command>
+  <command key="grepdc">
+    <description>greps, dedups and counts the number of matches</description>
+    <function><![CDATA[grep %0%]]></function>
+    <function><![CDATA[dedup]]></function>
+    <function><![CDATA[count lines]]></function>
+    <parameter name="Regex Pattern" default="" required="True" parmdesc="" sequence="1" />
+  </command>
+  <command key="UnRegion">
+    <description>Removes #regions from c# code</description>
+    <function><![CDATA[rep "#region(?<cmt>.*)" "//${cmt}"]]></function>
+    <function><![CDATA[rep "#endregion.*\n" ""]]></function>
+  </command>
+  <command key="detab">
+    <description>converts tabs to 4 spaces</description>
+    <function><![CDATA[rep "\t" "    "]]></function>
+  </command>
+  <command key="cleaninsert">
+    <description>insert with data cleaning options</description>
+    <function><![CDATA[insert %0%]]></function>
+    <function><![CDATA[getdate]]></function>
+    <function><![CDATA[suser]]></function>
+    <function><![CDATA[rep "\w+@geninfo.com" "itg-interfaces@geninfo.com"]]></function>
+    <parameter name="Table Name" default="" required="True" parmdesc="" sequence="1" />
+  </command>
+  <command key="noop">
+    <description>removes formatting</description>
+    <function><![CDATA[rep "7B1503B9-6CA9-4D33-A2A0-7006E51575F5" "7B1503B9-6CA9-4D33-A2A0-7006E51575F5"]]></function>
+  </command>
+  <command key="sqlcsprops">
+    <description>Copy with headers from query, and paste C# public properties</description>
+    <function><![CDATA[rep  "\n.+" ""]]></function>
+    <function><![CDATA[rep  "\w+" "public string $0 {get;set;}\n"]]></function>
+  </command>
+  <command key="sqlsafestring">
+    <description>Converts apostrophes to double apostrophes</description>
+    <function><![CDATA[rep "'" "''"]]></function>
+  </command>
+  <command key="insertanewline">
+    <description>inserts a new line after the text</description>
+    <function><![CDATA[rep "(?<nl>[\d\D]*)" "$1%0%"]]></function>
+    <parameter name="line" default="x" required="False" parmdesc="" sequence="1" />
+  </command>
+  <command key="strlist2">
+    <description>strlist with defined delimiter</description>
+    <function><![CDATA[rep "/%0%/i" "\n"]]></function>
+    <function><![CDATA[strlist]]></function>
+    <parameter name="delimiter" default="," required="True" parmdesc="" sequence="1" />
+  </command>
 </commands>

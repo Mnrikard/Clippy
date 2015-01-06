@@ -113,20 +113,19 @@ namespace ClippyLib.Editors
 
         public override void Edit()
         {
-            bool isHelp = _arguments[0].Equals("help", StringComparison.CurrentCultureIgnoreCase);
-            
             EditorManager manager = new EditorManager();
-                
-            if (isHelp)
+            
+            if(_arguments[0].Equals("help", StringComparison.CurrentCultureIgnoreCase))
             {
                 RespondToExe(manager.Help(_arguments));
                 return;
             }
 
             List<string> functions = Udf(_arguments);
-            if (functions.Count == 0 && !isHelp)
+            if (functions.Count == 0)
                 throw new UndefinedFunctionException(String.Format("Function:{0} does not exist or is not valid", _udfName));
             
+            //there could be multiple functions per UDF, one per line
             for (int fi = 0; fi < functions.Count; fi++)
             {
                 string function = functions[fi];
@@ -135,7 +134,7 @@ namespace ClippyLib.Editors
                 {
                     function = function.Replace("%" + (i - 1).ToString() + "%", _arguments[i]);
                 }
-
+				                
                 for (int i = 0; i < ParameterList.Count; i++)
                 {
                     function = function.Replace("%" + i.ToString() + "%", ParameterList[i].Value);
