@@ -53,6 +53,15 @@ namespace ClippyLib.Editors
                 Expecting = "a replacement string",
                 Required = true
             }); 
+            _parameterList.Add(new Parameter()
+            {
+                ParameterName = "pattern type",
+                Sequence = 3,
+                Validator = (a => (true)),
+                Expecting = "Defaults to \"regex\": either regex, sql, or text",
+                Required = false,
+                DefaultValue = "regex"
+            }); 
         }
 
         public override string ShortDescription
@@ -65,12 +74,16 @@ namespace ClippyLib.Editors
             get
             {
                 return @"Rep
-Syntax: rep ""A"" ""B""
+Syntax: rep ""A"" ""B"" [regex|sql|text]
 
 Performs a regular expression replacement on the source data
 
 Pattern A is a regular expression with IgnoreCase option set.
 Replacement B is the replacement string
+The final optional parameter defines the pattern type
+    regex is a regular expression
+    sql is a TSQL LIKE pattern
+    text is plain text, no pattern
 
 Special characters:
 \n    new line character
@@ -101,7 +114,23 @@ Example:
         
         public override void Edit()
         {
-            SuperRegex repper = ClipEscape(ParameterList[0].Value).ToSuperRegex();
+            SuperRegex repper = null;
+            switch(ParameterList[2].Value.ToLower())
+            {
+                case "sql":
+                    string pattern = Regex.Replace(ParameterList[0].Value, @"(?<esc>[\.\}\{\+\*\\\?\|\)\(\$\^\#])", "\\${esc}");
+                    pattern = Regex.Replace(pattern, "(?!\\\\)_", ".");
+                    pattern = Regex.Replace(pattern, "(?!\\\\)%", @"(.|\n)*");
+                    repper = ClipEscape(pattern).ToSuperRegex();
+                break;
+                case "text":
+                    repper = Regex.Escape(ClipEscape(ParameterList[0].Value)).ToSuperRegex();
+                break;
+                default:
+                    repper = ClipEscape(ParameterList[0].Value).ToSuperRegex();
+                break;
+            }
+            
             SourceData = repper.SuperReplace(SourceData, ClipEscape(ParameterList[1].Value));
         }
 
@@ -109,6 +138,7 @@ Example:
         {
             try
             {
+                //todo: figure out this validation with the new patterns
                 Regex r = new Regex(ClipEscape(pattern));
                 return true;
             }
