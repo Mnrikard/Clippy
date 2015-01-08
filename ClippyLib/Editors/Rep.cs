@@ -115,7 +115,7 @@ Example:
         public override void Edit()
         {
             SuperRegex repper = null;
-            switch(ParameterList[2].Value.ToLower())
+            switch((ParameterList[2].Value ?? ParameterList[2].DefaultValue).ToLower())
             {
                 case "sql":
                     string pattern = Regex.Replace(ParameterList[0].Value, @"(?<esc>[\.\}\{\+\*\\\?\|\)\(\$\^\#])", "\\${esc}");
