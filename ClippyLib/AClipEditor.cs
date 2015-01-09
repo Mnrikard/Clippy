@@ -103,15 +103,12 @@ namespace ClippyLib
             }
         }
 
-        public string GetNextParameterName()
+        public Parameter GetNextParameter()
         {
-            Parameter parm = (from p in ParameterList
-                              where p.IsValued == false
-                              orderby p.Sequence
-                              select p).FirstOrDefault();
-            if (parm == null)
-                return null;
-            return parm.ParameterName;
+            return (from Parameter p in ParameterList
+			        where p.IsValued == false
+			        orderby p.Sequence
+			        select p).FirstOrDefault();            
         }
 
         public void SetNextParameter(string parameterValue)

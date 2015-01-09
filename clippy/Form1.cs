@@ -188,6 +188,12 @@ namespace clippy
                 parms.Rows.Add(dr);
             }
             parametersGrid.DataSource = parms;
+            
+            int parmRow=0;
+            foreach(Parameter p in clipManager.ClipEditor.ParameterList)
+            {
+            	parametersGrid.Rows[parmRow++].Cells[1].ToolTipText = p.Expecting;
+            }
 			
             if(clipManager.ClipEditor.ParameterList.Count == 0)
             {
@@ -269,8 +275,13 @@ namespace clippy
         
         private void RestoreForm()
         {
-            this.ShowInTaskbar = true;
-            this.WindowState = FormWindowState.Normal;
+            ShowInTaskbar = true;
+            WindowState = FormWindowState.Normal;
+        }
+        
+        private void SetParmHelp()
+        {
+        	//parametersGrid
         }
 
         private void MinimizeForm()

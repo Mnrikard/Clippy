@@ -35,7 +35,7 @@ namespace ClippyLib
         string SourceData { get; set; }
 
         bool HasAllParameters { get; }
-        string GetNextParameterName();
+        Parameter GetNextParameter();
         void SetNextParameter(string parameter);
         void SetParameter(int parameterSequence, string parameter);
         List<Parameter> ParameterList { get; }

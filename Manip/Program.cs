@@ -65,7 +65,8 @@ namespace Manip
 
                 while (!manager.ClipEditor.HasAllParameters)
                 {
-                    Console.WriteLine(manager.ClipEditor.GetNextParameterName() + ":");
+                	Parameter nextOne = manager.ClipEditor.GetNextParameter();
+                	Console.WriteLine(String.Concat(nextOne.ParameterName , " {",nextOne.Expecting,"}:"));
                     try
                     {
                         manager.ClipEditor.SetNextParameter(Console.ReadLine());
