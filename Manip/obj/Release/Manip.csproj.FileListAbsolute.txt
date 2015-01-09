@@ -1,5 +1,0 @@
-C:\GitRepo\Clippy\bin\udf.xml
-C:\GitRepo\Clippy\bin\Manip.exe.config
-C:\GitRepo\Clippy\bin\Manip.exe
-C:\GitRepo\Clippy\Manip\obj\Release\ResolveAssemblyReference.cache
-C:\GitRepo\Clippy\Manip\obj\Release\Manip.exe
