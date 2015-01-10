@@ -179,12 +179,8 @@ namespace clippy
             {
                 DataRow dr = parms.NewRow();
                 dr["Parameter"] = p.ParameterName;
-                if (p.IsValued)
-                    dr["Value"] = ParmEscape(p.Value);
-                else if (!p.Required)
-                    dr["Value"] = ParmEscape(p.DefaultValue);
-                else
-                    dr["Value"] = String.Empty;
+                dr["Value"] = p.Value ?? p.DefaultValue ?? String.Empty;
+                                
                 parms.Rows.Add(dr);
             }
             parametersGrid.DataSource = parms;

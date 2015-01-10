@@ -54,7 +54,6 @@
     <Compile Include="Editors\Chunk.cs" />
     <Compile Include="Editors\NewText.cs" />
     <Compile Include="Editors\SqlUpdate.cs" />
-    <Compile Include="Editors\SRep.cs" />
     <Compile Include="Editors\Tabright.cs" />
     <Compile Include="Editors\Count.cs" />
     <Compile Include="Editors\Encode.cs" />

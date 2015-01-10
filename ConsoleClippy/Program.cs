@@ -48,6 +48,13 @@ namespace ConsoleClippy
                 manager.ClipEditor.PersistentEditorResponse += HandleResponseFromClippy;
 
                 SetParameters(manager, args);
+                
+                foreach (Parameter parmWithDefault in (from Parameter p in manager.ClipEditor.ParameterList
+                                                       where !p.IsValued && p.DefaultValue != null
+                                                       select p))
+                {
+                	parmWithDefault.Value = parmWithDefault.DefaultValue;
+                }
 
                 while (!manager.ClipEditor.HasAllParameters)
                 {

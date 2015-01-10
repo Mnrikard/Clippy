@@ -43,12 +43,13 @@ namespace ClippyLib.Editors
             get
             {
                 return @"Grep
-Syntax: grep ""pattern"" [separator]
+Syntax: grep ""pattern"" [separator] [patternType]
 Gets a Regular Expression match list based on the pattern passed in
 
 Pattern - a regular expression pattern, ignores case
 separator - The delimiter between matchs for the output
 separator defaults to new line character.
+patternType - One of regex, sql or text. Defaults to regex
 
 Example:
     clippy grep ""\d+""
@@ -77,6 +78,15 @@ Example:
                 DefaultValue = "\n",
                 Required = false,
                 Expecting = "A string separator"
+            });
+            _parameterList.Add(new Parameter()
+            {
+                ParameterName = "Pattern Type",
+                Sequence = 3,
+                Validator = (a => true),
+                DefaultValue = "regex",
+                Required = false,
+                Expecting = "One of [regex|sql|text]"
             });
         }
 
@@ -107,8 +117,24 @@ Example:
 
         public override void Edit()
         {
-            Regex matcher = ClipEscape(ParameterList[0].Value).ToRegex();
-            MatchCollection matches = matcher.Matches(SourceData);
+         	SuperRegex grepper = null;
+            switch((ParameterList[2].Value ?? ParameterList[2].DefaultValue).ToLower())
+            {
+                case "sql":
+                    string pattern = Regex.Replace(ParameterList[0].Value, @"(?<esc>[\.\}\{\+\*\\\?\|\)\(\$\^\#])", "\\${esc}");
+                    pattern = Regex.Replace(pattern, "(?!\\\\)_", ".");
+                    pattern = Regex.Replace(pattern, "(?!\\\\)%", @"(.|\n)*");
+                    grepper = ClipEscape(pattern).ToSuperRegex();
+                break;
+                case "text":
+                    grepper = Regex.Escape(ClipEscape(ParameterList[0].Value)).ToSuperRegex();
+                break;
+                default:
+                    grepper = ClipEscape(ParameterList[0].Value).ToSuperRegex();
+                break;
+            }
+            
+        	MatchCollection matches = grepper.Matches(SourceData);
             List<string> matchlist = new List<string>();
             foreach (Match match in matches)
             {
