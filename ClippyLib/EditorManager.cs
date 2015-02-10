@@ -113,6 +113,7 @@ To obtain a copy of the GNU General Public License, see:
                 	{
                 		finder.AppendLine(ci.EditorName);
                 	}
+                	return finder.ToString();
                 }
             	return ClipEditor.LongDescription;
             }
