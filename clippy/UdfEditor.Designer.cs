@@ -102,7 +102,7 @@
         	this.saveButton.Location = new System.Drawing.Point(329, 376);
         	this.saveButton.Name = "saveButton";
         	this.saveButton.Size = new System.Drawing.Size(75, 23);
-        	this.saveButton.TabIndex = 5;
+        	this.saveButton.TabIndex = 6;
         	this.saveButton.Text = "Save";
         	this.saveButton.UseVisualStyleBackColor = true;
         	this.saveButton.Click += new System.EventHandler(this.SaveButtonClick);
@@ -134,7 +134,7 @@
         	this.deleter.Location = new System.Drawing.Point(248, 376);
         	this.deleter.Name = "deleter";
         	this.deleter.Size = new System.Drawing.Size(75, 23);
-        	this.deleter.TabIndex = 6;
+        	this.deleter.TabIndex = 5;
         	this.deleter.Text = "Delete";
         	this.deleter.UseVisualStyleBackColor = false;
         	this.deleter.Click += new System.EventHandler(this.deleter_Click);

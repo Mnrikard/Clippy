@@ -1,6 +1,6 @@
 ﻿/*
  * 
- * Copyright 2012 Matthew Rikard
+ * Copyright 2012-2015 Matthew Rikard
  * This file is part of Clippy.
  * 
  *  Clippy is free software: you can redistribute it and/or modify
@@ -79,7 +79,7 @@ namespace ClippyLib
             return eds.ToArray();
         }
         
-        const string Disclaimer = @"Copyright 2012,2013 Matthew Rikard.
+        const string Disclaimer = @"Copyright 2012-2015 Matthew Rikard.
 Clippy is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -90,8 +90,8 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with Clippy.  If not, see <http://www.gnu.org/licenses/>.
+To obtain a copy of the GNU General Public License, see:
+<http://www.gnu.org/licenses/>.
 
 ";
 
@@ -102,8 +102,19 @@ along with Clippy.  If not, see <http://www.gnu.org/licenses/>.
                 ClipEditor = (from e in Editors
                               where e.EditorName.Equals(arguments[1], StringComparison.CurrentCultureIgnoreCase)
                               select e).FirstOrDefault();
-                if(ClipEditor != null)
-                    return ClipEditor.LongDescription;
+                if(ClipEditor == null)
+                {
+                	StringBuilder finder = new StringBuilder();
+                	foreach(IClipEditor ci in (from e in Editors
+                	                           where e.EditorName.ToLower().Contains(arguments[1].ToLower())
+                	                           || arguments[1].ToLower().Contains(e.EditorName.ToLower())
+                	                           || e.LongDescription.ToLower().Contains(arguments[1].ToLower())
+                	                           select e))
+                	{
+                		finder.AppendLine(ci.EditorName);
+                	}
+                }
+            	return ClipEditor.LongDescription;
             }
             StringBuilder output = new StringBuilder(Disclaimer);
             foreach (IClipEditor ce in Editors)

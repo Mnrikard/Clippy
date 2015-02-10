@@ -1,6 +1,6 @@
 ﻿/*
  * 
- * Copyright 2012 Matthew Rikard
+ * Copyright 2012-2015 Matthew Rikard
  * This file is part of Clippy.
  * 
  *  Clippy is free software: you can redistribute it and/or modify
@@ -19,8 +19,10 @@
 */
 
 using System;
-using ClippyLib;
 using System.Linq;
+using clippy;
+using ClippyLib;
+using System.Windows.Forms;
 
 namespace ConsoleClippy
 {
@@ -34,6 +36,11 @@ namespace ConsoleClippy
             {
                 Console.WriteLine(manager.Help(args));
                 Console.ReadLine();
+            }
+            else if(args.Length > 0 && args[0].Equals("udfeditor", StringComparison.CurrentCultureIgnoreCase))
+            {
+            	UdfEditor editorForm = new UdfEditor();
+            	editorForm.ShowDialog();
             }
             else
             {
@@ -86,7 +93,7 @@ namespace ConsoleClippy
             string[] parms = (from Parameter p in editor.ParameterList
                               orderby p.Sequence
                               select "\"" + (p.Value ?? p.DefaultValue ?? String.Empty).Replace("\"","\\q")+"\"").ToArray();
-            RecentCommands.SaveThisCommand(commandName, String.Join(" ", parms));
+            ClippyLib.RecentCommands.SaveThisCommand(commandName, String.Join(" ", parms));
         }
 
         private static void SetParameters(EditorManager manager, string[] args)

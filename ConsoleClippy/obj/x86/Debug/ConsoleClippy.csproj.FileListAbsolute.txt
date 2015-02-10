@@ -8,3 +8,5 @@ C:\GitRepo\Clippy\ConsoleClippy\bin\Debug\Clippy.exe
 C:\GitRepo\Clippy\ConsoleClippy\bin\Debug\Clippy.pdb
 C:\GitRepo\Clippy\ConsoleClippy\obj\x86\Debug\Clippy.exe
 C:\GitRepo\Clippy\ConsoleClippy\obj\x86\Debug\Clippy.pdb
+C:\GitRepo\Clippy\ConsoleClippy\bin\Debug\ClippyUtility.exe
+C:\GitRepo\Clippy\ConsoleClippy\bin\Debug\ClippyUtility.pdb

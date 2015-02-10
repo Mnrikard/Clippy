@@ -39,7 +39,7 @@ namespace clippy
 			//
 			InitializeComponent();
 			
-			aboutme.Text = @"Clippy: Copyright 2012-2014 Matthew Rikard
+			aboutme.Text = @"Clippy: Copyright 2012-2015 Matthew Rikard
 
 Clippy is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

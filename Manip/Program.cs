@@ -1,6 +1,6 @@
 ﻿/*
  * 
- * Copyright 2012 Matthew Rikard
+ * Copyright 2012-2015 Matthew Rikard
  * This file is part of Clippy.
  * 
  *  Clippy is free software: you can redistribute it and/or modify
@@ -63,20 +63,13 @@ namespace Manip
 
                 SetParameters(manager, args);
 
-                while (!manager.ClipEditor.HasAllParameters)
+                if (!manager.ClipEditor.HasAllParameters)
                 {
-                	Parameter nextOne = manager.ClipEditor.GetNextParameter();
-                	Console.WriteLine(String.Concat(nextOne.ParameterName , " {",nextOne.Expecting,"}:"));
-                    try
-                    {
-                        manager.ClipEditor.SetNextParameter(Console.ReadLine());
-                    }
-                    catch (InvalidParameterException ipe)
-                    {
-                        Console.WriteLine(ipe.ParameterMessage);
-                        continue;
-                    }
+                	Console.WriteLine("Y O U   M U S T   P A S S   A L L   R E Q U I R E D   P A R A M E T E R S");
+                	Console.WriteLine(manager.ClipEditor.LongDescription);
+                	return;
                 }
+
                 manager.ClipEditor.SourceData = content;
                 manager.ClipEditor.Edit();
                 content = manager.ClipEditor.SourceData;

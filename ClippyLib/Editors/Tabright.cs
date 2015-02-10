@@ -1,6 +1,6 @@
 ﻿/*
  * 
- * Copyright 2012 Matthew Rikard
+ * Copyright 2012-2015 Matthew Rikard
  * This file is part of Clippy.
  * 
  *  Clippy is free software: you can redistribute it and/or modify

@@ -1,6 +1,6 @@
 ﻿/*
  * 
- * Copyright 2012 Matthew Rikard
+ * Copyright 2012-2015 Matthew Rikard
  * This file is part of Clippy.
  * 
  *  Clippy is free software: you can redistribute it and/or modify
@@ -24,6 +24,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using ClippyLib;
+using Microsoft.Win32;
+using System.Collections.Generic;
 
 namespace clippy
 {
@@ -63,8 +65,34 @@ namespace clippy
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            MinimizeForm();
+        	RegistryKey hkcu = Registry.CurrentUser;
+            RegistryKey clippy = GetRegistryKey(hkcu, "Software\\Rikard\\Clippy");
+            if((clippy.GetValue("CloseFunction") ?? String.Empty).ToString() == "hide")
+            {
+	            e.Cancel = true;
+    			MinimizeForm();
+            }
+        }
+        
+        private RegistryKey GetRegistryKey(RegistryKey parentKey, string subKeyPath)
+        {
+            List<RegistryKey> keys = new List<RegistryKey>();
+            keys.Add(parentKey);
+            try
+            {
+                foreach (string keyname in subKeyPath.Split('\\'))
+                {
+                    keys.Add(keys[keys.Count - 1].CreateSubKey(keyname));
+                }
+                return keys[keys.Count - 1];
+            }
+            finally
+            {
+                for (int i = 1; i < keys.Count - 1; i++)
+                {
+                    keys[i].Close();
+                }
+            }
         }
         
         private void HandleResponseFromClippy(object sender, EditorResponseEventArgs e)

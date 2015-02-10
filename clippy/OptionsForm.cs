@@ -1,6 +1,6 @@
 ﻿/*
  * 
- * Copyright 2012 Matthew Rikard
+ * Copyright 2012-2015 Matthew Rikard
  * This file is part of Clippy.
  * 
  *  Clippy is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -69,6 +70,8 @@ namespace clippy
             RegistryKey clippy = GetRegistryKey(hkcu, "Software\\Rikard\\Clippy");
             clippy.SetValue("udfLocation", udfLocation.Text, RegistryValueKind.String);
             clippy.SetValue("snippetsLocation", snippetsLocation.Text, RegistryValueKind.String);
+            clippy.SetValue("CloseFunction", hideAtX.Checked ? "hide" : "close", RegistryValueKind.String);
+            
             this.Close();
         }
 
@@ -99,6 +102,26 @@ namespace clippy
             RegistryKey clippy = GetRegistryKey(hkcu, "Software\\Rikard\\Clippy");
             udfLocation.Text = (clippy.GetValue("udfLocation") ?? String.Empty).ToString();
             snippetsLocation.Text = (clippy.GetValue("snippetsLocation") ?? String.Empty).ToString();
+            if((clippy.GetValue("CloseFunction") ?? String.Empty).ToString() == "hide")
+            {
+            	hideAtX.Checked = true;
+            }
+            else
+            {
+            	closeAtX.Checked = true;
+            }
+        }
+        
+        void ChangeCloseFunction(object sender, EventArgs e)
+        {
+        	
+            
+        }
+        
+        
+        void RunAtStartCheckedChanged(object sender, EventArgs e)
+        {
+        	
         }
     }
 }

@@ -1,8 +1,8 @@
 C:\GitRepo\Clippy\bin\udf.xml
 C:\GitRepo\Clippy\bin\snippets.xml
-C:\GitRepo\Clippy\bin\ConsoleClippy.exe.config
-C:\GitRepo\Clippy\bin\ConsoleClippy.exe
-C:\GitRepo\Clippy\bin\ConsoleClippy.pdb
 C:\GitRepo\Clippy\ConsoleClippy\obj\x86\Release\ResolveAssemblyReference.cache
-C:\GitRepo\Clippy\ConsoleClippy\obj\x86\Release\ConsoleClippy.exe
-C:\GitRepo\Clippy\ConsoleClippy\obj\x86\Release\ConsoleClippy.pdb
+C:\GitRepo\Clippy\bin\Clippy.exe.config
+C:\GitRepo\Clippy\bin\Clippy.exe
+C:\GitRepo\Clippy\bin\Clippy.pdb
+C:\GitRepo\Clippy\ConsoleClippy\obj\x86\Release\Clippy.exe
+C:\GitRepo\Clippy\ConsoleClippy\obj\x86\Release\Clippy.pdb
