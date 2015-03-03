@@ -8,7 +8,7 @@
             InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
         
         <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
-        <Upgrade Id="DB7F2249-E896-4195-B5AC-71EB8184EA04">
+        <Upgrade Id="37C00A19-02CA-4145-A92A-3CA87BB94E11">
             <UpgradeVersion
                 Minimum="1.0.0.0" Maximum="99.0.0.0"
                 Property="PREVIOUSVERSIONSINSTALLED"
