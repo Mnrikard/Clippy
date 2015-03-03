@@ -13,6 +13,6 @@
     <StartArguments>connstring</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>strlist2</StartArguments>
+    <StartArguments>cleaninsert</StartArguments>
   </PropertyGroup>
 </Project>

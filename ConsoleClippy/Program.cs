@@ -37,7 +37,9 @@ namespace ConsoleClippy
                 Console.WriteLine(manager.Help(args));
                 Console.ReadLine();
             }
-            else if(args.Length > 0 && args[0].Equals("udfeditor", StringComparison.CurrentCultureIgnoreCase))
+            else if(args.Length > 0 && 
+                    (args[0].Equals("--udfeditor", StringComparison.CurrentCultureIgnoreCase)
+                     || args[0].Equals("--udf", StringComparison.CurrentCultureIgnoreCase)))
             {
             	UdfEditor editorForm = new UdfEditor();
             	editorForm.ShowDialog();
@@ -56,11 +58,15 @@ namespace ConsoleClippy
 
                 SetParameters(manager, args);
                 
-                foreach (Parameter parmWithDefault in (from Parameter p in manager.ClipEditor.ParameterList
-                                                       where !p.IsValued && p.DefaultValue != null
-                                                       select p))
+                // if you've supplied at least one parameter, then set the rest, otherwise prompt
+                if(args.Length > 1)
                 {
-                	parmWithDefault.Value = parmWithDefault.DefaultValue;
+	                foreach (Parameter parmWithDefault in (from Parameter p in manager.ClipEditor.ParameterList
+	                                                       where !p.IsValued && p.DefaultValue != null
+	                                                       select p))
+	                {
+	                	parmWithDefault.Value = parmWithDefault.DefaultValue;
+	                }
                 }
 
                 while (!manager.ClipEditor.HasAllParameters)
