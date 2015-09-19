@@ -1,0 +1,49 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClippyLib/EditorManager.cs">
+    <Files>
+      <File FileName="ClippyLib/Editors/Capitalize.cs" Line="64" Column="38" />
+      <File FileName="UT.ClippyLib/Editors/TestCapitalize.cs" Line="23" Column="27" />
+      <File FileName="ClippyLib/AClipEditor.cs" Line="45" Column="41" />
+      <File FileName="ClippyLib/EditorManager.cs" Line="38" Column="78" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True" selected="True">
+          <Node name="ClippyLib" expanded="True">
+            <Node name="Editors" expanded="True" />
+          </Node>
+          <Node name="UT.ClippyLib" expanded="True">
+            <Node name="Editors" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True">
+          <Node name="UT.ClippyLib" expanded="True">
+            <Node name="UT" expanded="True">
+              <Node name="ClippyLib" expanded="True">
+                <Node name="TestCapitalize" expanded="True">
+                  <Node name="CanCapitalize" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestCapitalize.cs" line="25" column="11" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestCapitalize.cs" line="21" column="10" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

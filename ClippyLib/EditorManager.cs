@@ -34,7 +34,8 @@ namespace ClippyLib
         public EditorManager()
         {
             Editors = new List<IClipEditor>();
-
+			
+			//todo: don't make each editor a singleton, make it in an abstract factory
             Editors.Add(new Capitalize());
             Editors.Add(new ClipSort());
             Editors.Add(new ChunkText());
