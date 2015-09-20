@@ -39,6 +39,8 @@
     <Compile Include="Editors\TestCapitalize.cs" />
     <Compile Include="Editors\EditorTester.cs" />
     <Compile Include="Editors\TestChunk.cs" />
+    <Compile Include="Editors\TestColumnAlign.cs" />
+    <Compile Include="Editors\TestCount.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

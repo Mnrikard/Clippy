@@ -26,7 +26,7 @@ using System.Text.RegularExpressions;
 
 namespace ClippyLib.Editors
 {
-    class Count : AClipEditor
+    internal class Count : AClipEditor
     {
         public override string EditorName
         {

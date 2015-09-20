@@ -32,7 +32,14 @@ namespace UT.ClippyLib
 		}
 
 		[Test]
-		public void CanChunkAtNonInteger()
+		public void CanChunkWithDifferentSeparator()
+		{
+			string actual = EditorTester.TestEditor(new ChunkText(), _chunktext, new []{"10","|"});
+			Assert.AreEqual("aaaaabbbbb|cccccddddd|e", actual);
+		}
+
+		[Test]
+		public void CanFailAtNonInteger()
 		{
 			Assert.Throws<InvalidParameterException>(
 				() => {EditorTester.TestEditor(new ChunkText(), _chunktext, new []{"ten","\n"});}

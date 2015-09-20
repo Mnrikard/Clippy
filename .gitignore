@@ -8,5 +8,5 @@ Manip/bin/
 Manip/obj/
 UT.ClippyLib/bin/
 UT.ClippyLib/obj/
-/test-results/
+test-results/
 *.swp

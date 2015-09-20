@@ -14,7 +14,7 @@ namespace UT.ClippyLib
 			return TestEditor(editor, input, new []{command});
 		}
 
-		public static string TestEditor(IClipEditor editor, string input, string[] commands)
+		public static string TestEditor(IClipEditor editor, string input, params string[] commands)
 		{
 			editor.SourceData = input;
 			editor.DefineParameters();

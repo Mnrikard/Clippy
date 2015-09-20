@@ -26,7 +26,9 @@ namespace ClippyLib.Editors
 {
     public class ColumnAlign : AClipEditor
     {
-        #region boilerplate
+		
+		private Regex _colSplitter;
+		private List<int> _columnLengths;
 
         public override string EditorName
         {
@@ -96,9 +98,7 @@ Example:
             });
         }
 
-        #endregion
 
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for(int i=0;i<ParameterList.Count;i++)
@@ -109,42 +109,50 @@ Example:
                 SetParameter(2, args[2]);
         }
 
+
         public override void Edit()
         {
-            List<int> columnLengths = new List<int>();
-            string[] rows = SourceData.Split('\n');
-            Regex colSplitter = new Regex(Regex.Escape(ClipEscape(ParameterList[1].Value)), RegexOptions.IgnoreCase);
-            
-            //round 1: define the lengths
-            string[] cols = colSplitter.Split(rows[0]);
-            foreach (string col in cols)
-                columnLengths.Add(col.Length);
-            for (int r = 1; r < rows.Length; r++)
-            {
-                cols = colSplitter.Split(rows[r]);
-                for (int c = 0; c < cols.Length; c++)
-                {
-                    if (c >= columnLengths.Count)
-                        columnLengths.Add(cols[c].Length);
-                    columnLengths[c] = Math.Max(columnLengths[c], cols[c].Length);
-                }
-            }
-            //set the defined length between
-            for (int c = 0; c < columnLengths.Count; c++)
-                columnLengths[c] += Int16.Parse(ParameterList[0].Value);
+			_colSplitter = new Regex (Regex.Escape (ClipEscape (ParameterList [1].Value)), RegexOptions.IgnoreCase);
 
-            //round 2: display
-            for (int r = 0; r < rows.Length; r++)
-            {
-                cols = colSplitter.Split(rows[r]);
-                for (int c = 0; c < cols.Length; c++)
-                {
-                    cols[c] = cols[c].PadRight(columnLengths[c], ' ');
-                }
-                rows[r] = String.Join(String.Empty, cols);
-            }
+			//todo: \r should be accounted for in each of the IClipEditors
+            string[] rows = SourceData.Split('\n');
+            
+            
+            DefineColumnLengths (rows);
+			RebuildRows (rows);
             SourceData = String.Join("\n", rows);
         }       
         
+		private void DefineColumnLengths (string[] rows)
+		{
+			_columnLengths = new List<int>();
+			for (int r = 0; r < rows.Length; r++) 
+			{
+				string[] cols = _colSplitter.Split (rows [r]);
+				for (int c = 0; c < cols.Length; c++) 
+				{
+					if (c >= _columnLengths.Count)
+					{
+						_columnLengths.Add(cols[c].Length);
+					}
+					_columnLengths[c] = Math.Max(_columnLengths[c], cols[c].Length);
+				}
+			}
+		}
+
+		private void RebuildRows (string[] rows)
+		{
+			string columnSeparator = new System.String(' ', Int32.Parse (ParameterList [0].Value));
+
+			for (int r = 0; r < rows.Length; r++) 
+			{
+				string[] cols = _colSplitter.Split(rows[r]);
+				for (int c = 0; c < cols.Length; c++) 
+				{
+					cols[c] = cols[c].PadRight(_columnLengths[c],' ');
+				}
+				rows[r] = String.Join(columnSeparator, cols).Trim();
+			}
+		}
     }
 }
