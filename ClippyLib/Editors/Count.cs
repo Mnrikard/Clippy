@@ -78,13 +78,12 @@ Example:
         {
             if (ParameterList.Count > 0 && ParameterList[0].Value != null && ParameterList[0].Value.StartsWith("line", StringComparison.CurrentCultureIgnoreCase))
             {
-                int lines = String.IsNullOrEmpty(SourceData) ? 0 : 1;
-                int currchar = 0;
-                while ((currchar = SourceData.IndexOf('\n', currchar)) != -1)
-                {
-                    currchar++;//increment so we don't keep hitting the same new line char
-                    lines++;
-                }
+				int lines = 0;
+				if(!String.IsNullOrEmpty(SourceData))
+				{
+					lines = SourceData.Split('\n').Length;
+				}
+
                 RespondToExe(String.Format("{0} lines", lines.ToString()));
             }
             else
@@ -93,8 +92,6 @@ Example:
             }
             //note: this particular edit doesn't change the sourcedata
             //that is on purpose
-        }
-
-           
+        }           
     }
 }
