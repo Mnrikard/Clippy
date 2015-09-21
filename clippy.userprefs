@@ -1,23 +1,27 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UT.ClippyLib/Editors/TestChunk.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClippyLib/RecentCommands.cs">
     <Files>
-      <File FileName="ClippyLib/Editors/Chunk.cs" Line="103" Column="1" />
-      <File FileName="UT.ClippyLib/Editors/TestChunk.cs" Line="38" Column="86" />
-      <File FileName="ClippyLib/AClipEditor.cs" Line="88" Column="1" />
-      <File FileName="UT.ClippyLib/Editors/EditorTester.cs" Line="25" Column="1" />
-      <File FileName="ClippyLib/Exceptions.cs" Line="28" Column="43" />
+      <File FileName="UT.ClippyLib/Editors/EditorTester.cs" Line="1" Column="1" />
+      <File FileName="ClippyLib/Editors/Dedupe.cs" Line="81" Column="38" />
+      <File FileName="UT.ClippyLib/Editors/TestDedupe.cs" Line="18" Column="4" />
+      <File FileName="ClippyLib/AClipEditor.cs" Line="28" Column="45" />
+      <File FileName="ClippyLib/IClipEditor.cs" Line="43" Column="21" />
+      <File FileName="clippy/Form1.cs" Line="188" Column="40" />
+      <File FileName="ConsoleClippy/Program.cs" Line="102" Column="40" />
+      <File FileName="ClippyLib/RecentCommands.cs" Line="31" Column="9" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
+          <Node name="clippy" expanded="True" />
           <Node name="ClippyLib" expanded="True">
             <Node name="Editors" expanded="True" />
+            <Node name="RecentCommands.cs" selected="True" />
           </Node>
+          <Node name="ConsoleClippy" expanded="True" />
           <Node name="UT.ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True">
-              <Node name="TestChunk.cs" selected="True" />
-            </Node>
+            <Node name="Editors" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -28,16 +32,7 @@
         <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
-          <Node name="UT.ClippyLib" expanded="True">
-            <Node name="UT" expanded="True">
-              <Node name="ClippyLib" expanded="True">
-                <Node name="TestCapitalize" expanded="True" />
-                <Node name="TestChunk" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

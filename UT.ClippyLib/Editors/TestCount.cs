@@ -28,7 +28,7 @@ c
 			EditorTester.TestEditor(cnt, linecounter, "lines");
 
 			Assert.AreEqual("11 lines", actualResponse);
-Assert.AreEqual(linecounter, cnt.SourceData);
+			Assert.AreEqual(linecounter, cnt.SourceData);
 		}
 
 		[Test]
@@ -41,8 +41,8 @@ Assert.AreEqual(linecounter, cnt.SourceData);
 			EditorTester.TestEditor(cnt, charcounter, "chars");
 
 			Assert.AreEqual("7 characters", actualResponse);
-Assert.AreEqual(linecounter, cnt.SourceData);
+			Assert.AreEqual(charcounter, cnt.SourceData);
 		}
-}
+	}
 }
 
