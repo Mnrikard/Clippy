@@ -21,11 +21,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace ClippyLib.Editors
 {
     public class SqlInsert : AClipEditor
-    {
+	{
+		private string _insertStatement;
+		private int _rowOfInsert;
+		private int _maxRowsPerInsert = 1000;
+
         #region boilerplate
 
         public override string EditorName
@@ -94,58 +99,71 @@ Example:
 
         #endregion
 
-
         public override void Edit()
-        {
-            string[] lines = SourceData.Split('\n');
-            string top = String.Empty;
-            System.Text.StringBuilder output = new System.Text.StringBuilder();
-            double currint = 0;
-            string topper = String.Empty;
-            int tapout = 1000;
-            int rowcount = 0;
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string[] cols = Regex.Split(lines[i], Regex.Escape(ClipEscape(ParameterList[1].Value)), RegexOptions.IgnoreCase);
-                if (i == 0)
-                {
-                    string tablename = ParameterList[0].Value.Replace(".", "].[").Replace("[[", "[").Replace("]]", "]");
-                    topper = String.Format("insert into [{0}] ({1})\nvalues\n", tablename, String.Join(", ", cols));
-                    rowcount = 0;
-                }
-                else
-                {
-                    if (++rowcount == tapout || i==1)
-                    {
-                        output.Append(topper);
-                        output.Append(" (");
-                        rowcount = 0;
-                    }
-                    else
-                    {
-                        output.Append(",(");
-                    }
+        {			
+			StringBuilder output = new StringBuilder();
 
-                    for (int j = 0; j < cols.Length; j++)
-                    {
-                        if (j > 0)
-                        {
-                            output.Append(", ");
-                        }
-                        if (Double.TryParse(cols[j], out currint) || cols[j] == "NULL")
-                        {
-                            output.Append(cols[j]);
-                        }
-                        else
-                        {
-                            output.Append("'" + cols[j].Replace("'", "''") + "'");
-                        }
-                    }
-                    output.Append(")\n");
+			string[] lines = SourceData.Split('\n');
+			string[] columnNames = GetColumns(lines[0]);
+			DefineInsertStatement(columnNames);
+			WriteInsertStatement(output);
+
+            for (int i = 1; i < lines.Length; i++)
+            {				               
+                if (_rowOfInsert >= _maxRowsPerInsert)
+                {
+					WriteInsertStatement(output);
                 }
+                else if(i > 1)
+                {
+                    output.Append(",");
+                }
+				
+				string[] cols = GetColumns(lines[i]);
+                WriteSingleRow (output, cols);
             }
+
             SourceData = output.ToString();
-        }       
+        }
+
+		private void WriteInsertStatement(StringBuilder writeTo)
+		{
+			writeTo.Append(_insertStatement);
+			_rowOfInsert = 0;
+		}
+
+		private void DefineInsertStatement (string[] columnNames)
+		{
+			string tableName = ParameterList [0].Value.Replace (".", "].[").Replace ("[[", "[").Replace ("]]", "]");
+			_insertStatement = String.Format ("insert into [{0}] ({1})\nvalues\n ", tableName, String.Join (", ", columnNames));
+		}
+
+		private string[] GetColumns(string line)
+		{
+			return Regex.Split(line, ParameterList[1].GetEscapedValue(), RegexOptions.IgnoreCase);
+		}
         
+		private void WriteSingleRow (StringBuilder output, string[] cols)
+		{
+			output.Append("(");
+			for (int j = 0; j < cols.Length; j++) 
+			{
+				if (j > 0) 
+				{
+					output.Append(", ");
+				}
+
+				string apostropheOrNot = IsNullOrNumber(cols[j]) ? String.Empty : "'";
+				output.AppendFormat("{0}{1}{0}", apostropheOrNot, cols[j].Replace("'", "''"));
+			}
+			output.Append(")\n");
+			_rowOfInsert++;
+		}
+
+		private bool IsNullOrNumber(string column)
+		{
+			double numberTester;
+			return (column == "NULL" || Double.TryParse(column, out numberTester));
+		}
     }
 }

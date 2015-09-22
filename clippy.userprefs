@@ -1,27 +1,29 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ClippyLib/RecentCommands.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UT.ClippyLib/Editors/TestSqlInsert.cs">
     <Files>
-      <File FileName="UT.ClippyLib/Editors/EditorTester.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/Editors/Dedupe.cs" Line="81" Column="38" />
-      <File FileName="UT.ClippyLib/Editors/TestDedupe.cs" Line="18" Column="4" />
-      <File FileName="ClippyLib/AClipEditor.cs" Line="28" Column="45" />
-      <File FileName="ClippyLib/IClipEditor.cs" Line="43" Column="21" />
-      <File FileName="clippy/Form1.cs" Line="188" Column="40" />
-      <File FileName="ConsoleClippy/Program.cs" Line="102" Column="40" />
-      <File FileName="ClippyLib/RecentCommands.cs" Line="31" Column="9" />
+      <File FileName="ClippyLib/Editors/Dedupe.cs" Line="54" Column="56" />
+      <File FileName="UT.ClippyLib/Editors/TestDedupe.cs" Line="1" Column="23" />
+      <File FileName="ClippyLib/AClipEditor.cs" Line="85" Column="78" />
+      <File FileName="ClippyLib/IClipEditor.cs" Line="33" Column="41" />
+      <File FileName="ClippyLib/Editors/Capitalize.cs" Line="71" Column="11" />
+      <File FileName="ClippyLib/Parameter.cs" Line="69" Column="4" />
+      <File FileName="ClippyLib/Editors/Tabright.cs" Line="140" Column="90" />
+      <File FileName="ClippyLib/Editors/SqlInsert.cs" Line="32" Column="40" />
+      <File FileName="UT.ClippyLib/Editors/TestSqlInsert.cs" Line="18" Column="27" />
+      <File FileName="UT.ClippyLib/Editors/EditorTester.cs" Line="19" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="clippy" expanded="True" />
           <Node name="ClippyLib" expanded="True">
             <Node name="Editors" expanded="True" />
-            <Node name="RecentCommands.cs" selected="True" />
           </Node>
           <Node name="ConsoleClippy" expanded="True" />
           <Node name="UT.ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True" />
+            <Node name="Editors" expanded="True">
+              <Node name="TestSqlInsert.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
@@ -32,7 +34,17 @@
         <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="UT.ClippyLib" expanded="True">
+            <Node name="UT" expanded="True">
+              <Node name="ClippyLib" expanded="True">
+                <Node name="TestSqlInsert" expanded="True">
+                  <Node name="CanCreateLongInsertStatement" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
@@ -40,6 +52,7 @@
     <BreakpointStore>
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/AClipEditor.cs" line="88" column="24" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/EditorTester.cs" line="19" column="14" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestSqlInsert.cs" line="25" column="32" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

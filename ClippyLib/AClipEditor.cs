@@ -82,7 +82,7 @@ namespace ClippyLib
             OnPersistentEditorResponse(e);
         }
 
-
+		//todo: remove this after replacing all refs with Parameter.GetEscapedValue
         protected string ClipEscape(string input)
         {
             return input.Replace("\\q", "\"")

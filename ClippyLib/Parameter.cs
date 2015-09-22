@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ClippyLib
 {
@@ -61,6 +62,18 @@ namespace ClippyLib
                 return true;
             }
         }
+
+		public string GetEscapedValue()
+		{
+			return Regex.Escape(ClipEscape(Value));
+		}
+
+		private string ClipEscape(string input)
+		{
+			return input.Replace("\\q", "\"")
+				.Replace("\\t", "\t")
+					.Replace("\\n", "\n");
+		}
 
     }
 }

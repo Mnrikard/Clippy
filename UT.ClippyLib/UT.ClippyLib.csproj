@@ -42,6 +42,7 @@
     <Compile Include="Editors\TestColumnAlign.cs" />
     <Compile Include="Editors\TestCount.cs" />
     <Compile Include="Editors\TestDedupe.cs" />
+    <Compile Include="Editors\TestSqlInsert.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
