@@ -56,10 +56,6 @@ Example:
             }
         }
 
-        public Dedupe()
-        {
-            
-        }
 
         public override void DefineParameters()
         {
@@ -90,9 +86,9 @@ Example:
 
         public override void Edit()
         {
-            string[] distinctItems = (from itm in Regex.Split(SourceData, Regex.Escape(ClipEscape(ParameterList[0].Value)), RegexOptions.IgnoreCase)
+            string[] distinctItems = (from itm in Regex.Split(SourceData, ParameterList[0].GetEscapedValueOrDefault(), RegexOptions.IgnoreCase)
                                       select itm).Distinct().ToArray();
-            SourceData = String.Join(ParameterList[0].Value, distinctItems);
+            SourceData = String.Join(ParameterList[0].GetEscapedValueOrDefault(), distinctItems);
         }       
         
     }

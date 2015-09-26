@@ -5,25 +5,22 @@ using ClippyLib.Editors;
 namespace UT.ClippyLib
 {
 	[TestFixture]
-	public class TestDedupe
+	public class TestDedupe : AEditorTester
 	{
 		[Test]
 		public void CanDedupeWithComma()
 		{
-			string duped = "abcd,abcd,abcd,abcd,defg,deFG";
-
-			string actual = EditorTester.TestEditor(new Dedupe(), duped, ",");
-			string expected = "abcd,defg,deFG";
-			Assert.AreEqual(expected, actual);
+			WhenClipboardContains("abcd,abcd,abcd,abcd,defg,deFG");
+			AndCommandIsRan("dedup ,");
+			ThenTheClipboardShouldContain("abcd,defg,deFG");
 		}
 
 		[Test]
 		public void CanDedupeWithNewLine()
 		{
-			string duped = "abcd\nabcd\nABCD";
-			string actual = EditorTester.TestEditor(new Dedupe(), duped, "\n");
-			string expected = "abcd\nABCD";
-			Assert.AreEqual(expected, actual);
+			WhenClipboardContains("abcd\nabcd\nABCD");
+			AndCommandIsRan("dedup");
+			ThenTheClipboardShouldContain("abcd\nABCD");
 		}
 	}
 }

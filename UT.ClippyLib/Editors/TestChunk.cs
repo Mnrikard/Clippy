@@ -38,7 +38,7 @@ namespace UT.ClippyLib
 		public void CanFailAtNonInteger()
 		{
 			Assert.Throws<InvalidParameterException>(
-				() => {EditorTester.TestEditor(new ChunkText(), _chunktext, new []{"ten","\n"});}
+				() => {TestEditor(new ChunkText(), _chunktext, new []{"ten","\n"});}
 				);
 		}
 	}

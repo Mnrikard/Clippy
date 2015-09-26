@@ -18,9 +18,9 @@ namespace UT.ClippyLib
 		[Test]
 		public void CanReplaceSuperRegex()
 		{
-			string content = "replace each word with it's capitalized second letter";
-			string expected = "rEplace eAch wOrd wIth iT's cApitalized sEcond lEtter";
-			EditorTester.AssertEditor(expected, new Rep(), content, "/(\\w)(\\w)([\\w']+)/i", "$0\\u$1$2");
+			WhenClipboardContains("replace each word with it's capitalized second letter");
+			AndCommandIsRan("rep /(\\w)(\\w)([\\w']+)/i $1\\u$2$3");
+			ThenTheClipboardShouldContain("rEplace eAch wOrd wIth iT's cApitalized sEcond lEtter");
 		}
 	}
 }

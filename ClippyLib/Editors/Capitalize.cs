@@ -90,7 +90,7 @@ Example:
 
         public override void Edit()
         {
-            string ctype = ParameterList[0].Value;
+            string ctype = ParameterList[0].GetValueOrDefault();
             if (ctype == "u")
                 SourceData = SourceData.ToUpper();
             else if (ctype == "l")

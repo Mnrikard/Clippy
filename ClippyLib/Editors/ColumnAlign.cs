@@ -112,7 +112,7 @@ Example:
 
         public override void Edit()
         {
-			_colSplitter = new Regex (Regex.Escape (ClipEscape (ParameterList [1].Value)), RegexOptions.IgnoreCase);
+			_colSplitter = new Regex(ParameterList[1].GetEscapedValueOrDefault(), RegexOptions.IgnoreCase);
 
 			//todo: \r should be accounted for in each of the IClipEditors
             string[] rows = SourceData.Split('\n');
@@ -142,7 +142,7 @@ Example:
 
 		private void RebuildRows (string[] rows)
 		{
-			string columnSeparator = new System.String(' ', Int32.Parse (ParameterList [0].Value));
+			string columnSeparator = new System.String(' ', Int32.Parse (ParameterList[0].GetValueOrDefault()));
 
 			for (int r = 0; r < rows.Length; r++) 
 			{

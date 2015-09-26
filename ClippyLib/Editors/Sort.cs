@@ -103,11 +103,11 @@ namespace ClippyLib.Editors
 
         public override void Edit()
         {
-            string[] sortable = Regex.Split(SourceData, Regex.Escape(ClipEscape(ParameterList[1].Value)), RegexOptions.IgnoreCase);
+            string[] sortable = Regex.Split(SourceData, ParameterList[1].GetEscapedValueOrDefault(), RegexOptions.IgnoreCase);
             Array.Sort(sortable, SortUnknown);
-            if (ParameterList[0].Value.Trim().Equals("desc", StringComparison.CurrentCultureIgnoreCase))
+            if (ParameterList[0].GetValueOrDefault().Trim().Equals("desc", StringComparison.CurrentCultureIgnoreCase))
                 Array.Reverse(sortable);
-            SourceData = String.Join(ClipEscape(ParameterList[1].Value), sortable);
+            SourceData = String.Join(ParameterList[1].GetEscapedValueOrDefault(), sortable);
         }
 
 

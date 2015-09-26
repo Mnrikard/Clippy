@@ -6,25 +6,50 @@ using ClippyLib;
 namespace UT.ClippyLib
 {
 	[TestFixture]
-	public class TestGrep
+	public class TestGrep : AEditorTester
 	{
 		[Test]
 		public void CanGrep()
 		{
-			string content = "this is a string with tennis";
-			EditorTester.AssertEditor("this,is,tennis", new Grep(), content, @"\w*is\b", ",");
+			WhenClipboardContains("this is a string with tennis");
+			AndCommandIsRan(@"grep ""\w*is\b"" ,");
+			ThenTheClipboardShouldContain("this,is,tennis");
+		}
+
+		[Test]
+		public void CanGrepWithOptions()
+		{
+			WhenClipboardContains("first word\n"+
+			                      "second word\n"+
+			                      "third word");
+			AndCommandIsRan("grep /^\\w+/m");
+			ThenTheClipboardShouldContain("first\n"+
+			                              "second\n"+
+			                              "third");
+		}
+
+		[Test]
+		public void CanGrepWithPlainText()
+		{
+			WhenClipboardContains("this is some text");
+			AndCommandIsRan("grep \"Some Text\" text");
+			ThenTheClipboardShouldContain("some text");
+		}
+
+		[Test]
+		public void CanGrepWithSqlPattern()
+		{
+			WhenClipboardContains("We sh0uld\nfind each line\nwith a d1git\nbut not this one");
+			AndCommandIsRan("grep %[0-9]% , sql");
+			ThenTheClipboardShouldContain("We sh0uld,with a d1git");
 		}
 
 		[Test]
 		public void CanReportWhenNoMatchFound()
 		{
-			string content = "a string";
-			IClipEditor grep = new Grep();
-			string actualResponse = null;
-			grep.EditorResponse += (a,b) => {actualResponse = b.ResponseString;};
-			EditorTester.TestEditor(grep, content, @"\w*is\b",",");
-			Assert.AreEqual("Pattern did not find a match in the string", actualResponse);
-			Assert.AreEqual(content, grep.SourceData);
+			WhenClipboardContains("any random string");
+			AndCommandIsRan("grep \"some pattern that won't match\"");
+			ThenClippyShouldRespondWith("Pattern did not find a match in the string");
 		}
 	}
 }

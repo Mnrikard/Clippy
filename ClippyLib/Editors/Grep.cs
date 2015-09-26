@@ -118,19 +118,20 @@ Example:
         public override void Edit()
         {
          	SuperRegex grepper = null;
-            switch((ParameterList[2].Value ?? ParameterList[2].DefaultValue).ToLower())
+            switch((ParameterList[2].GetValueOrDefault()).ToLower())
             {
                 case "sql":
                     string pattern = Regex.Replace(ParameterList[0].Value, @"(?<esc>[\.\}\{\+\*\\\?\|\)\(\$\^\#])", "\\${esc}");
                     pattern = Regex.Replace(pattern, "(?!\\\\)_", ".");
-                    pattern = Regex.Replace(pattern, "(?!\\\\)%", @"(.|\n)*");
-                    grepper = ClipEscape(pattern).ToSuperRegex();
+                    pattern = Regex.Replace(pattern, "(?!\\\\)%", @".*");
+                    grepper = Parameter.ClipEscape(String.Concat("/",pattern,"/mi")).ToSuperRegex();
+					
                 break;
                 case "text":
-                    grepper = Regex.Escape(ClipEscape(ParameterList[0].Value)).ToSuperRegex();
+                    grepper = Regex.Escape(ParameterList[0].GetEscapedValue()).ToSuperRegex();
                 break;
                 default:
-                    grepper = ClipEscape(ParameterList[0].Value).ToSuperRegex();
+					grepper = ClipEscape(ParameterList[0].Value).ToSuperRegex();
                 break;
             }
             
@@ -144,7 +145,7 @@ Example:
             if (matchlist.Count == 0)
                 RespondToExe("Pattern did not find a match in the string");
             else
-                SourceData = String.Join(ClipEscape(ParameterList[1].Value), matchlist.ToArray());
+                SourceData = String.Join(Parameter.ClipEscape(ParameterList[1].GetValueOrDefault()), matchlist.ToArray());
         }       
         
     }

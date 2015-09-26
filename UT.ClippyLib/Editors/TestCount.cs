@@ -6,42 +6,24 @@ using ClippyLib.Editors;
 namespace UT.ClippyLib
 {
 	[TestFixture]
-	public class TestCount
+	public class TestCount : AEditorTester
 	{
 		[Test]
 		public void CanCountLines ()
 		{
-			string linecounter = @"
-
-
-
-
-
-a
-b
-c
-
-";
-			IClipEditor cnt = new Count();
-			string actualResponse=null;
-			cnt.EditorResponse += (sender, e) => {actualResponse = e.ResponseString;};
-			EditorTester.TestEditor(cnt, linecounter, "lines");
-
-			Assert.AreEqual("11 lines", actualResponse);
-			Assert.AreEqual(linecounter, cnt.SourceData);
+			WhenClipboardContains("\r\n\r\n\r\n\r\n\r\n\r\na\r\nb\r\nc\r\n\r\n");
+			AndCommandIsRan("count lines");
+			ThenClippyShouldRespondWith("11 lines");
+			AndSourceDataShouldNotHaveChanged();
 		}
 
 		[Test]
 		public void CanCountChars()
 		{
-			string charcounter = "abcdefg";
-			IClipEditor cnt = new Count();
-			string actualResponse=null;
-			cnt.EditorResponse += (sender, e) => {actualResponse = e.ResponseString;};
-			EditorTester.TestEditor(cnt, charcounter, "chars");
-
-			Assert.AreEqual("7 characters", actualResponse);
-			Assert.AreEqual(charcounter, cnt.SourceData);
+			WhenClipboardContains("abcdefg");
+			AndCommandIsRan("count");
+			ThenClippyShouldRespondWith("7 characters");
+			AndSourceDataShouldNotHaveChanged();
 		}
 	}
 }

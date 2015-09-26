@@ -49,7 +49,7 @@ Description
 Converts from decimal to a base number system and back
 For instance 
 clippy tobase 16 will convert 255 to FF
-clippy tobase 16 -1 will convert FF to 255
+clippy tobase 16 reverse will convert FF to 255
 
 baseint - The base number: for example binary would be 2
           Octal would be 8
@@ -112,46 +112,48 @@ reverse - To convert back from a base to the decimal use ""reverse""
         public override void Edit()
         {
             byte basenum;
-            if (!Byte.TryParse(ParameterList[0].Value, out basenum))
+            if (!Byte.TryParse(ParameterList[0].GetValueOrDefault(), out basenum))
             {
                 RespondToExe("Base number is not a number");
                 return;
             }
-            if (ParameterList[1].Value.Equals("reverse", StringComparison.CurrentCultureIgnoreCase))
+
+			Func<string,int,string> numberConverter;
+			if(ParameterList[1].GetValueOrDefault().Equals("reverse", StringComparison.CurrentCultureIgnoreCase))
+				numberConverter = ConvertToDecimal;
+			else
+				numberConverter = ConvertToBase;
+
+			try
             {
-                try
-                {
-                    long output = ToDecimal(SourceData, basenum);
-                    SourceData = output.ToString();
-                }
-                catch
-                {
-                    RespondToExe("Source data cannot be converted to a number");
-                    return;
-                }
+				SourceData = numberConverter(SourceData, basenum);
             }
-            else
+            catch
             {
-                int sourceint;
-                if (!Int32.TryParse(SourceData, out sourceint))
-                {
-                    RespondToExe("Cannot convert source data to an integer(64 bit)");
-                    return;
-                }
-                SourceData = ConvertToBase(sourceint, basenum);
+                RespondToExe("Source data is not a number");
+                return;
             }
         }
 
         private const string baseChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        private static string ConvertToBase(int decNum, int baseNum)
+        private string ConvertToBase(string input, int baseNum)
         {
+			long decNum = Int64.Parse(input);
             if (decNum < baseNum)
-                return baseChars[decNum].ToString();
-            return ConvertToBase((int)Math.Floor((decimal)(decNum / baseNum)), baseNum) + baseChars[decNum % baseNum];
+                return baseChars[(int)decNum].ToString();
+            return ConvertToBase(
+				((int)Math.Floor((decimal)(decNum / baseNum))).ToString(), 
+				baseNum) 
+				+ baseChars[(int)(decNum % baseNum)];
         }
 
-        private static long ToDecimal(string baseString, int baseNum)
+		private string ConvertToDecimal(string input, int baseNum)
+		{
+			return ToDecimal(input, baseNum).ToString();
+		}
+
+        private long ToDecimal(string baseString, int baseNum)
         {
             if (baseString.Length == 1)
                 return baseChars.IndexOf(baseString.ToUpper());

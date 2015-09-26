@@ -70,7 +70,7 @@ namespace ClippyLib
 
 		private string GetEscapedValue(string value)
 		{
-			return Regex.Escape(ClipEscape(value));
+			return ClipEscape(Regex.Escape(value));
 		}
 
 		public string GetEscapedValueOrDefault()
@@ -88,7 +88,7 @@ namespace ClippyLib
 			return DefaultValue;
 		}
 
-		private string ClipEscape(string input)
+		public static string ClipEscape(string input)
 		{
 			return input.Replace("\\q", "\"")
 				.Replace("\\t", "\t")

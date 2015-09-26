@@ -17,6 +17,15 @@ namespace UT.ClippyLib
 			this.contents = contents;
 		}
 
+		protected void RegardlessOfClipboardContent()
+		{
+		}
+
+		protected void WhenCommandIsRan(string editorWithCommands)
+		{
+			AndCommandIsRan(editorWithCommands);
+		}
+
 		protected void AndCommandIsRan(string editorWithCommands)
 		{
 			EditorManager manager = new EditorManager();
@@ -31,7 +40,7 @@ namespace UT.ClippyLib
 				realArgs[i] = args[i+1];
 			}
 
-			actual = EditorTester.TestEditor(editor, this.contents, realArgs);
+			actual = TestEditor(editor, this.contents, realArgs);
 		}
 
 		protected void ThenTheClipboardShouldContain(string expected)
@@ -57,6 +66,39 @@ namespace UT.ClippyLib
 		protected void ThenClippyShouldRespondAndStayOpenWithMessage(string expectedResponse)
 		{
 			Assert.AreEqual(expectedResponse, this.persistentEditorResponse);
+		}
+
+		protected void AndSourceDataShouldNotHaveChanged()
+		{
+			Assert.AreEqual(contents, actual);
+		}
+
+		private static string TestEditor(IClipEditor editor, string input)
+		{
+			return TestEditor(editor, input, new string[0]);
+		}
+
+		private static string TestEditor(IClipEditor editor, string input, string command)
+		{
+			return TestEditor(editor, input, new []{command});
+		}
+
+		protected static string TestEditor(IClipEditor editor, string input, params string[] commands)
+		{
+			editor.SourceData = input;
+			editor.DefineParameters();
+			for(int i=0;i<commands.Length;i++)
+			{
+				editor.SetNextParameter(commands[i]);
+			}
+			editor.Edit();
+			return editor.SourceData;
+		}
+
+		private static void AssertEditor(string expected, IClipEditor editor, string input, params string[] commands)
+		{
+			string actual = TestEditor(editor, input, commands);
+			Assert.AreEqual(expected, actual);
 		}
 
 	}

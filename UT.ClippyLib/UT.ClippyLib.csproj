@@ -33,11 +33,11 @@
     <Reference Include="nunit.framework">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Test.cs" />
     <Compile Include="Editors\TestCapitalize.cs" />
-    <Compile Include="Editors\EditorTester.cs" />
     <Compile Include="Editors\TestChunk.cs" />
     <Compile Include="Editors\TestColumnAlign.cs" />
     <Compile Include="Editors\TestCount.cs" />
@@ -48,6 +48,10 @@
     <Compile Include="Editors\TestNewText.cs" />
     <Compile Include="Editors\TestRep.cs" />
     <Compile Include="Editors\AEditorTester.cs" />
+    <Compile Include="Editors\TestReverse.cs" />
+    <Compile Include="Editors\TestSort.cs" />
+    <Compile Include="Editors\TestToBase.cs" />
+    <Compile Include="Editors\TestXmlEdit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -58,5 +62,8 @@
       <Project>{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}</Project>
       <Name>ClippyLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
 </Project>

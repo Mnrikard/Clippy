@@ -1,31 +1,32 @@
 using NUnit.Framework;
 using System;
-using ClippyLib.Editors;
-using ClippyLib;
 
 namespace UT.ClippyLib
 {
 	[TestFixture]
-	public class TestColumnAlign
+	public class TestColumnAlign : AEditorTester
 	{
-		const string _columns = "Column1\tColumn2\n" +
-		                        "abcdefghijklmnopqrstuvwxyz\talphabet\n" +
-		                        "12345\tnumbers1-5";
-		[Test]
-		public void CanCreateInstance()
-		{
-			ColumnAlign ca = new ColumnAlign();
-			Assert.IsInstanceOf<IClipEditor>(ca);
-		}
-
+		const string ColumnsWithHeaders = "Column1\tColumn2\n" +
+		                                  "abcdefghijklmnopqrstuvwxyz\talphabet\n" +
+				                          "12345\tnumbers1-5";
 		[Test]
 		public void CanAlignColumns()
 		{
-			string actual = EditorTester.TestEditor(new ColumnAlign(), _columns, "2","\t");
-			string expected = "Column1                     Column2\n" +
+			WhenClipboardContains(ColumnsWithHeaders);
+			AndCommandIsRan("columnAlign");
+			ThenTheClipboardShouldContain("Column1                     Column2\n" +
 			                  "abcdefghijklmnopqrstuvwxyz  alphabet\n" +
-			                  "12345                       numbers1-5";
-			Assert.AreEqual(expected, actual);
+			                  "12345                       numbers1-5");
+		}
+
+		[Test]
+		public void CanAlignColumnsWithExtraSpace()
+		{
+			WhenClipboardContains(ColumnsWithHeaders);
+			AndCommandIsRan("columnAlign 4");
+			ThenTheClipboardShouldContain("Column1                       Column2\n" +
+			                              "abcdefghijklmnopqrstuvwxyz    alphabet\n" +
+			                              "12345                         numbers1-5");
 		}
 	}
 }

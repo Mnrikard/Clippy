@@ -59,9 +59,9 @@ namespace ClippyLib.Editors
 
         public override void Edit()
         {
-            string[] sortable = Regex.Split(SourceData, Regex.Escape(ClipEscape(ParameterList[0].Value)));
+            string[] sortable = Regex.Split(SourceData, ParameterList[0].GetEscapedValueOrDefault());
             Array.Reverse(sortable);
-            SourceData = String.Join(ParameterList[0].Value, sortable);
+            SourceData = String.Join(ParameterList[0].GetEscapedValueOrDefault(), sortable);
         }
 
 
