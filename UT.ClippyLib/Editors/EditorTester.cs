@@ -1,5 +1,6 @@
 using System;
 using ClippyLib;
+using NUnit.Framework;
 
 namespace UT.ClippyLib
 {
@@ -24,6 +25,12 @@ namespace UT.ClippyLib
 			}
 			editor.Edit();
 			return editor.SourceData;
+		}
+
+		public static void AssertEditor(string expected, IClipEditor editor, string input, params string[] commands)
+		{
+			string actual = TestEditor(editor, input, commands);
+			Assert.AreEqual(expected, actual);
 		}
 	}
 }
