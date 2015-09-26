@@ -46,6 +46,8 @@
     <Compile Include="Editors\TestEncode.cs" />
     <Compile Include="Editors\TestGrep.cs" />
     <Compile Include="Editors\TestNewText.cs" />
+    <Compile Include="Editors\TestRep.cs" />
+    <Compile Include="Editors\AEditorTester.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -100,7 +100,7 @@ Example:
 
         public override void Edit()
         {
-            SourceData = Chunk(SourceData, Int32.Parse(ParameterList[0].Value), ClipEscape(ParameterList[1].Value));
+			SourceData = Chunk(SourceData, Int32.Parse(ParameterList[0].GetValueOrDefault()), ClipEscape(ParameterList[1].GetValueOrDefault()));
         }
 
         public static string Chunk(string text, int nchar, string sep)

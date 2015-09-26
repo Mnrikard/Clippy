@@ -65,12 +65,27 @@ namespace ClippyLib
 
 		public string GetEscapedValue()
 		{
-			return Regex.Escape(ClipEscape(Value));
+			return GetEscapedValue(Value);
+		}
+
+		private string GetEscapedValue(string value)
+		{
+			return Regex.Escape(ClipEscape(value));
+		}
+
+		public string GetEscapedValueOrDefault()
+		{
+			return GetEscapedValue(GetValueOrDefault());
 		}
 
 		public string GetValueOrDefault()
 		{
-			return IsValued ? Value : DefaultValue;
+			if(IsValued)
+				return Value;
+			if(Required)
+				return null;
+
+			return DefaultValue;
 		}
 
 		private string ClipEscape(string input)

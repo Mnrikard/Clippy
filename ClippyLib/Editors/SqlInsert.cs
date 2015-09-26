@@ -140,7 +140,7 @@ Example:
 
 		private string[] GetColumns(string line)
 		{
-			return Regex.Split(line, ParameterList[1].GetEscapedValue(), RegexOptions.IgnoreCase);
+			return Regex.Split(line, ParameterList[1].GetEscapedValueOrDefault(), RegexOptions.IgnoreCase);
 		}
         
 		private void WriteSingleRow (StringBuilder output, string[] cols)

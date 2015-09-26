@@ -6,14 +6,14 @@ using System.Text;
 namespace UT.ClippyLib
 {
 	[TestFixture]
-	public class TestSqlInsert
+	public class TestSqlInsert : AEditorTester
 	{
-		[Test]
-		public void CanCreateLongInsertStatement ()
+		string dtnow = DateTime.Now.ToString();
+
+		private string SqlOutputOver1000Rows()
 		{
 			StringBuilder databaseText = new StringBuilder();
 			databaseText.Append("Name\tId\tDate\n");
-			string dtnow = DateTime.Now.ToString();
 
 			for(int i=0;i<2010;i++)
 			{
@@ -21,26 +21,30 @@ namespace UT.ClippyLib
 			}
 			databaseText.Append(String.Concat("Test\tNaN\t", dtnow));
 
-			var actual = EditorTester.TestEditor(new SqlInsert(), databaseText.ToString(),"tablex","\t");
-			Assert.IsTrue(actual.Contains(",('Test', 999, '"+dtnow+"')\n" +
-				                          "insert into [tablex] (Name, Id, Date)\nvalues\n " +
-			                              "('Test', 1000, '"+dtnow+"')"));
+			return databaseText.ToString();
+		}
+
+		[Test]
+		public void CanCreateLongInsertStatement ()
+		{
+			WhenClipboardContains(SqlOutputOver1000Rows());
+			AndCommandIsRan("insert tablex");
+			ThenTheClipboardShouldContainSubstring(",('Test', 999, '"+dtnow+"')\n" +
+			                                       "insert into [tablex] (Name, Id, Date)\nvalues\n " +
+			                                       "('Test', 1000, '"+dtnow+"')");		
 		}
 
 		[Test]
 		public void CanCreateInsertStatement ()
 		{
-			StringBuilder databaseText = new StringBuilder();
-			databaseText.Append("Name\tId\tDate\n");
-			databaseText.Append(String.Concat("Test\t1\t2015-09-22\n"));
-			databaseText.Append(String.Concat("Test\t2\tNULL"));
-
-			var actual = EditorTester.TestEditor(new SqlInsert(), databaseText.ToString(),"tablex","\t");
-			string expected = "insert into [tablex] (Name, Id, Date)\n" +
-				              "values\n" +
-				              " ('Test', 1, '2015-09-22')\n" +
-					          ",('Test', 2, NULL)\n";
-			Assert.AreEqual(expected, actual);
+			WhenClipboardContains("Name\tId\tDate\n" +
+				"Test\t1\t2015-09-22\n" +
+				"Test\t2\tNULL");
+			AndCommandIsRan("insert tablex");
+			ThenTheClipboardShouldContain("insert into [tablex] (Name, Id, Date)\n" +
+				"values\n" +
+				" ('Test', 1, '2015-09-22')\n" +
+				",('Test', 2, NULL)\n");
 		}
 	}
 }

@@ -6,36 +6,32 @@ using ClippyLib.Editors;
 namespace UT.ClippyLib
 {
 	[TestFixture]
-	public class TestChunk
+	public class TestChunk : AEditorTester
 	{
 		private const string _chunktext = "aaaaabbbbbcccccddddde";
-		[Test]
-		public void CanCreateInstance ()
-		{
-			ChunkText chnk = new ChunkText();
-			Assert.IsInstanceOf<IClipEditor>(chnk);
-		}
 
 		[Test]
 		public void CanChunkAt10()
 		{
-			string actual = EditorTester.TestEditor(new ChunkText(), _chunktext, new []{"10","\n"});
-			Assert.AreEqual("aaaaabbbbb\ncccccddddd\ne", actual);
+			WhenClipboardContains("aaaaabbbbbcccccddddde");
+			AndCommandIsRan("chunk 10 \\n");
+			ThenTheClipboardShouldContain("aaaaabbbbb\ncccccddddd\ne");
 		}
 
-		[Ignore]
 		[Test]
 		public void CanChunkAt10WithDefaultSeparator()
 		{
-			string actual = EditorTester.TestEditor(new ChunkText(), _chunktext, "10");
-			Assert.AreEqual("aaaaabbbbb\ncccccddddd\ne", actual);
+			WhenClipboardContains("aaaaabbbbbcccccddddde");
+			AndCommandIsRan("chunk 10");
+			ThenTheClipboardShouldContain("aaaaabbbbb\ncccccddddd\ne");
 		}
 
 		[Test]
 		public void CanChunkWithDifferentSeparator()
 		{
-			string actual = EditorTester.TestEditor(new ChunkText(), _chunktext, new []{"10","|"});
-			Assert.AreEqual("aaaaabbbbb|cccccddddd|e", actual);
+			WhenClipboardContains("aaaaabbbbbcccccddddde");
+			AndCommandIsRan("chunk 10 |");
+			ThenTheClipboardShouldContain("aaaaabbbbb|cccccddddd|e");
 		}
 
 		[Test]

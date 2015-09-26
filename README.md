@@ -44,6 +44,7 @@ of your command line.  Usage is through the standard pipe command and would look
 13. **Insert** - Copy your SQL output with headers and turn it into an  insert statement
 14. ToBase - Convert a base10 number to another base level (up to 36)
 15. Xml - Pretty print XML (or xml-esque or partial xml)
+16. Help - either print the list of functions, or specifics on a particular function if specified.
 
 
 #### User Defined Functions
