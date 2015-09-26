@@ -68,7 +68,7 @@ Example:
             {
                 ParameterName = "Code Type (url|html|base64)",
                 Sequence = 1,
-                Validator = (a => ("url".Equals(a.ToLower()) || "html".Equals(a.ToLower()) || "base64".Equals(a.ToLower()))),
+                Validator = (a => (Regex.IsMatch(a,"(url|html|xml|base64)", RegexOptions.IgnoreCase))),
                 DefaultValue = "url",
                 Required = true,
                 Expecting = "url, html or base64"
@@ -86,7 +86,7 @@ Example:
 
         #endregion
 
-        //you don't need to override this
+
         public override void SetParameters(string[] args)
         {
             for (int i = 0; i < ParameterList.Count; i++)
@@ -106,34 +106,35 @@ Example:
 
         public override void Edit()
         {
-            bool decode = ParameterList[1].Value.Equals("reverse", StringComparison.CurrentCultureIgnoreCase);
-            try
-            {
-                if (ParameterList[0].Value.Equals("url", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    if(decode)
-                        SourceData = SafeUrlDecode(SourceData);
-                    else
-                        SourceData = SafeUrlEncode(SourceData);
-                }
-                else if (ParameterList[0].Value.Equals("base64", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    if (decode)
-                        SourceData = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(SourceData));
-                    else
-                        SourceData = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(SourceData));
-                }
-                else
-                {
-                    if (decode)
-                        SourceData = System.Web.HttpUtility.HtmlDecode(SourceData);
-                    else
-                        SourceData = System.Web.HttpUtility.HtmlEncode(SourceData);
-                }   
-            }
-            catch
-            {
-                RespondToExe("Unable to " + (decode ? "decode" : "encode") + " data");
+            bool decode = ParameterList[1].GetValueOrDefault().Equals("reverse", StringComparison.CurrentCultureIgnoreCase);
+
+			string typeDirection = String.Concat(ParameterList[0].GetValueOrDefault().ToLower()," ",ParameterList[1].GetValueOrDefault().ToLower());
+
+			switch (typeDirection.Trim())
+			{
+				case "url reverse":
+					SourceData = SafeUrlDecode(SourceData);
+					break;
+				case "url":
+					SourceData = SafeUrlEncode(SourceData);
+					break;
+				case "base64":
+					SourceData = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(SourceData));
+					break;
+				case "base64 reverse":
+					SourceData = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(SourceData));
+					break;
+				case "html":
+				case "xml":
+					SourceData = System.Web.HttpUtility.HtmlEncode(SourceData);
+					break;
+				case "html reverse":
+				case "xml reverse":
+					SourceData = System.Web.HttpUtility.HtmlDecode(SourceData);
+					break;
+				default:
+					RespondToExe("Unable to " + (decode ? "decode" : "encode") + " data");
+					break;
             }
         }
 

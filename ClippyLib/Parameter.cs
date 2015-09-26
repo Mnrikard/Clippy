@@ -68,6 +68,11 @@ namespace ClippyLib
 			return Regex.Escape(ClipEscape(Value));
 		}
 
+		public string GetValueOrDefault()
+		{
+			return IsValued ? Value : DefaultValue;
+		}
+
 		private string ClipEscape(string input)
 		{
 			return input.Replace("\\q", "\"")
