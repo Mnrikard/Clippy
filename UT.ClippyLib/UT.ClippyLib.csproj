@@ -45,6 +45,7 @@
     <Compile Include="Editors\TestSqlInsert.cs" />
     <Compile Include="Editors\TestEncode.cs" />
     <Compile Include="Editors\TestGrep.cs" />
+    <Compile Include="Editors\TestNewText.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

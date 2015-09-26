@@ -99,12 +99,12 @@ ItemType:
         			break;
         		case "dt":
         			if(itemType.Trim()[1] == 'T')
-        			{
-        				SourceData = DateTime.Now.ToString("yyyy-M-d h:mm:ss tt");
+					{
+						SourceData = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         			}
         			else
-        			{
-        				SourceData = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+					{
+						SourceData = DateTime.Now.ToString("yyyy-M-d h:mm:ss tt");
         			}
         			break;
         		case "/.":
