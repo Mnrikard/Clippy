@@ -63,25 +63,17 @@ Example:
 
         #endregion
 
-        
-
         public override void Edit()
         {
             //get rid of spaces in between tags
-            String text = Regex.Replace(SourceData, @">\s+<", "><");
-            //new line on tag joins
-            text = Regex.Replace(text, "><", ">\n<");
-            //new line on tag ends
-            text = Regex.Replace(text, "([^>\\n])<", "$1\n<");
-            //content after a self closing tag
-            text = Regex.Replace(text, @"/>([^\n<])", "/>\n$1");
-            //turns <tag>\r\n</tag> into <tag></tag>
-            text = Regex.Replace(text, @"(<([^\s>]+).+)\n(</\2[\s>])", "$1$3");
+            var text = InitializeSpaces();
+
             string[] lines = text.Split('\n');
             int tabcount = 0;
-            bool inComment = false;
+            bool inCommentOrCdata = false;
             string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
-            for (int line = 0; line < lines.Length; line++)
+            
+			for (int line = 0; line < lines.Length; line++)
             {
                 /*
                     * if prev tag is not closer and I'm not a closer and I'm not a comment
@@ -89,16 +81,19 @@ Example:
                     * if I'm a closer
                     * --
                     */
-                if (lines[line].Trim().StartsWith("<!--") && !lines[line].Trim().EndsWith("-->"))
-                {
-                    inComment = true;
-                }
-                else if (inComment && lines[line].Trim().EndsWith("-->"))
-                {
-                    inComment = false;
-                }
+				if(inCommentOrCdata)
+				{
+					if (EndOfCommentOrCdata(lines[line]))
+					{
+						inCommentOrCdata = false;
+					}
+				}
+				else
+				{
+					inCommentOrCdata = StartsCommentOrCdata(lines[line]);
+				}
 
-                if (lines[line].StartsWith("</") && !inComment)
+                if (lines[line].StartsWith("</") && !inCommentOrCdata)
                 {
                     tabcount--;
                     if (tabcount < 0)
@@ -107,24 +102,51 @@ Example:
 
                 lines[line] = tabstr.Times(tabcount) + lines[line];
 
-                if (
-                    !inComment
-                    && !lines[line].Contains("</")
-                    && !lines[line].Contains("/>")
-                    && !lines[line].StartsWith("</")
-                    && !lines[line].StartsWith("<?xml")
-                    && !lines[line].EndsWith("-->")
-                    && (lines[line].Contains("<") || lines[line].Contains(">"))
-                    )
-                {
-                    tabcount++;
-                }
+				if (ShouldIncrementTabCount(lines, inCommentOrCdata, line)) 
+				{
+					tabcount++;
+				}
 
             }
             SourceData = String.Join("\n", lines);
         }
 
+		private bool EndOfCommentOrCdata(string line)
+		{
+			return line.Trim().EndsWith("-->") || line.Trim().EndsWith("]]>");
+		}
+		private bool StartsCommentOrCdata(string line)
+		{
+			line = line.Trim();
+			return (line.StartsWith("<!--") && !line.EndsWith("-->")) ||
+				(line.StartsWith("<![CDATA[") && !line.EndsWith("]]>"));
+		}
+
+		private bool ShouldIncrementTabCount(string[] lines, bool inComment, int line)
+		{
+			return !inComment && 
+					!lines [line].Contains ("</") && 
+					!lines [line].Contains ("/>") && 
+					!lines [line].StartsWith ("</") && 
+					!lines [line].StartsWith ("<?xml") && 
+					!lines [line].EndsWith ("-->") && 
+					(lines [line].Contains ("<") || lines [line].Contains (">"));
+		}
         
         
+		private string InitializeSpaces()
+		{
+			Regex spaceBetweenTags = new Regex(@">\s+<");
+			Regex endTags = new Regex("([^>\\n])<");
+			Regex textAfterClosedTag = new Regex(@"/>([^\n<])");
+			Regex emptyTag = new Regex(@"(<([^\s>]+).+)\n(</\2[\s>])");
+
+			String text = spaceBetweenTags.Replace(SourceData, "><")
+				.Replace("><",">\n<");
+			text = endTags.Replace(text,"$1\n<");
+			text = textAfterClosedTag.Replace(text, "/>\n$1");
+			text = emptyTag.Replace(text, "$1$3");
+			return text;
+		}
     }
 }
