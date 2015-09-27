@@ -3,7 +3,7 @@ using System;
 using ClippyLib.Editors;
 using ClippyLib;
 
-namespace UT.ClippyLib
+namespace UT.ClippyLib.Editors
 {
 	[TestFixture]
 	public class TestGrep : AEditorTester

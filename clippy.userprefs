@@ -1,11 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UT.ClippyLib/Editors/TestRep.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UT.ClippyLib/Editors/TestXmlEdit.cs">
     <Files>
-      <File FileName="UT.ClippyLib/Editors/EditorTester.cs" Line="29" Column="1" />
-      <File FileName="ClippyLib/AClipEditor.cs" Line="69" Column="20" />
-      <File FileName="ClippyLib/Editors/Rep.cs" Line="1" Column="1" />
-      <File FileName="UT.ClippyLib/Editors/TestRep.cs" Line="12" Column="23" />
+      <File FileName="UT.ClippyLib/Editors/AEditorTester.cs" Line="2" Column="17" />
+      <File FileName="ClippyLib/Editors/XmlEdit.cs" Line="83" Column="29" />
+      <File FileName="UT.ClippyLib/Editors/TestXmlEdit.cs" Line="13" Column="4" />
+      <File FileName="UT.ClippyLib/app.config" Line="20" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,7 +15,8 @@
           </Node>
           <Node name="ConsoleClippy" expanded="True" />
           <Node name="UT.ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True" selected="True" />
+            <Node name="References" selected="True" />
+            <Node name="Editors" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -26,25 +27,15 @@
         <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
-          <Node name="UT.ClippyLib" expanded="True">
-            <Node name="UT" expanded="True">
-              <Node name="ClippyLib" expanded="True">
-                <Node name="TestNewText" expanded="True">
-                  <Node name="CanGetRandomSlashDot" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/AClipEditor.cs" line="88" column="24" />
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/EditorTester.cs" line="20" column="14" />
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestSqlInsert.cs" line="25" column="32" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="15" column="18" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Grep.cs" line="127" column="44" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/XmlEdit.cs" line="83" column="56" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

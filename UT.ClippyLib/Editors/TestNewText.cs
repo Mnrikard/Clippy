@@ -3,7 +3,7 @@ using System;
 using ClippyLib.Editors;
 using System.Text.RegularExpressions;
 
-namespace UT.ClippyLib
+namespace UT.ClippyLib.Editors
 {
 	[TestFixture]
 	public class TestNewText : AEditorTester

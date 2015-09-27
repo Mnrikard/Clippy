@@ -3,7 +3,7 @@ using ClippyLib;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
 
-namespace UT.ClippyLib
+namespace UT.ClippyLib.Editors
 {
 	public abstract class AEditorTester
 	{

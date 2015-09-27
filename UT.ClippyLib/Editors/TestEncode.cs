@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System;
 using ClippyLib.Editors;
 
-namespace UT.ClippyLib
+namespace UT.ClippyLib.Editors
 {
 	[TestFixture]
 	public class TestEncode : AEditorTester

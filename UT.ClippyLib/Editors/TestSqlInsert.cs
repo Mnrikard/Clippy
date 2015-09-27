@@ -3,7 +3,7 @@ using System;
 using ClippyLib.Editors;
 using System.Text;
 
-namespace UT.ClippyLib
+namespace UT.ClippyLib.Editors
 {
 	[TestFixture]
 	public class TestSqlInsert : AEditorTester
