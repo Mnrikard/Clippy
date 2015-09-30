@@ -91,7 +91,7 @@ Replacement String:
                 ParameterName = "pattern type",
                 Sequence = 3,
                 Validator = (a => (true)),
-                Expecting = "Defaults to \"regex\": either regex, sql, or text",
+                Expecting = "either regex, sql, or text",
                 Required = false,
                 DefaultValue = "regex"
             }); 

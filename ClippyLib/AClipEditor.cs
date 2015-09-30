@@ -43,7 +43,7 @@ namespace ClippyLib
 		public virtual string ShortDescription { get { return Description; } }
 
 
-		// todo:   oooh, what if the example somehow got to be part of the unit test!!!
+		// todo: oooh, what if the example somehow got to be part of the unit test!!!
         public virtual string LongDescription 
 		{ 
 			get
@@ -51,6 +51,7 @@ namespace ClippyLib
 				return String.Concat(Name, Environment.NewLine,
 				                     "Syntax: ", Name.ToLower() ,SyntaxParameters(), Environment.NewLine,
 				                     Environment.NewLine,
+				                     ShortDescription, Environment.NewLine,
 				                     DescribeParameters(),
 				                     Environment.NewLine,
 				                     "Example:", Environment.NewLine,

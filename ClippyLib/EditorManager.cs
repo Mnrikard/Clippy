@@ -68,9 +68,7 @@ namespace ClippyLib
                           select e).FirstOrDefault();
             if (ClipEditor == null)
                 ClipEditor = new UdfEditor(editorName);
-			//todo: move to each constructor
-            ClipEditor.DefineParameters();
-            return ClipEditor;
+			return ClipEditor;
         }
 
         public string[] GetEditors()

@@ -40,7 +40,7 @@ namespace ClippyLib.Editors
             _parameterList = new List<Parameter>();
             _parameterList.Add(new Parameter()
             {
-                ParameterName = "Case Type (U|L|M)",
+                ParameterName = "Case Type",
                 Sequence = 1,
                 Validator = (a => (a.Length > 0 && "ulm".Contains(a.ToLower().Substring(0,1)))),
                 DefaultValue = "u",

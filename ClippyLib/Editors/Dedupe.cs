@@ -31,9 +31,9 @@ namespace ClippyLib.Editors
 		{
 			Name = "Dedup";
 			Description = "Removes duplicate values from a list.";
-			exampleInput = "";
-			exampleCommand = "";
-			exampleOutput = "";
+			exampleInput = "a,a,b,b,c,d,a,c";
+			exampleCommand = "dedup \",\"";
+			exampleOutput = "a,b,c,d";
 			DefineParameters();
 		}
 

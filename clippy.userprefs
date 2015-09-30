@@ -1,21 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UT.ClippyLib/Editors/TestXmlEdit.cs">
-    <Files>
-      <File FileName="UT.ClippyLib/Editors/TestXmlEdit.cs" Line="56" Column="39" />
-      <File FileName="ClippyLib/Editors/XmlEdit.cs" Line="65" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True" />
+            <Node name="Editors" expanded="True">
+              <Node name="Snippet.cs" selected="True" />
+            </Node>
           </Node>
           <Node name="ConsoleClippy" expanded="True" />
           <Node name="UT.ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True">
-              <Node name="TestXmlEdit.cs" selected="True" />
-            </Node>
+            <Node name="Editors" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -27,19 +23,16 @@
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
         <State expanded="True">
-          <Node name="UT.ClippyLib" expanded="True">
-            <Node name="UT" expanded="True">
-              <Node name="ClippyLib" expanded="True" />
-            </Node>
-          </Node>
+          <Node name="UT.ClippyLib" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="15" column="18" />
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Grep.cs" line="127" column="44" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="23" column="18" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Grep.cs" line="105" column="44" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="16" column="12" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

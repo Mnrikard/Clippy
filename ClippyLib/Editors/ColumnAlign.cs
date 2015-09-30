@@ -40,17 +40,6 @@ namespace ClippyLib.Editors
 			DefineParameters();
 		}
 
-        private bool IsPositiveInteger(string n)
-        {
-            short s;
-            if (Int16.TryParse(n, out s))
-            {
-                if (s >= 0)
-                    return true;
-            }
-            return false;
-        }
-
         public override void DefineParameters()
         {
             _parameterList = new List<Parameter>();
@@ -74,6 +63,17 @@ namespace ClippyLib.Editors
             });
         }
 
+		
+		private bool IsPositiveInteger(string n)
+		{
+			short s;
+			if (Int16.TryParse(n, out s))
+			{
+				if (s >= 0)
+					return true;
+			}
+			return false;
+		}
 
         public override void SetParameters(string[] args)
         {

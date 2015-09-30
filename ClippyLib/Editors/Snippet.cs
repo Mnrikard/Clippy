@@ -37,6 +37,20 @@ namespace ClippyLib.Editors
 			exampleOutput = "this is the text I always write";
 			DefineParameters();
 		}
+		
+		public override void DefineParameters()
+		{
+			_parameterList = new List<Parameter>();
+			_parameterList.Add(new Parameter()
+			                   {
+				ParameterName = "Snippet to use",
+				Sequence = 1,
+				Validator = (a => true),
+				DefaultValue = "",
+				Required = true,
+				Expecting = "A snippet Name defined in snippet.xml"
+			});
+		}
 
         public static XmlDocument SnippetsXml()
         {
@@ -110,19 +124,6 @@ namespace ClippyLib.Editors
 
         private XmlDocument _snippets = null;
 
-        public override void DefineParameters()
-        {
-            _parameterList = new List<Parameter>();
-            _parameterList.Add(new Parameter()
-            {
-                ParameterName = "Snippet to use",
-                Sequence = 1,
-                Validator = (a => true),
-                DefaultValue = "",
-                Required = true,
-                Expecting = "A snippet Name defined in snippet.xml"
-            });
-        }
 
         public override void SetParameters(string[] args)
         {

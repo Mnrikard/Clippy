@@ -42,7 +42,7 @@ namespace ClippyLib.Editors
             _parameterList = new List<Parameter>();
             _parameterList.Add(new Parameter()
             {
-                ParameterName = "Code Type (url|html|base64)",
+                ParameterName = "Code Type",
                 Sequence = 1,
                 Validator = (a => (Regex.IsMatch(a,"(url|html|xml|base64)", RegexOptions.IgnoreCase))),
                 DefaultValue = "url",
@@ -56,7 +56,7 @@ namespace ClippyLib.Editors
                 Validator = (a => (String.IsNullOrEmpty(a) || a.Trim().Length == 0 || "reverse".Equals(a, StringComparison.CurrentCultureIgnoreCase))),
                 DefaultValue = String.Empty,
                 Required = false,
-                Expecting = "reverse or empty string"
+                Expecting = "either \"reverse\", \"decode\" or empty string"
             });
         }
 
@@ -79,7 +79,8 @@ namespace ClippyLib.Editors
 
         public override void Edit()
         {
-            bool decode = ParameterList[1].GetValueOrDefault().Equals("reverse", StringComparison.CurrentCultureIgnoreCase);
+            bool decode = ParameterList[1].GetValueOrDefault().Equals("reverse", StringComparison.CurrentCultureIgnoreCase) || 
+				ParameterList[1].GetValueOrDefault().Equals("decode", StringComparison.CurrentCultureIgnoreCase);
 
 			string typeDirection = String.Concat(ParameterList[0].GetValueOrDefault().ToLower()," ",ParameterList[1].GetValueOrDefault().ToLower());
 

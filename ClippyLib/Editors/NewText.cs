@@ -31,7 +31,7 @@ namespace ClippyLib.Editors
 		public NewText()
 		{
 			Name = "NewText";
-			Description = @"Generates new text 
+			Description = @"Generates new text for Guids or Current dates
 ItemType:
 	ID        Generates a new GUID
 	Date      Generates the current date as yyyy-MM-dd
@@ -45,6 +45,8 @@ ItemType:
 			DefineParameters();
 		}
 
+		public override string ShortDescription { get { return "Generates new text for Guids or Current dates"; } }
+
 		public override void DefineParameters()
         {
             _parameterList = new List<Parameter>();
@@ -55,7 +57,7 @@ ItemType:
                 Validator = (a => Regex.IsMatch(a, @"^\s*(id|date|time|dt|/\.)\s*$", RegexOptions.IgnoreCase)),
                 DefaultValue = "ID",
                 Required = false,
-                Expecting = "One of the defined item types"
+                Expecting = "either ID, Date, Time, time, dT, or dt"
             });
         }
 
