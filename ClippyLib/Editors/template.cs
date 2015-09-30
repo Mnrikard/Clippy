@@ -6,30 +6,15 @@ namespace ClippyLib.Editors
 {
     public class Template : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "callable name"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "..."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Template
-Syntax: 
-Description
-
-describe params
-";
-            }
-        }
+		public Template()
+		{
+			Name = "";
+			Description = "";
+			exampleInput = "";
+			exampleCommand = "";
+			exampleOutput = "";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -44,8 +29,6 @@ describe params
                 Expecting = "a string delimiter"
             });
         }
-
-        #endregion
 
         //you don't need to override this
         public override void SetParameters(string[] args)

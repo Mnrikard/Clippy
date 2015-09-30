@@ -26,42 +26,20 @@ namespace ClippyLib.Editors
 {
     public class XmlEdit : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "Xml"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Pretty prints xml inside the string."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Xml
-Syntax: xml
-Tabs over the xml inside each node.
-
-No parameters
-
-Example:
-    clippy xml
-    nests your nodes inside their parents.
-";
-            }
-        }
+        public XmlEdit()
+		{
+			Name = "Xml";
+			Description = "Pretty prints xml inside the string.";
+			exampleInput = "<root><child/></root>";
+			exampleCommand = "xml";
+			exampleOutput = "<root>\n\t<child/>\n</root>";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
             _parameterList = new List<Parameter>();
-            
         }
-
-        #endregion
 
         public override void Edit()
         {

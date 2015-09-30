@@ -27,40 +27,16 @@ namespace ClippyLib.Editors
 {
     public class Encode : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "Encode"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Encodes/Decodes urls and html"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Encode
-Syntax: clippy encode [url|html] [reverse]
-
-Encodes/Decodes urls and html
-
-url|html|base64 - Encodes either by url, html or base64
-reverse - Decodes instead of encodes
-
-Example:
-    clippy encode url
-    will change the source data from
-    ""specialchars=none""
-    to
-    ""specialchars%3Dnone""
-";
-            }
-        }
-
+		public Encode()
+		{
+			Name = "Encode";
+			Description = "Encodes/Decodes text with different formats";
+			exampleInput = "<xml/>";
+			exampleCommand = "encode xml";
+			exampleOutput = "&lt;xml/&gt;";
+			DefineParameters();
+		}
+        
         public override void DefineParameters()
         {
             _parameterList = new List<Parameter>();
@@ -71,7 +47,7 @@ Example:
                 Validator = (a => (Regex.IsMatch(a,"(url|html|xml|base64)", RegexOptions.IgnoreCase))),
                 DefaultValue = "url",
                 Required = true,
-                Expecting = "url, html or base64"
+                Expecting = "url, xml, html or base64"
             });
             _parameterList.Add(new Parameter()
             {
@@ -83,9 +59,6 @@ Example:
                 Expecting = "reverse or empty string"
             });
         }
-
-        #endregion
-
 
         public override void SetParameters(string[] args)
         {

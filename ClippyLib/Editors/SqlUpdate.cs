@@ -26,39 +26,15 @@ namespace ClippyLib.Editors
 {
     public class SqlUpdate : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "Update"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Converts a delimited string into a sql update statement"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Update
-Syntax: clippy update [tablename] [primaryKey] [delimiter]
-Converts a delimited string (can be multiple rows) into an Sql update statement
-
-tablename - The name of the table to which you are updating
-
-delimiter - The string delimiter between columns
-Defaults to tab
-
-Example:
-    clippy update ""PersonnelRecords""
-    will take tab delimited result set from a grid (including column headers)
-    and create an update statement out of it to update the table
-    called PersonnelRecords.
-";
-            }
-        }
+		public SqlUpdate()
+		{
+			Name = "Update";
+			Description = "Converts a delimited string into a sql update statement";
+			exampleInput = "column1\tcolumn2\tcolumn3\n1\ttext\t1900-1-1";
+			exampleCommand = "update tablename column1";
+			exampleOutput = "update tablename set column2='text', column3='1900-1-1' where column1=1";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -100,13 +76,9 @@ Example:
             }
         }
 
-        #endregion
-
-
         public override void Edit()
         {
             string[] lines = SourceData.Split('\n');
-            string top = String.Empty;
             System.Text.StringBuilder output = new System.Text.StringBuilder();
             double currint = 0;
             string topper = String.Empty;

@@ -26,77 +26,39 @@ namespace ClippyLib.Editors
 {
     public class ToBase : AClipEditor
     {
-        #region boilerplate
+        public ToBase()
+		{
+			Name = "ToBase";
+			Description = "Converts from decimal to a base number system and back";
+			exampleInput = "254";
+			exampleCommand = "tobase 16";
+			exampleOutput = "FE";
+			DefineParameters();
+		}
 
-        public override string EditorName
-        {
-            get { return "ToBase"; }
-        }
+		public override void DefineParameters()
+		{
+			_parameterList = new List<Parameter>();
+			_parameterList.Add(new Parameter()
+			                   {
+				ParameterName = "Base Number",
+				Sequence = 1,
+				Validator = IsBaseNumber,
+				DefaultValue = "16",
+				Required = true,
+				Expecting = "A number between 2 and 36"
+			});
+			_parameterList.Add(new Parameter()
+			                   {
+				ParameterName = "Reverse",
+				Sequence = 2,
+				Validator = a => (a.Trim()==String.Empty || "reverse".Equals(a, StringComparison.CurrentCultureIgnoreCase)),
+				DefaultValue = String.Empty,
+				Required = false,
+				Expecting = "the word \"reverse\""
+			});
+		}
 
-        public override string ShortDescription
-        {
-            get { return "Converts from/to base integers"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"ToBase
-Syntax: clippy tobase [baseint] [reverse]
-Description
-
-Converts from decimal to a base number system and back
-For instance 
-clippy tobase 16 will convert 255 to FF
-clippy tobase 16 reverse will convert FF to 255
-
-baseint - The base number: for example binary would be 2
-          Octal would be 8
-          Hexidecimal would be 16
-
-reverse - To convert back from a base to the decimal use ""reverse""
-";
-            }
-        }
-
-        private static bool IsBaseNumber(string b)
-        {
-            byte bb;
-            if (Byte.TryParse(b, out bb))
-            {
-                if (bb <= 36 && bb >= 2)
-                    return true;
-            }
-            return false;
-        }
-
-        public override void DefineParameters()
-        {
-            _parameterList = new List<Parameter>();
-            _parameterList.Add(new Parameter()
-            {
-                ParameterName = "Base Number",
-                Sequence = 1,
-                Validator = IsBaseNumber,
-                DefaultValue = "16",
-                Required = true,
-                Expecting = "A number between 2 and 36"
-            });
-            _parameterList.Add(new Parameter()
-            {
-                ParameterName = "Reverse",
-                Sequence = 2,
-                Validator = a => (a.Trim()==String.Empty || "reverse".Equals(a, StringComparison.CurrentCultureIgnoreCase)),
-                DefaultValue = String.Empty,
-                Required = false,
-                Expecting = "the word \"reverse\""
-            });
-        }
-
-        #endregion
-
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for(int i=1;i<ParameterList.Count;i++)
@@ -134,6 +96,17 @@ reverse - To convert back from a base to the decimal use ""reverse""
                 return;
             }
         }
+		
+		private static bool IsBaseNumber(string b)
+		{
+			byte bb;
+			if (Byte.TryParse(b, out bb))
+			{
+				if (bb <= 36 && bb >= 2)
+					return true;
+			}
+			return false;
+		}
 
         private const string baseChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

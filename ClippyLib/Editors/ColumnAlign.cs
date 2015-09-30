@@ -26,43 +26,19 @@ namespace ClippyLib.Editors
 {
     public class ColumnAlign : AClipEditor
     {
-		
 		private Regex _colSplitter;
 		private List<int> _columnLengths;
 
-        public override string EditorName
-        {
-            get { return "ColumnAlign"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Takes delimited text and transforms it to fixed width."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"ColumnAlign
-Syntax: clippy columnAlign [numberOfSpaces] [originalDelimiter]
-
-Takes delimited data (such as from a grid, or csv) and converts it to line up the columns
-when printed with a fixed width font.
-
-numberOfSpaces - a number defining the number of spaces between each column.
-Defaults to 2
-
-originalDelimiter - a string delimiter of the original text.
-for instance for csv use "",""
-Defaults to tab character
-
-Example:
-    clippy columnalign 3 \t
-    will align tab delimited text with 3 spaces between each column.
-";
-            }
-        }
+		public ColumnAlign()
+		{
+			Name = "ColumnAlign";
+			Description = "Takes delimited data (such as from a grid, or csv) and converts it to line up the columns when printed with a fixed width font.";
+			exampleInput = "column1\tcolumn2\n1\t2";
+			exampleCommand = "columnalign";
+			exampleOutput = "column1  column2\n" +
+			                "1        2";
+			DefineParameters();
+		}
 
         private bool IsPositiveInteger(string n)
         {
@@ -94,7 +70,7 @@ Example:
                 Validator = a => true,
                 DefaultValue = "\t",
                 Required = false,
-                Expecting = "an string delimiter"
+                Expecting = "a string delimiter"
             });
         }
 

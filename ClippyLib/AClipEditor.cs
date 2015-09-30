@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Text;
 
 namespace ClippyLib
 {
@@ -31,11 +32,65 @@ namespace ClippyLib
 
         public abstract void Edit();
 
-        public abstract string EditorName { get; }
+		protected string Name;
+		protected string Description;
+		internal string exampleInput;
+		internal string exampleCommand;
+		internal string exampleOutput;
 
-        public abstract string ShortDescription { get; }
+		public virtual string EditorName { get {return Name;} }
 
-        public abstract string LongDescription { get; }
+		public virtual string ShortDescription { get { return Description; } }
+
+
+		// todo:   oooh, what if the example somehow got to be part of the unit test!!!
+        public virtual string LongDescription 
+		{ 
+			get
+			{
+				return String.Concat(Name, Environment.NewLine,
+				                     "Syntax: ", Name.ToLower() ,SyntaxParameters(), Environment.NewLine,
+				                     Environment.NewLine,
+				                     DescribeParameters(),
+				                     Environment.NewLine,
+				                     "Example:", Environment.NewLine,
+				                     "Original content: ", ClipUnEscape(exampleInput), Environment.NewLine,
+				                     "Command: ", ClipUnEscape(exampleCommand), Environment.NewLine,
+				                     "New content: ", ClipUnEscape(exampleOutput));
+
+			}
+		}
+
+		private string SyntaxParameters()
+		{
+			StringBuilder output = new StringBuilder();
+			foreach(Parameter p in ParameterList)
+			{
+				output.Append(" ");
+				output.Append(p.Required ? "\"" : "[");
+				output.Append(p.ParameterName.Replace(" ",""));
+				output.Append(p.Required ? "\"" : "]");
+			}
+			return output.ToString();
+		}
+
+		private string DescribeParameters()
+		{
+			StringBuilder output = new StringBuilder();
+			foreach(Parameter p in ParameterList)
+			{
+				output.Append(p.ParameterName.Replace(" ",""));
+				output.Append(" - ");
+				output.Append(p.Expecting);
+				if(!p.Required && p.DefaultValue != null)
+				{
+					output.AppendFormat(". Defaults to \"{0}\"", ClipUnEscape(p.DefaultValue));
+				}
+				output.AppendLine();
+			}
+			return output.ToString();
+		}
+
 
         #endregion
 
@@ -89,6 +144,13 @@ namespace ClippyLib
                 .Replace("\\t", "\t")
                 .Replace("\\n", "\n");
         }
+
+		protected string ClipUnEscape(string input)
+		{
+			return input.Replace("\"", "\\q")
+				.Replace("\t", "\\t")
+				.Replace("\n", "\\n");
+		}
 
         public bool HasAllParameters
         {

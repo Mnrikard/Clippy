@@ -31,39 +31,19 @@ namespace ClippyLib.Editors
 		private int _rowOfInsert;
 		private int _maxRowsPerInsert = 1000;
 
-        #region boilerplate
+		public SqlInsert()
+		{
+			Name = "Insert";
+			Description = "Converts a delimited string into a sql insert statement";
+			exampleInput = "column1\tcolumn2\tcolumn3\n" +
+				"7,Text,1900-1-1";
+			exampleCommand = "insert tableName";
+			exampleOutput = "insert into tableName (column1, column2, column3)\n" +
+				"values\n" +
+				" (7,'Text','1900-1-1')";
+			DefineParameters();
+		}
 
-        public override string EditorName
-        {
-            get { return "Insert"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Converts a delimited string into a sql insert statement"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Insert
-Syntax: clippy insert [tablename] [delimiter]
-Converts a delimited string (can be multiple rows) into an Sql insert statement
-
-tablename - The name of the table to which you are inserting
-
-delimiter - The string delimiter between columns
-Defaults to tab
-
-Example:
-    clippy insert ""PersonnelRecords""
-    will take tab delimited result set from a grid (including column headers)
-    and create an insert statement out of it to insert into the table
-    called PersonnelRecords.
-";
-            }
-        }
 
         public override void DefineParameters()
         {
@@ -96,8 +76,6 @@ Example:
                 SetParameter(2, ParameterList[1].DefaultValue);
             }
         }
-
-        #endregion
 
         public override void Edit()
         {			

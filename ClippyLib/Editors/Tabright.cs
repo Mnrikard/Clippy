@@ -28,36 +28,15 @@ namespace ClippyLib.Editors
 {
     public class TabRight : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "tabright"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Tabs c style and vb style text into correctly nested values."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"TabRight [languagetype]
-Syntax: TabRight vb
-Tabs c style and vb style code into correctly nested statements
-based on your preferences for tab characters
-
-languageType - one of vb or c
-defaults to c
-
-Example:
-    clippy tabright vb
-    will correctly nest your vb code.
-";
-            }
-        }
+        public TabRight()
+		{
+			Name = "TabRight";
+			Description = "Tabs c style and vb style text into correctly nested values.";
+			exampleInput = "public int main(){ printf(\"hello\");}";
+			exampleCommand = "tabright c";
+			exampleOutput = "public int main()\n{\n\tprintf(\"hello\");\n}";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -73,9 +52,6 @@ Example:
             });
         }
 
-        #endregion
-
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for(int i=0;i<ParameterList.Count;i++)

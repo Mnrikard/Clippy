@@ -27,35 +27,15 @@ namespace ClippyLib.Editors
 {
     public class Dedupe : AClipEditor
     {
-        public override string EditorName { get { return "Dedup"; } }
-
-        #region boilerplate
-
-        public override string ShortDescription
-        {
-            get { return "Removes duplicate values from a list"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Dedup
-Syntax: clippy dedup [delimiter]
-Separates the string into a list based on the delimiter and removes duplicate entries.
-
-delimiter can be any string
-defaults to new line character
-
-Example:
-    clippy dedup
-    will remove duplicates from the source data after splitting by a new line character
-    clippy dedup "",""
-    will change the source data from ""a,b,a,c"" to ""a,b,c""
-";
-            }
-        }
-
+		public Dedupe()
+		{
+			Name = "Dedup";
+			Description = "Removes duplicate values from a list.";
+			exampleInput = "";
+			exampleCommand = "";
+			exampleOutput = "";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -71,9 +51,6 @@ Example:
             });
         }
 
-        #endregion
-
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for(int i=0;i<ParameterList.Count;i++)

@@ -2,10 +2,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="UT.ClippyLib/Editors/TestXmlEdit.cs">
     <Files>
-      <File FileName="UT.ClippyLib/Editors/AEditorTester.cs" Line="2" Column="17" />
-      <File FileName="ClippyLib/Editors/XmlEdit.cs" Line="83" Column="29" />
-      <File FileName="UT.ClippyLib/Editors/TestXmlEdit.cs" Line="13" Column="4" />
-      <File FileName="UT.ClippyLib/app.config" Line="20" Column="30" />
+      <File FileName="UT.ClippyLib/Editors/TestXmlEdit.cs" Line="56" Column="39" />
+      <File FileName="ClippyLib/Editors/XmlEdit.cs" Line="65" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,8 +13,9 @@
           </Node>
           <Node name="ConsoleClippy" expanded="True" />
           <Node name="UT.ClippyLib" expanded="True">
-            <Node name="References" selected="True" />
-            <Node name="Editors" expanded="True" />
+            <Node name="Editors" expanded="True">
+              <Node name="TestXmlEdit.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
@@ -27,7 +26,13 @@
         <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="UT.ClippyLib" expanded="True">
+            <Node name="UT" expanded="True">
+              <Node name="ClippyLib" expanded="True" />
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
@@ -35,7 +40,6 @@
     <BreakpointStore>
       <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="15" column="18" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Grep.cs" line="127" column="44" />
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/XmlEdit.cs" line="83" column="56" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

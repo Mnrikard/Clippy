@@ -25,41 +25,15 @@ namespace ClippyLib.Editors
 {
     public class Capitalize : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "Cap"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Sets case to upper, lower or first letter of each word."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Cap
-Syntax: clippy cap [U|L|M]
-
-Sets the capitalization of the source data
-
-U|L|M - U: returns the string in all upper case characters
-        L: returns the string in all lower case characters
-        M: returns the string in mixed case characters
-           for instance: ""the quick brown dog"" becomes
-           ""The Quick Brown Dog""
-
-Defaults to upper case
-
-Example:
-    clippy cap L
-    will set the source data to lower case text.
-";
-            }
-        }
+        public Capitalize()
+		{
+			Name = "Cap";
+			Description = "Sets case to upper, lower or first letter of each word.";
+			exampleInput = "this is lower case";
+			exampleCommand = "cap u";
+			exampleOutput = "THIS IS LOWER CASE";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -75,9 +49,6 @@ Example:
             });
         }
 
-        #endregion
-
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for(int i=0;i<ParameterList.Count;i++)

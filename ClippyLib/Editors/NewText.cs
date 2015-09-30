@@ -28,39 +28,24 @@ namespace ClippyLib.Editors
 {
     public class NewText : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "NewText"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Generates new text"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"NewText
-Syntax: 
-clippy NewText [ItemType]
-
+		public NewText()
+		{
+			Name = "NewText";
+			Description = @"Generates new text 
 ItemType:
 	ID        Generates a new GUID
 	Date      Generates the current date as yyyy-MM-dd
 	Time      Generates the current time as HH:mm:ss (24h)
 	time      Generates the current time as hh:mm:ss [ap]m (12h)
-	dt        Generates the current date/time as yyyy-MM-dd HH:mm:ss
-	dT        Generates the current date/time as yyyy-M-d h:mm:ss [ap]m
-	
-";
-            }
-        }
+	dT        Generates the current date/time as yyyy-MM-dd HH:mm:ss
+	dt        Generates the current date/time as yyyy-M-d h:mm:ss [ap]m";
+			exampleInput = "doesn't matter";
+			exampleCommand = "newtext id";
+			exampleOutput = "A new GUID";
+			DefineParameters();
+		}
 
-        public override void DefineParameters()
+		public override void DefineParameters()
         {
             _parameterList = new List<Parameter>();
             _parameterList.Add(new Parameter()
@@ -73,8 +58,6 @@ ItemType:
                 Expecting = "One of the defined item types"
             });
         }
-
-        #endregion
 
         public override void Edit()
         {

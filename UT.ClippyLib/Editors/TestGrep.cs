@@ -8,6 +8,14 @@ namespace UT.ClippyLib.Editors
 	[TestFixture]
 	public class TestGrep : AEditorTester
 	{
+		
+		[Test]
+		public void CanDescribeItself()
+		{
+			Grep g = new Grep();
+			Assert.IsTrue(g.LongDescription.Contains("PatternType - One of [regex|sql|text]"));
+		}
+
 		[Test]
 		public void CanGrep()
 		{

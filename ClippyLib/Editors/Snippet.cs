@@ -28,34 +28,15 @@ namespace ClippyLib.Editors
 {
     public class Snippet : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "Snippet"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Returns a string of text defined in the snippet.xml file."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Snippet
-Syntax: clippy snippet [snippetName]
-Description
-
-returns the snippet of code/text defined in the snippet.xml file
-
-snippetName - the Name node of the snippet desired
-If left out, will display all snippets and their description and then request
-you to choose.
-";
-            }
-        }
+		public Snippet()
+		{
+			Name = "Snippet";
+			Description = "Returns a string of text defined in the snippet.xml file.";
+			exampleInput = "doesn't matter";
+			exampleCommand = "snippet thingIAlwaysWrite";
+			exampleOutput = "this is the text I always write";
+			DefineParameters();
+		}
 
         public static XmlDocument SnippetsXml()
         {
@@ -143,9 +124,6 @@ you to choose.
             });
         }
 
-        #endregion
-
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             if (args.Length > 1)

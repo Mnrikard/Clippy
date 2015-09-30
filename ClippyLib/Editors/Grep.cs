@@ -26,38 +26,16 @@ namespace ClippyLib.Editors
 {
     public class Grep : AClipEditor
     {
-        #region boilerplate 
+        public Grep()
+		{
+			Name = "Grep";
+			Description = "Gets a match list based on the Regular Expression/SQL/Text pattern passed in";
+			exampleInput = "1 and 2 and 3";
+			exampleCommand = "grep \\d \n regex";
+			exampleOutput = "1\n2\n3";
+			DefineParameters();
+		}
 
-        public override string EditorName
-        {
-            get { return "Grep"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Gets a list of each pattern match."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Grep
-Syntax: grep ""pattern"" [separator] [patternType]
-Gets a Regular Expression match list based on the pattern passed in
-
-Pattern - a regular expression pattern, ignores case
-separator - The delimiter between matchs for the output
-separator defaults to new line character.
-patternType - One of regex, sql or text. Defaults to regex
-
-Example:
-    clippy grep ""\d+""
-    will return each sequence of digits to a line.
-";
-            }
-        }
-        
         public override void DefineParameters()
         {
             _parameterList = new List<Parameter>();
@@ -65,7 +43,7 @@ Example:
             {
                 ParameterName = "Pattern",
                 Sequence = 1,
-                Validator = ValidateRegex,
+                Validator = a => true, //todo: make ValidateRegex work with sql/text patterns too,
                 DefaultValue = null,
                 Required = true,
                 Expecting = "A regular expression pattern"
@@ -102,7 +80,7 @@ Example:
                 return false;
             }
         }
-        #endregion
+
 
         public override void SetParameters(string[] args)
         {
