@@ -5,13 +5,7 @@
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True">
-              <Node name="Snippet.cs" selected="True" />
-            </Node>
-          </Node>
-          <Node name="ConsoleClippy" expanded="True" />
-          <Node name="UT.ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True" />
+            <Node name="styles.css" selected="True" />
           </Node>
         </State>
       </Pad>
