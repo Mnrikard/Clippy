@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Clippy Documentation</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="styles.css"></link>
+</head>
+<body>
+
+<xmp theme="united" style="display:none;">
+
+### General Usage
+
+#### Clippy and it's ugly stepsister, the graphical interface for clippy
+	
+Clippy and the graphical interface for clippy both work on the data that's inside your clipboard. 
+The best way to interact with clippy is:
+
+Whatever editor you are currently working in, copy the text you wish to change.  Run one of the clippy
+commands and paste back into the application you were just working in.  The console version, if ran from
+a run prompt (Window key+R) will go away as soon as it's done, so you can immediately hit Ctrl+V to
+paste back into your application.  The graphical interface forces you to tab/click back to your
+original application. But hey, you like clicking that mouse a lot if you want the graphical interface,
+right?
+
+If you need help, ask for it. Either click the help menu, or type `clippy help`
+	
+	
+#### Manip
+
+Manip is for you that know how awesome awk/sed/grep in \*nix are.  I **don't** promise that manip will
+do even a tenth of what those commands can do for you, but it **is** nice for a lot of purposes.  It will 
+handle your standard output stream and perform all the functions that clippy will do for your clipboard.
+Even the user defined functions.
+
+Just pipe your output through manip and watch it output your text just the way you like it.
+
+### Specific Commands
+
+The best documentation for specific commands inside of clippy is clippy itself.  You should first learn
+how to use `clippy help` and `clippy help [functionName]`
+
+ 1. Cap - capitalizes or lower cases
+ 2. Chunk - splits text by number of characters
+ 3. ColumnAlign - Aligns tab delimited text into text-columns
+ 4. Count - Counts the number of characters or lines
+ 5. Dedupe - Deduplicates a list
+ 6. Encode - encode/decode xml/url/base64
+ 7. **Grep** - returns list of matches
+ 8. NewText - get a new GUID, or current date data 
+ 9. **Rep** - replaces regex patterns or sql patterns
+ 10. Reverse - Reverses your text
+ 11. Snippet - Obtains a predefined snippet of text
+ 12. Sort - Sorts a list
+ 13. **Insert** - Copy your SQL output with headers and turn it into an  insert statement
+ 14. ToBase - Convert a base10 number to another base level (up to 36)
+ 15. Xml - Pretty print XML (or xml-esque or partial xml)
+ 16. Help - either print the list of functions, or specifics on a particular function if specified.
+
+### User Defined Functions
+
+Very often, you will find yourself performing the same function or set of functions many times over.
+Save these to user defined functions.  For instance, if you find yourself removing empty lines more 
+than once, you can define a function that looks like:
+
+    rep "\n{2,}" "\n"
+    
+You can call that "smash" and then you will be able to run a command `clippy smash` any time you wish.
+
+To quickly view/create/update some UDF's, just type in `clippy --udf`.  I then present you with a
+ugly windows form to make those.  Otherwise, you can modify your udf.xml file by hand.
+
+### Special Characters
+
+Clippy has several "special" characters so it lives happily on the command-line.
+
+* \\q - A quotation mark (because quotation marks denote the end of a parameter on the command line)
+* \\t - A tab
+* \\n - A carriage return/line feed (don't worry about the \\r)
+
+
+</xmp>
+
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+</body>
+</html>

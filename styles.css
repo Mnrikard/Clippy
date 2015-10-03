@@ -1,0 +1,2 @@
+ul.toplink li {display:inline; float:left; padding-right:20px;}
+ul.toplink li:last-child {float:none;}
