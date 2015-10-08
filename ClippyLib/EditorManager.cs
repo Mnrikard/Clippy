@@ -73,10 +73,10 @@ namespace ClippyLib
 
         public string[] GetEditors()
         {
-			UdfEditor udfEd = new UdfEditor();
             List<string> eds = (from e in Editors
                                 select e.EditorName).ToList();
-            eds.AddRange(udfEd.GetFunctions());
+			UserFunctionsList ufl = new UserFunctionsList();
+            eds.AddRange(ufl.GetFunctions());
             return eds.ToArray();
         }
         
@@ -124,8 +124,8 @@ To obtain a copy of the GNU General Public License, see:
                 output.AppendFormat("{0}  -  {1}\r\n", ce.EditorName, ce.ShortDescription);
             }
             output.Append("---------------------\r\nUser Defined\r\n---------------------\r\n");
-			UdfEditor udfEd = new UdfEditor();
-            udfEd.DescribeFunctions(output);
+			UserFunctionsList ufl = new UserFunctionsList();
+            ufl.DescribeFunctions(output);
 
             return output.ToString();
         }

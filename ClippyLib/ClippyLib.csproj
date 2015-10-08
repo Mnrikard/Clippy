@@ -82,6 +82,7 @@
     <Compile Include="Settings\SettingsFromRegistry.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="UserFunction.cs" />
+    <Compile Include="UserFunctionsList.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\ConsoleClippy\udf.xml">

@@ -38,14 +38,14 @@ namespace ClippyLib
 		{
 			public UserParameter(XElement parameterNode)
 			{
-				Name = parameterNode.Attribute("name");
+				Name = parameterNode.Attribute("name").Value;
 				DefaultValue = parameterNode.Attribute("default") == null ? string.Empty : parameterNode.Attribute("default").Value;
 				Description = parameterNode.Attribute("parmdesc") == null ? string.Empty : parameterNode.Attribute("parmdesc").Value;
 
 				if(parameterNode.Attribute("required") != null)
 					Required = bool.Parse(parameterNode.Attribute("required").Value);
 				if(parameterNode.Attribute("sequence") != null)
-					Sequence = int.Parse(parameterNode.Attribute("sequence"));
+					Sequence = int.Parse(parameterNode.Attribute("sequence").Value);
 			}
 
 			public string Name {get;set;}
@@ -54,6 +54,7 @@ namespace ClippyLib
 			public string Description {get;set;}
 			public int Sequence {get;set;}
 		}
+
 	}
 }
 
