@@ -77,6 +77,11 @@
     <Compile Include="Editors\Rep.cs" />
     <Compile Include="RecentCommands.cs" />
     <Compile Include="SuperRegex.cs" />
+    <Compile Include="Settings\SettingsObtainer.cs" />
+    <Compile Include="Settings\SettingsFromFile.cs" />
+    <Compile Include="Settings\SettingsFromRegistry.cs" />
+    <Compile Include="StringHelper.cs" />
+    <Compile Include="UserFunction.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\ConsoleClippy\udf.xml">
@@ -100,4 +105,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Settings\" />
+  </ItemGroup>
 </Project>
