@@ -34,6 +34,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="NSubstitute">
+      <HintPath>..\lib\NSubstitute.net4.0\NSubstitute.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Test.cs" />
@@ -52,6 +55,9 @@
     <Compile Include="Editors\TestSort.cs" />
     <Compile Include="Editors\TestToBase.cs" />
     <Compile Include="Editors\TestXmlEdit.cs" />
+    <Compile Include="TestUserFunctionsList.cs" />
+    <Compile Include="AllTestSetup.cs" />
+    <Compile Include="Editors\TestUdfEditor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -65,5 +71,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\ConsoleClippy\udf.xml">
+      <Link>testUdf.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

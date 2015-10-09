@@ -127,7 +127,6 @@ namespace ClippyLib.Editors
 
 			InitializeSubParameters(_selectedFunction);
 			SetTheseParameters(_selectedFunction);
-
             
             ExecuteSubFunctions (manager);
         }

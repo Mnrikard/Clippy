@@ -10,8 +10,11 @@ namespace ClippyLib
 {
 	public class UserFunctionsList : List<UserFunction>
 	{
+		SettingsObtainer _settings;
+
 		public UserFunctionsList ()
 		{
+			_settings = SettingsObtainer.CreateInstance();
 			InitFunctions();
 		}
 
@@ -22,16 +25,19 @@ namespace ClippyLib
 
 		private void GetListOfUserFunctionsFromFile()
 		{
-			SettingsObtainer obt = SettingsObtainer.CreateInstance();
-			string udfLocation = obt.UdfLocation;
-
-			if(!File.Exists(udfLocation))
+			if(!File.Exists(_settings.UdfLocation))
 				throw new UndefinedFunctionException("No UDF file is set.");
 
-			XDocument udfDoc = new XDocument(udfLocation);
-			foreach(XElement command in udfDoc.Root.Elements("command"))
+			XDocument udfDoc = XDocument.Load(_settings.UdfLocation);
+
+
+			XElement root = udfDoc.Root;
+			if(root != null)
 			{
-				this.Add(new UserFunction(command));
+				foreach(var command in root.Elements("command"))
+				{
+					this.Add(new UserFunction(command));
+				}
 			}
 		}
 
