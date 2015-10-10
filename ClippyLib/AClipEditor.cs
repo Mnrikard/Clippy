@@ -157,6 +157,9 @@ namespace ClippyLib
         {
             get
             {
+				if(ParameterList == null)
+					return true;
+
                 foreach (Parameter p in ParameterList)
                 {
                     if (!p.IsValued && p.Required)

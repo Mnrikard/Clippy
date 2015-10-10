@@ -60,7 +60,7 @@
     <Compile Include="Editors\SqlInsert.cs" />
     <Compile Include="Editors\ToBase.cs" />
     <Compile Include="Editors\Reverse.cs" />
-    <Compile Include="Editors\Snippet.cs" />
+    <Compile Include="Editors\SnippetTextEditor.cs" />
     <Compile Include="Editors\XmlEdit.cs" />
     <Compile Include="Editors\Grep.cs" />
     <Compile Include="Editors\Dedupe.cs" />
