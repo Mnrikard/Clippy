@@ -54,6 +54,7 @@ namespace ClippyLib.Editors
             _udfParameters = new Dictionary<string, string>();
             _xmlDefinedParms = new List<Parameter>();
 			_userFunctions = new UserFunctionsList();
+			_parameterList = new List<Parameter>();
         }
         public UdfEditor(string udfName) : this()
         {
