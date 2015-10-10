@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ClippyLib;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
@@ -28,8 +29,8 @@ namespace UT.ClippyLib.Editors
 
 		protected void AndCommandIsRan(string editorWithCommands)
 		{
+			string[] args = editorWithCommands.ParseArguments();
 			EditorManager manager = new EditorManager();
-			string[] args = manager.GetArgumentsFromString(editorWithCommands);
 			IClipEditor editor = manager.GetClipEditor(args[0]);
 			manager.ClipEditor.EditorResponse += (a,b) => {editorResponse = b.ResponseString;};
 			manager.ClipEditor.PersistentEditorResponse += (a,b) => {persistentEditorResponse = b.ResponseString;};
@@ -41,6 +42,37 @@ namespace UT.ClippyLib.Editors
 			}
 
 			actual = TestEditor(editor, this.contents, realArgs);
+		}
+
+		protected void AndUdfCommandIsRan(string udfWithCommands)
+		{
+			string[] args = udfWithCommands.ParseArguments();
+			EditorManager manager = new EditorManager();
+
+			manager.GetClipEditor(args[0]);
+			manager.ClipEditor.EditorResponse += (a,b) => {editorResponse = b.ResponseString;};
+			manager.ClipEditor.PersistentEditorResponse += (a,b) => {persistentEditorResponse = b.ResponseString;};
+
+			while (true)
+			{
+				manager.ClipEditor.SetParameters(args);
+				break;
+			}
+
+			// if you've supplied at least one parameter, then set the rest, otherwise prompt
+			if(args.Length > 1)
+			{
+				foreach (Parameter parmWithDefault in (from Parameter p in manager.ClipEditor.ParameterList
+				                                       where !p.IsValued && p.DefaultValue != null
+				                                       select p))
+				{
+					parmWithDefault.Value = parmWithDefault.DefaultValue;
+				}
+			}
+
+			manager.ClipEditor.SourceData = this.contents;
+			manager.ClipEditor.Edit();
+			actual = manager.ClipEditor.SourceData;
 		}
 
 		protected void ThenTheClipboardShouldContain(string expected)

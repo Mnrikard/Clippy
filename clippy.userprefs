@@ -1,11 +1,35 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClippyLib/UserFunctionsList.cs">
+    <Files>
+      <File FileName="ClippyLib/Editors/UdfEditor.cs" Line="129" Column="42" />
+      <File FileName="ClippyLib/Settings/SettingsObtainer.cs" Line="9" Column="33" />
+      <File FileName="ClippyLib/Settings/SettingsFromFile.cs" Line="16" Column="1" />
+      <File FileName="ClippyLib/StringHelper.cs" Line="8" Column="40" />
+      <File FileName="ClippyLib/AClipEditor.cs" Line="29" Column="5" />
+      <File FileName="ClippyLib/EditorManager.cs" Line="128" Column="43" />
+      <File FileName="ClippyLib/Settings/SettingsFromRegistry.cs" Line="20" Column="16" />
+      <File FileName="bin/udf.xml" Line="12" Column="1" />
+      <File FileName="ClippyLib/UserFunction.cs" Line="48" Column="41" />
+      <File FileName="ClippyLib/UserFunctionsList.cs" Line="37" Column="30" />
+      <File FileName="UT.ClippyLib/TestUserFunctionsList.cs" Line="44" Column="1" />
+      <File FileName="ConsoleClippy/udf.xml" Line="22" Column="13" />
+      <File FileName="UT.ClippyLib/AllTestSetup.cs" Line="30" Column="11" />
+      <File FileName="UT.ClippyLib/Editors/TestCount.cs" Line="14" Column="26" />
+      <File FileName="UT.ClippyLib/Editors/TestUdfEditor.cs" Line="13" Column="1" />
+      <File FileName="UT.ClippyLib/Editors/AEditorTester.cs" Line="33" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ClippyLib" expanded="True">
-            <Node name="styles.css" selected="True" />
+            <Node name="Editors" expanded="True" />
+            <Node name="Settings" expanded="True" />
+            <Node name="UserFunctionsList.cs" selected="True" />
+          </Node>
+          <Node name="ConsoleClippy" expanded="True" />
+          <Node name="UT.ClippyLib" expanded="True">
+            <Node name="Editors" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -17,7 +41,18 @@
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
         <State expanded="True">
-          <Node name="UT.ClippyLib" selected="True" />
+          <Node name="UT.ClippyLib" expanded="True">
+            <Node name="UT" expanded="True">
+              <Node name="ClippyLib" expanded="True">
+                <Node name="Editors" expanded="True">
+                  <Node name="TestUdfEditor" expanded="True">
+                    <Node name="CanExecuteSimpleUdf" selected="True" />
+                  </Node>
+                </Node>
+                <Node name="TestUserFunctionsList" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
@@ -27,6 +62,9 @@
       <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="23" column="18" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Grep.cs" line="105" column="44" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="16" column="12" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/TestUserFunctionsList.cs" line="18" column="44" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Settings/SettingsFromRegistry.cs" line="20" column="16" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestUdfEditor.cs" line="13" column="15" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

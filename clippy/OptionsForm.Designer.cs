@@ -120,7 +120,6 @@
         	this.hideAtX.TabStop = true;
         	this.hideAtX.Text = "Hide";
         	this.hideAtX.UseVisualStyleBackColor = true;
-        	this.hideAtX.CheckedChanged += new System.EventHandler(this.ChangeCloseFunction);
         	// 
         	// closeAtX
         	// 
@@ -131,7 +130,6 @@
         	this.closeAtX.TabStop = true;
         	this.closeAtX.Text = "Close";
         	this.closeAtX.UseVisualStyleBackColor = true;
-        	this.closeAtX.CheckedChanged += new System.EventHandler(this.ChangeCloseFunction);
         	// 
         	// OptionsForm
         	// 

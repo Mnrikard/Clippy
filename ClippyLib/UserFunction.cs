@@ -29,6 +29,18 @@ namespace ClippyLib
 			}
 		}
 
+		public UserFunction(string name, string description, string subfuncs, List<UserParameter> parameters)
+		{
+			Name = name;
+			Description = description;
+			Parameters = parameters;
+
+			foreach(string subfunction in subfuncs.Split('\n'))
+			{
+				SubFunctions.Enqueue(subfunction.Trim());
+			}
+		}
+
 		public string Name{get; set;}
 		public string Description {get; set;}
 		public Queue<string> SubFunctions {get; set;}
@@ -46,6 +58,15 @@ namespace ClippyLib
 					Required = bool.Parse(parameterNode.Attribute("required").Value);
 				if(parameterNode.Attribute("sequence") != null)
 					Sequence = int.Parse(parameterNode.Attribute("sequence").Value);
+			}
+
+			public UserParameter(string name, string defaultValue, bool required, string description, int sequence)
+			{
+				Name = name;
+				DefaultValue = defaultValue;
+				Required = required;
+				Description = description;
+				Sequence = sequence;
 			}
 
 			public string Name {get;set;}

@@ -168,10 +168,13 @@ namespace ClippyLib.Editors
 				function = function.Replace (dynamicParameter, _arguments[i]);
 			}
 
-			for (int i = 0; i < ParameterList.Count; i++) 
+			if(ParameterList != null)
 			{
-				string dynamicParameter = String.Concat("%",i.ToString(),"%");
-				function = function.Replace (dynamicParameter, ParameterList[i].Value);
+				for (int i = 0; i < ParameterList.Count; i++) 
+				{
+					string dynamicParameter = String.Concat("%",i.ToString(),"%");
+					function = function.Replace (dynamicParameter, ParameterList[i].Value);
+				}
 			}
 
 			return function;

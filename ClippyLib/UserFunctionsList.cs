@@ -71,6 +71,41 @@ namespace ClippyLib
 			        select func.Name).ToList();
 		}
 
+		
+		public void Save()
+		{
+			XElement root = new XElement("commands");
+			XDocument saveFile = new XDocument(root);
+
+			this.Sort();
+			foreach(UserFunction uf in this)
+			{
+				XElement command = new XElement("command",new XAttribute("key",uf.Name),
+					new XElement("description",uf.Description)
+				);
+
+				foreach(string subfunc in uf.SubFunctions)
+				{
+					command.Add(new XElement("function",subfunc));
+				}
+
+				foreach(UserFunction.UserParameter param in uf.Parameters)
+				{
+					command.Add(new XElement("parameter",
+						new XAttribute("name", param.Name),
+						new XAttribute("default", param.DefaultValue),
+						new XAttribute("parmdesc", param.Description),
+						new XAttribute("sequence", param.Sequence.ToString()),
+						new XAttribute("required", param.Required.ToString())
+					));
+				}
+
+				root.Add(command);
+			}
+
+			saveFile.Save(_settings.UdfLocation);
+		}
+
 	}
 }
 

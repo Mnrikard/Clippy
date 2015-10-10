@@ -58,6 +58,7 @@
     <Compile Include="TestUserFunctionsList.cs" />
     <Compile Include="AllTestSetup.cs" />
     <Compile Include="Editors\TestUdfEditor.cs" />
+    <Compile Include="TestConsoleclippy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -67,6 +68,10 @@
     <ProjectReference Include="..\ClippyLib\ClippyLib.csproj">
       <Project>{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}</Project>
       <Name>ClippyLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConsoleClippy\ConsoleClippy.csproj">
+      <Project>{0C5D6673-5856-4060-9404-E96B4FBEEB9F}</Project>
+      <Name>ConsoleClippy</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

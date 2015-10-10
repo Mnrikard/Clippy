@@ -83,6 +83,8 @@
     <Compile Include="StringHelper.cs" />
     <Compile Include="UserFunction.cs" />
     <Compile Include="UserFunctionsList.cs" />
+    <Compile Include="Snippet.cs" />
+    <Compile Include="SnippetsList.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\ConsoleClippy\udf.xml">

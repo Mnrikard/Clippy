@@ -31,6 +31,7 @@ namespace UT.ClippyLib
     <description>Lists all numeric values in a string.</description>
     <function>rep ""\D+"" "",""</function>
     <function>rep ""([\d,]{80,90},)"" ""$1\n""</function>
+	<function>rep ""[\d\D]+"" ""($0)""</function>
   </command>
   <command key=""HtmlEncode"">
     <description>Encodes to html</description>

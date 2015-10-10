@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ClippyLib.Editors;
-using Microsoft.Win32;
 
 namespace ClippyLib
 {
@@ -47,7 +46,7 @@ namespace ClippyLib
             Editors.Add(new NewText());
             Editors.Add(new Rep());
             Editors.Add(new Reverse());
-            Editors.Add(new Snippet());
+            Editors.Add(new SnippetTextEditor());
             Editors.Add(new SqlInsert());
             Editors.Add(new TabRight());
             Editors.Add(new ToBase());

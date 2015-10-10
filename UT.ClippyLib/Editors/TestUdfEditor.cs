@@ -10,7 +10,7 @@ namespace UT.ClippyLib.Editors
 		public void CanExecuteSimpleUdf()
 		{
 			WhenClipboardContains("1 2 3 4 5 10 23 57 99");
-			AndCommandIsRan("NumList");
+			AndUdfCommandIsRan("NumList");
 			ThenTheClipboardShouldContain("(1,2,3,4,5,10,23,57,99)");
 		}
 	}
