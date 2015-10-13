@@ -26,10 +26,9 @@ namespace ClippyLib
 		private void GetListOfUserFunctionsFromFile()
 		{
 			if(!File.Exists(_settings.UdfLocation))
-				throw new UndefinedFunctionException("No UDF file is set.");
+				return;
 
 			XDocument udfDoc = XDocument.Load(_settings.UdfLocation);
-
 
 			XElement root = udfDoc.Root;
 			if(root != null)

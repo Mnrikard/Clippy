@@ -22,6 +22,15 @@ namespace UT.ClippyLib.Editors
 			AndCommandIsRan("encode url reverse");
 			ThenTheClipboardShouldContain("this&that! $10.00*%^");
 		}
+		
+		[Test]
+		public void CanDecodeLongUrl()
+		{
+			WhenClipboardContains(_reallyLongUrlOver1000Chars);
+			AndCommandIsRan("encode url reverse");
+			ThenTheClipboardShouldContain(_reallyLongUrlOver1000Chars.Replace("%20"," "));
+		}
+
 
 		[Test]
 		public void CanEncodeBase64()
@@ -69,6 +78,19 @@ namespace UT.ClippyLib.Editors
 			WhenClipboardContains("&lt;root&gt;test&lt;/root&gt;");
 			AndCommandIsRan("encode xml reverse");
 			ThenTheClipboardShouldContain("<root>test</root>");
+		}
+
+		private string _reallyLongUrlOver1000Chars
+		{
+			get
+			{
+				System.Text.StringBuilder output = new System.Text.StringBuilder();
+				for(int i=0;i<1000;i++)
+				{
+					output.Append(String.Concat("text%20goes%20here%20"));
+				}
+				return output.ToString();
+			}
 		}
 	}
 }

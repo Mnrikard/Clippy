@@ -26,7 +26,7 @@ namespace ClippyLib
 		private void GetListOfSnippetsFromFile()
 		{
 			if(!File.Exists(_settings.SnippetsLocation))
-				throw new UndefinedFunctionException("No snippets file is set.");
+				return;
 
 			XDocument snippetsDoc = XDocument.Load(_settings.SnippetsLocation);
 

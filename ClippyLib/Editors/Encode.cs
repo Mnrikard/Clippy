@@ -87,7 +87,7 @@ namespace ClippyLib.Editors
 			switch (typeDirection.Trim())
 			{
 				case "url reverse":
-					SourceData = SafeUrlDecode(SourceData);
+					SourceData = ModifiedUrlDecode(SourceData);
 					break;
 				case "url":
 					SourceData = SafeUrlEncode(SourceData);
@@ -161,6 +161,24 @@ namespace ClippyLib.Editors
             }
             return output.ToString();
         }
+
+		private string ModifiedUrlDecode(string data)
+		{
+			for(int i=0;i<256;i++)
+			{
+				string replacement = String.Concat("%",i.ToString("x").PadLeft(2,'0'));
+				if(data.Contains(replacement.ToUpper()))
+				{
+					data = data.Replace(replacement.ToUpper(), ((char)i).ToString());
+				}
+				if(data.Contains(replacement))
+				{
+					data = data.Replace(replacement, ((char)i).ToString());
+				}
+			}
+
+			return data;
+		}
         
     }
 }
