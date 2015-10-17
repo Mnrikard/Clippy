@@ -1,11 +1,10 @@
-using NUnit.Framework;
 using System;
-using ClippyLib.Settings;
-using NSubstitute;
-using System.IO;
-using ClippyLib;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using ClippyLib.Editors;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace UT.ClippyLib
 {

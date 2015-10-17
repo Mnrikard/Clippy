@@ -29,7 +29,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Windows.Forms;
-using ClippyLib;
+using ClippyLib.Editors;
 
 namespace clippy
 {

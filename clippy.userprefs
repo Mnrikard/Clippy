@@ -1,28 +1,29 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ClippyLib/AClipEditor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ConsoleClippy/Program.cs">
     <Files>
-      <File FileName="ConsoleClippy/Program.cs" Line="99" Column="67" />
-      <File FileName="UT.ClippyLib/TestConsoleclippy.cs" Line="1" Column="1" />
-      <File FileName="UT.ClippyLib/Editors/TestUdfEditor.cs" Line="1" Column="1" />
-      <File FileName="UT.ClippyLib/Editors/AEditorTester.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/StringHelper.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/Editors/UdfEditor.cs" Line="33" Column="38" />
-      <File FileName="UT.ClippyLib/AllTestSetup.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/EditorManager.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/Editors/SnippetTextEditor.cs" Line="1" Column="1" />
-      <File FileName="clippy/UdfEditor.cs" Line="117" Column="6" />
-      <File FileName="ClippyLib/UserFunction.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/AClipEditor.cs" Line="102" Column="9" />
+      <File FileName="ClippyLib/RecentCommands/Store.cs" Line="41" Column="20" />
+      <File FileName="ClippyLib/Editors/Tabright.cs" Line="303" Column="19" />
+      <File FileName="ClippyLib/Editors/Grep.cs" Line="75" Column="23" />
+      <File FileName="ClippyLib/Settings/SettingsFromFile.cs" Line="28" Column="37" />
+      <File FileName="ClippyLib/Settings/SettingsObtainer.cs" Line="17" Column="63" />
+      <File FileName="ClippyLib/RecentCommands/RegistryStore.cs" Line="5" Column="34" />
+      <File FileName="ClippyLib/RecentCommands/FileStore.cs" Line="30" Column="5" />
+      <File FileName="UT.ClippyLib/Editors/TestCapitalize.cs" Line="28" Column="4" />
+      <File FileName="clippy/Form1.cs" Line="270" Column="32" />
+      <File FileName="ConsoleClippy/Program.cs" Line="104" Column="23" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
+          <Node name="clippy" expanded="True" />
           <Node name="ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True" />
-            <Node name="AClipEditor.cs" selected="True" />
+            <Node name="RecentCommands" expanded="True" />
+            <Node name="Settings" expanded="True" />
           </Node>
-          <Node name="ConsoleClippy" expanded="True" />
+          <Node name="ConsoleClippy" expanded="True">
+            <Node name="Program.cs" selected="True" />
+          </Node>
           <Node name="UT.ClippyLib" expanded="True">
             <Node name="Editors" expanded="True" />
           </Node>
@@ -41,13 +42,13 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="23" column="18" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="22" column="18" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Grep.cs" line="105" column="44" />
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="16" column="12" />
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/TestUserFunctionsList.cs" line="18" column="44" />
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Settings/SettingsFromRegistry.cs" line="20" column="16" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="15" column="12" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/TestUserFunctionsList.cs" line="17" column="44" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestUdfEditor.cs" line="13" column="15" />
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="139" column="36" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="138" column="36" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Encode.cs" line="170" column="17" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

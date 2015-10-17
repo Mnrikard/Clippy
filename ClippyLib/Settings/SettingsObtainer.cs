@@ -8,7 +8,14 @@ namespace ClippyLib.Settings
 	{
 		public abstract string UdfLocation { get;set; }
 		public abstract string SnippetsLocation { get;set; }
+		public abstract string RecentCommandsLocation { get;set; }
 		public abstract bool ClosesOnExit { get;set; }
+
+
+		protected string snippetsKey = "snippetsLocation";
+		protected string udfKey = "udfLocation";
+		protected string recentCommandsKey = "recentCommandsLocation";
+		protected string closeOptionKey = "CloseFunction";
 
 		public static SettingsObtainer CreateInstance()
 		{

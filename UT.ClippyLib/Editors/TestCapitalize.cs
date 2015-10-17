@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using System;
 using ClippyLib.Editors;
-using ClippyLib;
 
 namespace UT.ClippyLib.Editors
 {

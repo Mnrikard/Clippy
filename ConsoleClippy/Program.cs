@@ -21,7 +21,7 @@
 using System;
 using System.Linq;
 using clippy;
-using ClippyLib;
+using ClippyLib.Editors;
 using System.Windows.Forms;
 
 namespace ConsoleClippy
@@ -41,7 +41,7 @@ namespace ConsoleClippy
                     (args[0].Equals("--udfeditor", StringComparison.CurrentCultureIgnoreCase)
                      || args[0].Equals("--udf", StringComparison.CurrentCultureIgnoreCase)))
             {
-            	UdfEditor editorForm = new UdfEditor();
+            	clippy.UdfEditor editorForm = new clippy.UdfEditor();
             	editorForm.ShowDialog();
             }
             else
@@ -99,7 +99,10 @@ namespace ConsoleClippy
             string[] parms = (from Parameter p in editor.ParameterList
                               orderby p.Sequence
                               select "\"" + (p.Value ?? p.DefaultValue ?? String.Empty).Replace("\"","\\q")+"\"").ToArray();
-            ClippyLib.RecentCommands.SaveThisCommand(commandName, String.Join(" ", parms));
+			string args = String.Join(" ", parms);
+
+			var commandStore = ClippyLib.RecentCommands.Store.GetInstance();
+			commandStore.SaveThisCommand(commandName, args);
         }
 
         private static void SetParameters(EditorManager manager, string[] args)
@@ -111,14 +114,14 @@ namespace ConsoleClippy
                     manager.ClipEditor.SetParameters(args);
                     break;
                 }
-                catch (ClippyLib.InvalidParameterException pe)
+                catch (ClippyLib.Editors.InvalidParameterException pe)
                 {
                     Console.WriteLine("Error: " + pe.ParameterMessage);
                     Console.WriteLine("Press enter to continue, results are not guaranteed\r\n");
                     Console.ReadLine();
                     break;
                 }
-                catch (ClippyLib.UndefinedFunctionException udfe)
+                catch (ClippyLib.Editors.UndefinedFunctionException udfe)
                 {
                     manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
                     Console.WriteLine(udfe.FunctionMessage);

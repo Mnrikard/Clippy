@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace ClippyLib
+namespace ClippyLib.Editors
 {
 	public class UserFunction
 	{

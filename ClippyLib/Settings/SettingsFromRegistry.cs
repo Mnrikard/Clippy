@@ -13,47 +13,41 @@ namespace ClippyLib.Settings
 			ClippyRegistryKey = hkcu.OpenSubKey("Software\\Rikard\\Clippy", true);
 		}
 
+		public override string RecentCommandsLocation 
+		{
+			get { return GetRegistryValue(recentCommandsKey); }
+			set { SetRegistryValue(recentCommandsKey, value); }
+		}
+
 		public override string UdfLocation 
 		{
-			get 
-			{
-				return ClippyRegistryKey == null ? string.Empty :  ClippyRegistryKey.GetValue("udfLocation").ToString();
-			}
-			set
-			{
-				if(ClippyRegistryKey != null)
-				{
-					ClippyRegistryKey.SetValue("udfLocation", value, RegistryValueKind.String);
-				}
-			}
+			get { return GetRegistryValue(udfKey); }
+			set { SetRegistryValue(udfKey, value); }
 		}
 
 		public override string SnippetsLocation
 		{
-			get 
-			{
-				return ClippyRegistryKey == null ? string.Empty :  ClippyRegistryKey.GetValue("snippetsLocation").ToString();
-			}
-			set
-			{
-				if(ClippyRegistryKey != null)
-				{
-					ClippyRegistryKey.SetValue("snippetsLocation", value, RegistryValueKind.String);
-				}
-			}
+			get { return GetRegistryValue(snippetsKey); }
+			set { SetRegistryValue(snippetsKey, value); }
 		}
 
 		public override bool ClosesOnExit
 		{
-			get
-			{
-				return ClippyRegistryKey == null ? true :  ClippyRegistryKey.GetValue("CloseFunction").ToString().Equals("close",StringComparison.CurrentCultureIgnoreCase);
-			}
-			set
-			{
-				ClippyRegistryKey.SetValue("CloseFunction", value ? "close" : "hide", RegistryValueKind.String);
-			}
+			get { return GetRegistryValue(closeOptionKey).Equals("close", StringComparison.CurrentCultureIgnoreCase); }
+			set { SetRegistryValue(closeOptionKey, value ? "close" : "hide"); }
+		}
 
+		private string GetRegistryValue(string key)
+		{
+			return ClippyRegistryKey == null ? string.Empty :  ClippyRegistryKey.GetValue(key).ToString();
+		}
+
+		private void SetRegistryValue(string key, string value)
+		{
+			if(ClippyRegistryKey != null)
+			{
+				ClippyRegistryKey.SetValue(key, value, RegistryValueKind.String);
+			}
 		}
 
 	}

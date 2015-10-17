@@ -33,7 +33,6 @@ namespace ClippyLib.Editors
     public class UdfEditor : AClipEditor
     {
         private string _udfName;
-        private XmlDocument _udfSettings;
         private string[] _arguments;
         private Dictionary<string, string> _udfParameters;
         private List<Parameter> _xmlDefinedParms;

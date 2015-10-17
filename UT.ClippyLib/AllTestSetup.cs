@@ -10,6 +10,7 @@ namespace UT.ClippyLib
 	{
 		private string rcPath;
 		private string udfPath;
+		private string recentLoc;
 
 		[SetUp]
 		public void InitializeTests()
@@ -19,11 +20,9 @@ namespace UT.ClippyLib
 				".clippyrc");
 
 			udfPath = Path.Combine(Environment.CurrentDirectory,"udf.xml");
+			recentLoc = Path.Combine(Environment.CurrentDirectory,"clippyRecentCommands");
 
-			if(File.Exists(udfPath))
-				File.Delete(udfPath);
-			if(File.Exists(rcPath))
-				File.Delete(rcPath);
+			DestroyTestArtifacts();
 
 			File.WriteAllText(udfPath, @"<?xml version=""1.0"" encoding=""utf-8""?>
 <commands>
@@ -39,8 +38,13 @@ namespace UT.ClippyLib
   </command>
 </commands>");
 
-			File.WriteAllText(rcPath, String.Concat("udfLocation:",udfPath,"\n" +
-			                                         "snippetsLocation:null\n" +
+			File.WriteAllText(recentLoc, "rep a b\n" +
+				"fakeCommand\n" +
+				"grep c\n");
+
+			File.WriteAllText(rcPath, String.Concat("udfLocation:",udfPath,"\n" ,
+			                                        "snippetsLocation:null\n" ,
+			                                        "recentCommandsLocation:",recentLoc,"\n" ,
 			                                         "CloseFunction:close\n"));
 		}
 
@@ -51,6 +55,8 @@ namespace UT.ClippyLib
 				File.Delete(udfPath);
 			if(File.Exists(rcPath))
 				File.Delete(rcPath);
+			if(File.Exists(recentLoc))
+				File.Delete(recentLoc);
 		}
 
 	}

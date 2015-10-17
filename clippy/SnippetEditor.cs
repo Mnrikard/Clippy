@@ -27,7 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ClippyLib.Settings;
-using ClippyLib;
+using ClippyLib.Editors;
 
 namespace clippy
 {

@@ -75,7 +75,6 @@
     <Compile Include="Parameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Editors\Rep.cs" />
-    <Compile Include="RecentCommands.cs" />
     <Compile Include="SuperRegex.cs" />
     <Compile Include="Settings\SettingsObtainer.cs" />
     <Compile Include="Settings\SettingsFromFile.cs" />
@@ -85,6 +84,9 @@
     <Compile Include="UserFunctionsList.cs" />
     <Compile Include="Snippet.cs" />
     <Compile Include="SnippetsList.cs" />
+    <Compile Include="RecentCommands\RegistryStore.cs" />
+    <Compile Include="RecentCommands\Store.cs" />
+    <Compile Include="RecentCommands\FileStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\ConsoleClippy\udf.xml">
@@ -110,5 +112,6 @@
   -->
   <ItemGroup>
     <Folder Include="Settings\" />
+    <Folder Include="RecentCommands\" />
   </ItemGroup>
 </Project>

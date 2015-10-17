@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using ClippyLib;
+using ClippyLib.Editors;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
 

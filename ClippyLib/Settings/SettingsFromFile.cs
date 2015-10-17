@@ -13,20 +13,26 @@ namespace ClippyLib.Settings
 
 		public override string UdfLocation 
 		{ 
-			get { return GetValue("udfLocation:"); }
-			set { SetValue("udfLocation:", value); }
+			get { return GetValue(udfKey); }
+			set { SetValue(udfKey, value); }
 		}
 
 		public override string SnippetsLocation
 		{ 
-			get { return GetValue("snippetsLocation:"); }
-			set { SetValue("snippetsLocation:", value); }
+			get { return GetValue(snippetsKey); }
+			set { SetValue(snippetsKey, value); }
+		}
+
+		public override string RecentCommandsLocation
+		{
+			get { return GetValue(recentCommandsKey); }
+			set { SetValue(recentCommandsKey, value); }
 		}
 
 		public override bool ClosesOnExit
 		{ 
-			get { return GetValue("CloseFunction:") == "close"; }
-			set { SetValue("CloseFunction:", value ? "close" : "hide" ); }
+			get { return GetValue(closeOptionKey) == "close"; }
+			set { SetValue(closeOptionKey, value ? "close" : "hide" ); }
 		}
 
 		private string GetValue(string valueName)

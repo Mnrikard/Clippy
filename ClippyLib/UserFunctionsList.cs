@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Text;
 
-namespace ClippyLib
+namespace ClippyLib.Editors
 {
 	public class UserFunctionsList : List<UserFunction>
 	{

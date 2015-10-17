@@ -20,26 +20,29 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.Win32;
+using ClippyLib.Settings;
 
-namespace ClippyLib.Editors
+namespace ClippyLib.RecentCommands
 {
-    public class InvalidParameterException : System.Exception
+    public abstract class Store
     {
-        public string ParameterMessage { get; private set; }
-        public InvalidParameterException(string formatMessage, params object[] formatItems)
-        {
-            ParameterMessage = String.Format(formatMessage, formatItems);
-        }
-    }
+		public abstract void SaveThisCommand(string editorname, string parms);
+		public abstract string[] GetRecentCommandList();
 
-    public class UndefinedFunctionException : System.Exception
-    {
-        public string FunctionMessage { get; private set; }
-        public UndefinedFunctionException(string formatMessage, params object[] formatItems)
-        {
-            FunctionMessage = String.Format(formatMessage, formatItems);
-        }
+		public static Store GetInstance()
+		{
+			SettingsObtainer obt = SettingsObtainer.CreateInstance();
+			if(File.Exists(obt.RecentCommandsLocation))
+			{
+				return new FileStore(obt.RecentCommandsLocation);
+			}
+			return new RegistryStore();
+		}
+
+        
     }
 }

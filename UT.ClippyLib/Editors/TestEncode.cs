@@ -31,6 +31,14 @@ namespace UT.ClippyLib.Editors
 			ThenTheClipboardShouldContain(_reallyLongUrlOver1000Chars.Replace("%20"," "));
 		}
 
+		[Test]
+		public void CanDecodeInvalidUrlString()
+		{
+			WhenClipboardContains("this%20is%20a%20partial%20string%");
+			AndCommandIsRan("encode url reverse");
+			ThenTheClipboardShouldContain("this is a partial string%");
+		}
+
 
 		[Test]
 		public void CanEncodeBase64()

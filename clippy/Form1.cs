@@ -19,12 +19,12 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using ClippyLib;
-using System.Collections.Generic;
+using ClippyLib.Editors;
 using ClippyLib.Settings;
 
 namespace clippy
@@ -165,12 +165,12 @@ namespace clippy
             {
                 clipManager.ClipEditor.SetParameters(arguments);
             }
-            catch (ClippyLib.InvalidParameterException pe)
+            catch (ClippyLib.Editors.InvalidParameterException pe)
             {
                 MessageBox.Show(pe.ParameterMessage, "Error creating parameters", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 functions.Focus();
             }
-            catch (ClippyLib.UndefinedFunctionException udfe)
+            catch (ClippyLib.Editors.UndefinedFunctionException udfe)
             {
                 errorLabel.Text = udfe.FunctionMessage;
                 functions.BackColor = Color.Yellow;
@@ -214,7 +214,7 @@ namespace clippy
                 {
                     clipManager.ClipEditor.SetParameter(i, parmValue);
                 }
-                catch (ClippyLib.InvalidParameterException pe)
+                catch (ClippyLib.Editors.InvalidParameterException pe)
                 {
                     MessageBox.Show(pe.ParameterMessage, "Error with passed parameter: \"" + parmValue + "\"", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -239,7 +239,7 @@ namespace clippy
                 MessageBox.Show(udfex.FunctionMessage);
             }
 
-            SaveThisCommand(_currentCommand, parmString.ToString());
+			SaveThisCommand(_currentCommand, parmString.ToString());
 
             clipManager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
             functions.Focus();
@@ -261,12 +261,14 @@ namespace clippy
 		
         private void SaveThisCommand(string editorName, string parms)
         {
-            ClippyLib.RecentCommands.SaveThisCommand(editorName, parms);
+			var commandStore = ClippyLib.RecentCommands.Store.GetInstance();
+            commandStore.SaveThisCommand(editorName, parms);
         }
 
         private string[] GetRecentCommandList()
         {
-            return ClippyLib.RecentCommands.GetRecentCommandList();
+			var commandStore = ClippyLib.RecentCommands.Store.GetInstance();
+			return commandStore.GetRecentCommandList();
         }
 
         private string ParmEscape(string value)

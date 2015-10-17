@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClippyLib {
+namespace ClippyLib.Editors {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

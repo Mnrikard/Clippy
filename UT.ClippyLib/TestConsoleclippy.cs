@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using ConsoleClippy;
 using System;
-using ClippyLib;
+using ClippyLib.Editors;
 
 namespace UT.ClippyLib
 {
