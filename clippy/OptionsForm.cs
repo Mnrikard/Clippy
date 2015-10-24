@@ -79,7 +79,11 @@ namespace clippy
 			SettingsObtainer obtainer = SettingsObtainer.CreateInstance();
 			udfLocation.Text = obtainer.UdfLocation;
 			snippetsLocation.Text = obtainer.SnippetsLocation;
-			hideAtX.Checked = !obtainer.ClosesOnExit;
+
+			bool closeOnExit = obtainer.ClosesOnExit;
+
+			closeAtX.Checked = closeOnExit;
+			hideAtX.Checked = !closeOnExit;
         }
                 
     }

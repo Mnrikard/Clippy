@@ -31,7 +31,7 @@ namespace ClippyLib.Settings
 
 		public override bool ClosesOnExit
 		{ 
-			get { return GetValue(closeOptionKey) == "close"; }
+			get { return GetValue(closeOptionKey).Trim().Equals("close", StringComparison.CurrentCultureIgnoreCase); }
 			set { SetValue(closeOptionKey, value ? "close" : "hide" ); }
 		}
 
@@ -57,7 +57,7 @@ namespace ClippyLib.Settings
 				}
 			}
 
-			return null;
+			return string.Empty;
 		}
 
 		private void SetValue(string valueName, string value)
@@ -72,18 +72,23 @@ namespace ClippyLib.Settings
 			StringBuilder settingsValues = new StringBuilder();
 			using(StreamReader settingsReader = new StreamReader(_settingsFile))
 			{
+				bool valueSet = false;
 				string line;
 				while((line = settingsReader.ReadLine()) != null)
 				{
 					if(line.StartsWith(valueName, StringComparison.CurrentCultureIgnoreCase))
 					{
 						settingsValues.AppendLine(String.Concat(valueName,value));
+						valueSet = true;
 					}
 					else
 					{
 						settingsValues.AppendLine(line.Trim());
 					}
 				}
+
+				if(!valueSet)
+					settingsValues.AppendLine(String.Concat(valueName,value));
 			}
 
 			File.WriteAllText(_settingsFile, settingsValues.ToString());

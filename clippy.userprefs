@@ -1,31 +1,48 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UT.ClippyLib/Editors/TestCapitalize.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="clippy/COPYING">
     <Files>
-      <File FileName="ClippyLib/RecentCommands/Store.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/Editors/Tabright.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/Editors/Grep.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/Settings/SettingsFromFile.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/Settings/SettingsObtainer.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/RecentCommands/RegistryStore.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/RecentCommands/FileStore.cs" Line="1" Column="1" />
-      <File FileName="UT.ClippyLib/Editors/TestCapitalize.cs" Line="28" Column="4" />
-      <File FileName="clippy/Form1.cs" Line="1" Column="1" />
-      <File FileName="ConsoleClippy/Program.cs" Line="104" Column="23" />
+      <File FileName="UT.ClippyLib/Editors/TestChunk.cs" Line="7" Column="2" />
+      <File FileName="UT.ClippyLib/TestUserFunctionsList.cs" Line="13" Column="36" />
+      <File FileName="clippy/About.Designer.cs" Line="65" Column="74" />
+      <File FileName="clippy/Form1.Designer.cs" Line="67" Column="99" />
+      <File FileName="clippy/HelpCenter.Designer.cs" Line="94" Column="89" />
+      <File FileName="clippy/OptionsForm.Designer.cs" Line="150" Column="89" />
+      <File FileName="clippy/PersistentInformation.Designer.cs" Line="54" Column="89" />
+      <File FileName="clippy/RecentCommands.Designer.cs" Line="65" Column="88" />
+      <File FileName="clippy/SnippetEditor.Designer.cs" Line="133" Column="89" />
+      <File FileName="clippy/UdfEditor.Designer.cs" Line="197" Column="50" />
+      <File FileName="clippy/Form1.cs" Line="70" Column="14" />
+      <File FileName="ClippyLib/Settings/SettingsObtainer.cs" Line="10" Column="3" />
+      <File FileName="clippy/UdfEditor.cs" Line="32" Column="17" />
+      <File FileName="clippy/OptionsForm.cs" Line="85" Column="1" />
+      <File FileName="ClippyLib/Settings/SettingsFromFile.cs" Line="34" Column="1" />
+      <File FileName="ClippyLib/SnippetsList.cs" Line="32" Column="1" />
+      <File FileName="ClippyLib/Editors/UdfEditor.cs" Line="138" Column="1" />
+      <File FileName="clippy/COPYING" Line="55" Column="49" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="clippy" expanded="True" />
+          <Node name="clippy" expanded="True">
+            <Node name="COPYING" selected="True" />
+            <Node name="Form1.cs" expanded="True" />
+            <Node name="HelpCenter.cs" expanded="True" />
+            <Node name="OptionsForm.cs" expanded="True" />
+            <Node name="PersistentInformation.cs" expanded="True" />
+            <Node name="RecentCommands.cs" expanded="True" />
+            <Node name="SnippetEditor.cs" expanded="True" />
+            <Node name="UdfEditor.cs" expanded="True" />
+          </Node>
           <Node name="ClippyLib" expanded="True">
+            <Node name="Editors" expanded="True" />
             <Node name="RecentCommands" expanded="True" />
             <Node name="Settings" expanded="True" />
           </Node>
           <Node name="ConsoleClippy" expanded="True" />
+          <Node name="Manip" expanded="True" />
           <Node name="UT.ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True">
-              <Node name="TestCapitalize.cs" selected="True" />
-            </Node>
+            <Node name="Editors" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -45,7 +62,7 @@
       <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="22" column="18" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Grep.cs" line="105" column="44" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="15" column="12" />
-      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/TestUserFunctionsList.cs" line="17" column="44" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/TestUserFunctionsList.cs" line="18" column="44" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestUdfEditor.cs" line="13" column="15" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="138" column="36" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Encode.cs" line="170" column="17" />
