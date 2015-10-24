@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using ClippyLib.Editors;
+using ClippyLib;
 using NSubstitute;
 using NUnit.Framework;
 

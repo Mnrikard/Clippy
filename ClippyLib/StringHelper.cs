@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ClippyLib.Editors
+namespace ClippyLib
 {
 	public static class StringHelper
 	{

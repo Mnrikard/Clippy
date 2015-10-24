@@ -21,7 +21,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace ClippyLib.Editors
+namespace ClippyLib
 {
     public class SuperRegex : Regex
     {

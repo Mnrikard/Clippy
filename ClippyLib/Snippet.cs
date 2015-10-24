@@ -1,7 +1,7 @@
 using System;
 using System.Xml.Linq;
 
-namespace ClippyLib.Editors
+namespace ClippyLib
 {
 	public class Snippet
 	{

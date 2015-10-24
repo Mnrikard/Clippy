@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ClippyLib.Editors
+namespace ClippyLib
 {
     public class EditorResponseEventArgs : System.EventArgs
     {

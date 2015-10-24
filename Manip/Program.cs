@@ -24,6 +24,7 @@
 
 using System;
 using System.Text;
+using ClippyLib;
 using ClippyLib.Editors;
 using System.Linq;
 
@@ -91,14 +92,14 @@ namespace Manip
                     manager.ClipEditor.SetParameters(args);
                     break;
                 }
-                catch (ClippyLib.Editors.InvalidParameterException pe)
+                catch (ClippyLib.InvalidParameterException pe)
                 {
                     Console.WriteLine("Error: " + pe.ParameterMessage);
                     Console.WriteLine("Press enter to continue, results are not guaranteed\r\n");
                     Console.ReadLine();
                     break;
                 }
-                catch (ClippyLib.Editors.UndefinedFunctionException udfe)
+                catch (ClippyLib.UndefinedFunctionException udfe)
                 {
                     manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
                     Console.WriteLine(udfe.FunctionMessage);

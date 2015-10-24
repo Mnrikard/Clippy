@@ -23,8 +23,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.IO;
 
-namespace ClippyLib.Editors
+namespace ClippyLib
 {
     public static class Extensions
     {
@@ -66,6 +67,7 @@ namespace ClippyLib.Editors
                 repper = new Regex(spattern, RegexOptions.IgnoreCase);
             return repper;
         }
+
         public static SuperRegex ToSuperRegex(this string spattern)
         {
             SuperRegex repper;
@@ -91,5 +93,12 @@ namespace ClippyLib.Editors
             int output;
             return Int32.TryParse(possibleNumber, out output);
         }
+
+		public static string GetLocalFile(string filename)
+		{
+			string currentAppDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+			return Path.Combine(currentAppDir,filename);
+		}
     }
 }

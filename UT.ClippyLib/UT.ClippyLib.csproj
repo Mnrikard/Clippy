@@ -59,6 +59,7 @@
     <Compile Include="AllTestSetup.cs" />
     <Compile Include="Editors\TestUdfEditor.cs" />
     <Compile Include="TestConsoleclippy.cs" />
+    <Compile Include="Editors\TestSnippet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

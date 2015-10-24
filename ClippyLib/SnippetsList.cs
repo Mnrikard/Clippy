@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using ClippyLib.Settings;
 using System.IO;
-using System.Xml.Linq;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
+using ClippyLib;
+using ClippyLib.Settings;
 
-namespace ClippyLib.Editors
+namespace ClippyLib
 {
 	public class SnippetsList : List<Snippet>
 	{

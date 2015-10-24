@@ -91,7 +91,7 @@
             this.Controls.Add(this.helpBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.functionList);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = new System.Drawing.Icon(ClippyLib.Extensions.GetLocalFile("clippy2.ico"));
             this.Name = "HelpCenter";
             this.Text = "Function Descriptions";
             this.Load += new System.EventHandler(this.HelpCenterLoad);

@@ -62,7 +62,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -157,6 +156,12 @@
     <None Include="UdfEditor.resx">
       <DependentUpon>UdfEditor.cs</DependentUpon>
     </None>
+    <None Include="history.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include=".clippyrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClippyLib\ClippyLib.csproj">
@@ -166,7 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="clippy.ico" />
-    <Content Include="clippy2.ico" />
+    <Content Include="clippy2.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RGrader.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

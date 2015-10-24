@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Microsoft.Win32;
+using ClippyLib;
 
 namespace ClippyLib.Settings
 {
@@ -9,7 +10,8 @@ namespace ClippyLib.Settings
 		public abstract string UdfLocation { get;set; }
 		public abstract string SnippetsLocation { get;set; }
 		public abstract string RecentCommandsLocation { get;set; }
-		public abstract bool ClosesOnExit { get;set; }
+		private bool _closesOnExit = true;
+		public virtual bool ClosesOnExit { get{return _closesOnExit;}set{_closesOnExit = value;} }
 
 
 		protected string snippetsKey = "snippetsLocation";
@@ -19,9 +21,9 @@ namespace ClippyLib.Settings
 
 		public static SettingsObtainer CreateInstance()
 		{
-			string currentAppDir =  Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+			string rcfileLocation = Extensions.GetLocalFile(".clippyrc");
 
-			if(File.Exists(Path.Combine(currentAppDir, ".clippyrc")))
+			if(File.Exists(rcfileLocation))
 			{
 				return new SettingsFromFile();
 			}

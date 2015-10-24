@@ -22,9 +22,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ClippyLib.Editors;
 
-
-namespace ClippyLib.Editors
+namespace ClippyLib
 {
     public class EditorManager
     {

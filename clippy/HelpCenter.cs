@@ -18,11 +18,12 @@
  *
 */
 
-using ClippyLib.Editors;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml;
+using ClippyLib;
+using ClippyLib.Editors;
 
 namespace clippy
 {

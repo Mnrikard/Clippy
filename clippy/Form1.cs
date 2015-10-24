@@ -24,6 +24,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using ClippyLib;
 using ClippyLib.Editors;
 using ClippyLib.Settings;
 
@@ -165,12 +166,12 @@ namespace clippy
             {
                 clipManager.ClipEditor.SetParameters(arguments);
             }
-            catch (ClippyLib.Editors.InvalidParameterException pe)
+            catch (ClippyLib.InvalidParameterException pe)
             {
                 MessageBox.Show(pe.ParameterMessage, "Error creating parameters", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 functions.Focus();
             }
-            catch (ClippyLib.Editors.UndefinedFunctionException udfe)
+            catch (ClippyLib.UndefinedFunctionException udfe)
             {
                 errorLabel.Text = udfe.FunctionMessage;
                 functions.BackColor = Color.Yellow;
@@ -214,7 +215,7 @@ namespace clippy
                 {
                     clipManager.ClipEditor.SetParameter(i, parmValue);
                 }
-                catch (ClippyLib.Editors.InvalidParameterException pe)
+                catch (ClippyLib.InvalidParameterException pe)
                 {
                     MessageBox.Show(pe.ParameterMessage, "Error with passed parameter: \"" + parmValue + "\"", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

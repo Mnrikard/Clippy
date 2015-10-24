@@ -24,7 +24,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Text;
 
-namespace ClippyLib.Editors
+namespace ClippyLib
 {
     public abstract class AClipEditor : IClipEditor
     {
