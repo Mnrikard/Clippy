@@ -70,7 +70,7 @@ namespace clippy
 			obtainer.UdfLocation = udfLocation.Text;
 			obtainer.SnippetsLocation = snippetsLocation.Text;
 			obtainer.ClosesOnExit = !hideAtX.Checked;
-            
+			obtainer.RawTabString = tabStringBox.Text;
             this.Close();
         }
 
@@ -79,6 +79,7 @@ namespace clippy
 			SettingsObtainer obtainer = SettingsObtainer.CreateInstance();
 			udfLocation.Text = obtainer.UdfLocation;
 			snippetsLocation.Text = obtainer.SnippetsLocation;
+			tabStringBox.Text = obtainer.RawTabString;
 
 			bool closeOnExit = obtainer.ClosesOnExit;
 

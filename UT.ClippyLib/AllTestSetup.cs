@@ -57,7 +57,8 @@ namespace UT.ClippyLib
 			File.WriteAllText(rcPath, String.Concat("udfLocation:",udfPath,"\n" ,
 			                                        "snippetsLocation:",snippetsLocation,"\n" ,
 			                                        "recentCommandsLocation:",recentLoc,"\n" ,
-			                                         "CloseFunction:close\n"));
+			                                         "CloseFunction:close\n" +
+			                                         "tabString:{TAB}"));
 		}
 
 		[TearDown]

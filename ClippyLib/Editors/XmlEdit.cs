@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ClippyLib.Settings;
 
 namespace ClippyLib.Editors
 {
@@ -49,7 +50,9 @@ namespace ClippyLib.Editors
             string[] lines = text.Split('\n');
             int tabcount = 0;
             bool inCommentOrCdata = false;
-            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
+
+			SettingsObtainer obt = SettingsObtainer.CreateInstance();
+			string tabstr = obt.TabString;
             
 			for (int line = 0; line < lines.Length; line++)
             {

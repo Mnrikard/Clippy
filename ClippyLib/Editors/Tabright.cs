@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
+using ClippyLib.Settings;
 
 namespace ClippyLib.Editors
 {
@@ -87,7 +88,8 @@ namespace ClippyLib.Editors
         /// <param name="tabcount">Number of tabs to assume for base.</param>
         private static string TabRightCold(string text, int tabcount)
         {
-            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
+			SettingsObtainer obt = SettingsObtainer.CreateInstance();
+			string tabstr = obt.TabString;
             text = Regex.Replace(text, @"\n\s*", String.Empty).Replace("{", "{\n").Replace("}", "\n}\n").Replace(";", ";\n");
             string[] rows = text.Split('\n');
 
@@ -122,7 +124,9 @@ namespace ClippyLib.Editors
             bool blockComment = false;
             string prevChar = String.Empty;
             string setPrvChr = String.Empty;
-            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
+
+			SettingsObtainer obt = SettingsObtainer.CreateInstance();
+			string tabstr = obt.TabString;
 
             StringReader sr = new StringReader(code);
             StringBuilder codeOut = new StringBuilder();
@@ -305,7 +309,9 @@ namespace ClippyLib.Editors
             //special instructions for "select case" statements
             Regex casebound = new Regex(@"^(select case|end select)", RegexOptions.IgnoreCase);
             Regex caseitem = new Regex(@"^case\s", RegexOptions.IgnoreCase);
-            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
+
+			SettingsObtainer obt = SettingsObtainer.CreateInstance();
+			string tabstr = obt.TabString;
             bool incase = false;
 
             //get rid of multiline rows

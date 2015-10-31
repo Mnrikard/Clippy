@@ -30,6 +30,7 @@ namespace ClippyLib.Editors
 		private string _insertStatement;
 		private int _rowOfInsert;
 		private int _maxRowsPerInsert = 1000;
+		private Regex _leadingZero = new Regex("^0\\d");
 
 		public SqlInsert()
 		{
@@ -140,6 +141,9 @@ namespace ClippyLib.Editors
 
 		private bool IsNullOrNumber(string column)
 		{
+			if(_leadingZero.IsMatch(column))
+				return false;
+
 			double numberTester;
 			return (column == "NULL" || Double.TryParse(column, out numberTester));
 		}

@@ -35,7 +35,7 @@ namespace UT.ClippyLib.Editors
 		}
 
 		[Test]
-		public void CanCreateInsertStatement ()
+		public void CanCreateInsertStatement()
 		{
 			WhenClipboardContains("Name\tId\tDate\n" +
 				"Test\t1\t2015-09-22\n" +
@@ -45,6 +45,19 @@ namespace UT.ClippyLib.Editors
 				"values\n" +
 				" ('Test', 1, '2015-09-22')\n" +
 				",('Test', 2, NULL)\n");
+		}
+
+		[Test]
+		public void CanTreatLeadingZerosAsString()
+		{
+			WhenClipboardContains("Name\tId\tDate\n" +
+			                      "Test\t01\t2015-09-22\n" +
+			                      "Test\t02\tNULL");
+			AndCommandIsRan("insert tablex");
+			ThenTheClipboardShouldContain("insert into [tablex] (Name, Id, Date)\n" +
+			                              "values\n" +
+			                              " ('Test', '01', '2015-09-22')\n" +
+			                              ",('Test', '02', NULL)\n");
 		}
 	}
 }

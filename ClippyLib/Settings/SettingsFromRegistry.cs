@@ -37,6 +37,12 @@ namespace ClippyLib.Settings
 			set { SetRegistryValue(closeOptionKey, value ? "close" : "hide"); }
 		}
 
+		public override string TabString
+		{
+			get { return UnescapeTabString(GetRegistryValue(tabStringKey)); }
+			set { SetRegistryValue(tabStringKey, EscapeTabString(value)); }
+		}
+
 		private string GetRegistryValue(string key)
 		{
 			return ClippyRegistryKey == null ? string.Empty :  ClippyRegistryKey.GetValue(key).ToString();

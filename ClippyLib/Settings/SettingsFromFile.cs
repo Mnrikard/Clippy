@@ -35,6 +35,12 @@ namespace ClippyLib.Settings
 			set { SetValue(closeOptionKey, value ? "close" : "hide" ); }
 		}
 
+		public override string TabString
+		{
+			get { return UnescapeTabString(GetValue(tabStringKey)); }
+			set { SetValue(tabStringKey, EscapeTabString(value)); }
+		}
+
 		private string GetValue(string valueName)
 		{
 			valueName = valueName.Trim();

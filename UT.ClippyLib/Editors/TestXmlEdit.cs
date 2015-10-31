@@ -9,8 +9,6 @@ namespace UT.ClippyLib.Editors
 		[Test]
 		public void CanPrettyPrintXml()
 		{
-			System.Configuration.ConfigurationManager.AppSettings.Add("tabString","\t");
-
 			WhenClipboardContains("<root><child><grandchild /></child></root>");
 			AndCommandIsRan("xml");
 			ThenTheClipboardShouldContain("<root>\n\t<child>\n\t\t<grandchild />\n\t</child>\n</root>");
@@ -20,8 +18,6 @@ namespace UT.ClippyLib.Editors
 		[Test]
 		public void CanPrettyPrintPartialXml()
 		{
-			System.Configuration.ConfigurationManager.AppSettings.Add("tabString","\t");
-
 			WhenClipboardContains("<root><child><grandchild />");
 			AndCommandIsRan("xml");
 			ThenTheClipboardShouldContain("<root>\n\t<child>\n\t\t<grandchild />");
@@ -30,8 +26,6 @@ namespace UT.ClippyLib.Editors
 		[Test]
 		public void CanPrettyPrintSortofXmlWithWeirdStuff()
 		{
-			System.Configuration.ConfigurationManager.AppSettings.Add("tabString","\t");
-
 			WhenClipboardContains("<root><child><grandchild /><!-- some string\n" +
 				"with newline chars in a comment\n" +
 				"this should be preserved -->\n" +
