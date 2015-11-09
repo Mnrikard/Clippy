@@ -19,12 +19,14 @@ namespace ClippyLib
 			string rparen = "\\)";
 			string lparen = "\\(";
 			_insideParens = new Regex(String.Concat(lparen,"(?<insides>[^",lparen,rparen,"]+)",rparen));
+			_simpleExponent = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>\\^)\\s*(?<right>",decimalPattern,")"));
 			_simpleMultDiv = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>[\\*\\/])\\s*(?<right>",decimalPattern,")"));
 			_simpleAddSubtract = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>[\\+\\-])\\s*(?<right>",decimalPattern,")"));
 			_sumUpList = new Regex(String.Concat("(?<top>",decimalPattern,")\\s+(?<bottom>",decimalPattern,")"));
 		}
 
 		private readonly Regex _insideParens;
+		private readonly Regex _simpleExponent;
 		private readonly Regex _simpleMultDiv;
 		private readonly Regex _simpleAddSubtract;
 		private readonly Regex _sumUpList;
@@ -74,6 +76,7 @@ namespace ClippyLib
 				paren = _insideParens.Match(math);
 			}
 
+			math = EvaluatePattern(math, _simpleExponent);
 			math = EvaluatePattern(math, _simpleMultDiv);
 			math = EvaluatePattern(math, _simpleAddSubtract);
 
@@ -103,6 +106,8 @@ namespace ClippyLib
 		{
 			switch(oper.Trim())
 			{
+				case "^":
+					return Power;
 				case "*":
 					return Multiply;
 				case "/":
@@ -134,7 +139,10 @@ namespace ClippyLib
 		{
 			return left / right;
 		}
-
+		private decimal Power(decimal left, decimal right)
+		{
+			return (decimal)System.Math.Pow((double)left, (double)right);
+		}
 		
 		private decimal ParseDecimal(string math)
 		{

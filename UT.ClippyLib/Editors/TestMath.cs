@@ -87,18 +87,26 @@ namespace UT.ClippyLib.Editors
 		[Test]
 		public void CanSumList()
 		{
-			WhenClipboardContains("1111\n" +
-				"1111\n" +
-				"3333\n" +
-				"4444\n" +
-			                      "====");			
+			WhenClipboardContains(" 1111\n" +
+				" 1111\n" +
+				" 3333\n" +
+				" 4444\n" +
+			    " ====");			
 			AndCommandIsRan("math");
-			ThenTheClipboardShouldContain("1111\n" +
-				"1111\n" +
-				"3333\n" +
-				"4444\n" +
-				"====\n" +
+			ThenTheClipboardShouldContain(" 1111\n" +
+				" 1111\n" +
+				" 3333\n" +
+				" 4444\n" +
+				" ====\n" +
 				"9999");
+		}
+
+		[Test]
+		public void CanPower()
+		{
+			WhenClipboardContains("2^4");
+			AndCommandIsRan("math");
+			ThenTheClipboardShouldContain("2^4=16");
 		}
 	}
 }
