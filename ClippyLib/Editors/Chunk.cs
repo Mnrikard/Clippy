@@ -79,7 +79,7 @@ namespace ClippyLib.Editors
 
         public static string Chunk(string text, int nchar, string sep)
         {
-            string[] chunkparts = new string[(int)Math.Ceiling(text.Length / (double)nchar)];
+            string[] chunkparts = new string[(int)System.Math.Ceiling(text.Length / (double)nchar)];
             for (var i = 0; i < chunkparts.Length; i++)
             {
                 if (nchar * (i + 1) > text.Length)

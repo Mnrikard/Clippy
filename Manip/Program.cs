@@ -79,7 +79,8 @@ namespace Manip
 
             }
             
-            Console.WriteLine(content);
+			// write, not writeline here, on purpose (run this with writeline as !Manip inside of VIM and you'll see why)
+            Console.Write(content);
         }
 
 

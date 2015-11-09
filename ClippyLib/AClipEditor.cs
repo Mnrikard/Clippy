@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ClippyLib
 {
@@ -197,6 +198,16 @@ namespace ClippyLib
                 throw new IndexOutOfRangeException("ParameterList out of range.");
             parm.Value = parameterValue;
         }
+
+		protected Regex _leadingZero = new Regex("^0\\d");
+		protected bool IsNullOrNumber(string column)
+		{
+			if(_leadingZero.IsMatch(column))
+				return false;
+
+			double numberTester;
+			return (column == "NULL" || Double.TryParse(column, out numberTester));
+		}
 
         public abstract void DefineParameters();
 

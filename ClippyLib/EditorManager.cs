@@ -43,6 +43,7 @@ namespace ClippyLib
             Editors.Add(new Dedupe());
             Editors.Add(new Encode());
             Editors.Add(new Grep());
+			Editors.Add(new Math());
             Editors.Add(new NewText());
             Editors.Add(new Rep());
             Editors.Add(new Reverse());

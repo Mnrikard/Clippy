@@ -116,7 +116,7 @@ namespace ClippyLib.Editors
             if (decNum < baseNum)
                 return baseChars[(int)decNum].ToString();
             return ConvertToBase(
-				((int)Math.Floor((decimal)(decNum / baseNum))).ToString(), 
+				((int)System.Math.Floor((decimal)(decNum / baseNum))).ToString(), 
 				baseNum) 
 				+ baseChars[(int)(decNum % baseNum)];
         }
@@ -130,7 +130,7 @@ namespace ClippyLib.Editors
         {
             if (baseString.Length == 1)
                 return baseChars.IndexOf(baseString.ToUpper());
-            return (baseChars.IndexOf(baseString.ToUpper()[0]) * ((long)Math.Pow(baseNum, (baseString.Length - 1)))) + ToDecimal(baseString.Substring(1), baseNum);
+            return (baseChars.IndexOf(baseString.ToUpper()[0]) * ((long)System.Math.Pow(baseNum, (baseString.Length - 1)))) + ToDecimal(baseString.Substring(1), baseNum);
         }
 
         

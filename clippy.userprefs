@@ -1,29 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="clippy/OptionsForm.Designer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClippyLib/AClipEditor.cs">
     <Files>
-      <File FileName="UT.ClippyLib/Editors/TestSqlInsert.cs" Line="37" Column="9" />
-      <File FileName="ClippyLib/Editors/SqlInsert.cs" Line="146" Column="4" />
-      <File FileName="clippy/OptionsForm.cs" Line="82" Column="46" />
-      <File FileName="clippy/OptionsForm.Designer.cs" Line="154" Column="71" />
-      <File FileName="ClippyLib/Settings/SettingsObtainer.cs" Line="19" Column="3" />
+      <File FileName="UT.ClippyLib/Editors/TestSqlInsert.cs" Line="1" Column="1" />
+      <File FileName="ClippyLib/Editors/SqlInsert.cs" Line="1" Column="1" />
+      <File FileName="clippy/OptionsForm.cs" Line="1" Column="1" />
+      <File FileName="clippy/OptionsForm.Designer.cs" Line="1" Column="1" />
+      <File FileName="ClippyLib/Settings/SettingsObtainer.cs" Line="1" Column="1" />
+      <File FileName="ConsoleClippy/Program.cs" Line="1" Column="1" />
+      <File FileName="ClippyLib/IClipEditor.cs" Line="1" Column="1" />
+      <File FileName="ClippyLib/AClipEditor.cs" Line="209" Column="22" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="clippy" expanded="True">
-            <Node name="OptionsForm.cs" expanded="True">
-              <Node name="OptionsForm.Designer.cs" selected="True" />
-            </Node>
-            <Node name="PersistentInformation.cs" expanded="True" />
-            <Node name="RecentCommands.cs" expanded="True" />
-            <Node name="SnippetEditor.cs" expanded="True" />
-            <Node name="UdfEditor.cs" expanded="True" />
-          </Node>
           <Node name="ClippyLib" expanded="True">
-            <Node name="Editors" expanded="True" />
-            <Node name="RecentCommands" expanded="True" />
-            <Node name="Settings" expanded="True" />
+            <Node name="References" selected="True" />
           </Node>
           <Node name="ConsoleClippy" expanded="True" />
           <Node name="Manip" expanded="True" />
@@ -52,6 +44,7 @@
       <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestUdfEditor.cs" line="13" column="15" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="138" column="36" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Encode.cs" line="170" column="17" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/AClipEditor.cs" line="209" column="22" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

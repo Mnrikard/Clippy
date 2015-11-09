@@ -111,7 +111,7 @@ namespace ClippyLib.Editors
 					{
 						_columnLengths.Add(cols[c].Length);
 					}
-					_columnLengths[c] = Math.Max(_columnLengths[c], cols[c].Length);
+					_columnLengths[c] = System.Math.Max(_columnLengths[c], cols[c].Length);
 				}
 			}
 		}

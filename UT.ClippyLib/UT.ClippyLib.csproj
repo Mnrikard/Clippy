@@ -60,6 +60,7 @@
     <Compile Include="Editors\TestUdfEditor.cs" />
     <Compile Include="TestConsoleclippy.cs" />
     <Compile Include="Editors\TestSnippet.cs" />
+    <Compile Include="Editors\TestMath.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
