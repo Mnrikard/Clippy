@@ -37,14 +37,15 @@ of your command line.  Usage is through the standard pipe command and would look
 6. Encode - encode/decode xml/url/base64
 7. **Grep** - returns list of matches
 8. NewText - get a new GUID, or current date data
-9. **Rep** - replaces regex patterns or sql patterns
-10. Reverse - Reverses your text
-11. Snippet - Obtains a predefined snippet of text
-12. Sort - Sorts a list
-13. **Insert** - Copy your SQL output with headers and turn it into an  insert statement
-14. ToBase - Convert a base10 number to another base level (up to 36)
-15. Xml - Pretty print XML (or xml-esque or partial xml)
-16. Help - either print the list of functions, or specifics on a particular function if specified.
+9. Math - evaluates simple math expressions
+10. **Rep** - replaces regex patterns or sql patterns
+11. Reverse - Reverses your text
+12. Snippet - Obtains a predefined snippet of text
+13. Sort - Sorts a list
+14. **Insert** - Copy your SQL output with headers and turn it into an  insert statement
+15. ToBase - Convert a base10 number to another base level (up to 36)
+16. Xml - Pretty print XML (or xml-esque or partial xml)
+17. Help - either print the list of functions, or specifics on a particular function if specified.
 
 
 #### User Defined Functions
