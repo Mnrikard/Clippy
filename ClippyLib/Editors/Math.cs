@@ -19,22 +19,25 @@ namespace ClippyLib
 			string rparen = "\\)";
 			string lparen = "\\(";
 			_insideParens = new Regex(String.Concat(lparen,"(?<insides>[^",lparen,rparen,"]+)",rparen));
-			_simpleExponent = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>\\^)\\s*(?<right>",decimalPattern,")"));
-			_simpleMultDiv = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>[\\*\\/])\\s*(?<right>",decimalPattern,")"));
-			_simpleAddSubtract = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>[\\+\\-])\\s*(?<right>",decimalPattern,")"));
 			_sumUpList = new Regex(String.Concat("(?<top>",decimalPattern,")\\s+(?<bottom>",decimalPattern,")"));
 		}
 
 		private readonly Regex _insideParens;
-		private readonly Regex _simpleExponent;
-		private readonly Regex _simpleMultDiv;
-		private readonly Regex _simpleAddSubtract;
 		private readonly Regex _sumUpList;
 
 
 		public override void DefineParameters()
 		{
 			_parameterList = new List<Parameter>();
+			_parameterList.Add(new Parameter()
+			                   {
+				ParameterName = "Answer only",
+				Sequence = 1,
+				Validator = a => (a.StartsWith("answer", StringComparison.CurrentCultureIgnoreCase) || String.IsNullOrEmpty(a)),
+				Expecting = "Empty or \"answer\" for answer only.",
+				Required=false,
+				DefaultValue=""
+			});
 		}
 
 		public override void Edit()
@@ -45,7 +48,9 @@ namespace ClippyLib
 			{
 				string answer = EvaluateExpression(expression);
 
-				if(SourceData.Contains("\n"))
+				if(ParameterList[0].GetValueOrDefault().Equals("answer", StringComparison.CurrentCultureIgnoreCase))
+					SourceData = answer;
+				else if(SourceData.Contains("\n"))
 					SourceData = String.Concat(SourceData,"\n",answer);
 				else if(SourceData.Contains("="))
 					SourceData = String.Concat(SourceData,answer);
@@ -76,9 +81,11 @@ namespace ClippyLib
 				paren = _insideParens.Match(math);
 			}
 
-			math = EvaluatePattern(math, _simpleExponent);
-			math = EvaluatePattern(math, _simpleMultDiv);
-			math = EvaluatePattern(math, _simpleAddSubtract);
+			math = (new Exponent()).EvaluatePattern(math);
+			math = (new MultiplyDivide()).EvaluatePattern(math);
+			math = (new Modulo()).EvaluatePattern(math);
+			math = (new DivideWithRemainder()).EvaluatePattern(math);
+			math = (new AddSubtract()).EvaluatePattern(math);
 
 			if(math == originalMath)
 			{
@@ -88,73 +95,138 @@ namespace ClippyLib
 			return EvaluateExpression(math);
 		}
 
-		private string EvaluatePattern(string math, Regex pattern)
+
+
+
+		private abstract class Operation
 		{
-			Match expr = pattern.Match(math);
-			while(expr.Success)
+			protected Regex EquationPattern;
+			protected string decimalPattern = @"(?!=\d\s*)\-?\d+(\.\d+)?";
+			protected string rparen = "\\)";
+			protected string lparen = "\\(";
+
+			protected abstract string Perform(string equation);
+
+			public string EvaluatePattern(string math)
 			{
-				Func<decimal,decimal,decimal> operation = DetermineFunction(expr.Groups["oper"].Value);
-				string answer = operation(ParseDecimal(expr.Groups["left"].Value), ParseDecimal(expr.Groups["right"].Value)).ToString();
-				math = math.Replace(expr.Value, answer);
-				expr = pattern.Match(math);
+				Match expr = EquationPattern.Match(math);
+				while(expr.Success)
+				{
+					string answer = Perform(expr.Value);
+					math = math.Replace(expr.Value, answer);
+					expr = EquationPattern.Match(math);
+				}
+
+				return math;
 			}
 
-			return math;
+			protected decimal ParseDecimal(string math)
+			{
+				decimal evaled;
+				if(!decimal.TryParse(math, out evaled))
+				{
+					string failureMessage = String.Concat("Cannot evaluate " + math + " to a decimal");
+					throw new Exception(failureMessage);
+				}
+				return evaled;
+			}
 		}
 
-		private Func<decimal,decimal,decimal> DetermineFunction(string oper)
+		private class AddSubtract : Operation
 		{
-			switch(oper.Trim())
+			public AddSubtract()
 			{
-				case "^":
-					return Power;
-				case "*":
-					return Multiply;
-				case "/":
-					return Divide;
-				case "+":
-					return Add;
-				case "-":
-					return Subtract;
+				EquationPattern = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>[\\+\\-])\\s*(?<right>",decimalPattern,")"));
 			}
-			throw new Exception(String.Concat("Unknown operator: ", oper));
+
+			protected override string Perform(string equation)
+			{
+				Match expr = EquationPattern.Match(equation);
+				Decimal left = ParseDecimal(expr.Groups["left"].Value);
+				Decimal right = ParseDecimal(expr.Groups["right"].Value);
+				string oper = expr.Groups["oper"].Value;
+
+				if(oper.Contains("+"))
+					return (left+right).ToString();
+
+				return (left-right).ToString();
+			}
+
 		}
 
-		private decimal Add(decimal left, decimal right)
+		private class MultiplyDivide : Operation
 		{
-			return left + right;
-		}
-		
-		private decimal Subtract(decimal left, decimal right)
-		{
-			return left - right;
-		}
-		
-		private decimal Multiply(decimal left, decimal right)
-		{
-			return left * right;
-		}
-		
-		private decimal Divide(decimal left, decimal right)
-		{
-			return left / right;
-		}
-		private decimal Power(decimal left, decimal right)
-		{
-			return (decimal)System.Math.Pow((double)left, (double)right);
-		}
-		
-		private decimal ParseDecimal(string math)
-		{
-			decimal evaled;
-			if(!decimal.TryParse(EvaluateExpression(math), out evaled))
+			public MultiplyDivide()
 			{
-				string failureMessage = String.Concat("Cannot evaluate " + math + " to a decimel");
-				RespondToExe(failureMessage);
-				throw new Exception(failureMessage);
+				EquationPattern = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>[\\*\\/])\\s*(?<right>",decimalPattern,")"));
 			}
-			return evaled;
+
+			protected override string Perform(string equation)
+			{
+				Match expr = EquationPattern.Match(equation);
+				Decimal left = ParseDecimal(expr.Groups["left"].Value);
+				Decimal right = ParseDecimal(expr.Groups["right"].Value);
+				string oper = expr.Groups["oper"].Value;
+
+				if(oper.Contains("*"))
+					return (left * right).ToString();
+
+				return (left / right).ToString();
+			}
 		}
+
+		private class Exponent : Operation
+		{
+			public Exponent()
+			{
+				EquationPattern = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>\\^)\\s*(?<right>",decimalPattern,")"));
+			}
+
+			protected override string Perform(string equation)
+			{
+				Match expr = EquationPattern.Match(equation);
+				Decimal left = ParseDecimal(expr.Groups["left"].Value);
+				Decimal right = ParseDecimal(expr.Groups["right"].Value);
+
+				return System.Math.Pow((double)left,(double)right).ToString();
+			}
+		}
+
+		private class Modulo : Operation
+		{
+			public Modulo()
+			{
+				EquationPattern = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>\\%)\\s*(?<right>",decimalPattern,")"));
+			}
+
+			protected override string Perform(string equation)
+			{
+				Match expr = EquationPattern.Match(equation);
+				Decimal left = ParseDecimal(expr.Groups["left"].Value);
+				Decimal right = ParseDecimal(expr.Groups["right"].Value);
+
+				return (left % right).ToString();
+			}
+		}
+
+		
+		private class DivideWithRemainder : Operation
+		{
+			public DivideWithRemainder()
+			{
+				EquationPattern = new Regex(String.Concat("(?<left>",decimalPattern,")\\s*(?<oper>\\/\\%)\\s*(?<right>",decimalPattern,")"));
+			}
+
+			protected override string Perform(string equation)
+			{
+				Match expr = EquationPattern.Match(equation);
+				Decimal left = ParseDecimal(expr.Groups["left"].Value);
+				Decimal right = ParseDecimal(expr.Groups["right"].Value);
+
+				return String.Concat(System.Math.Floor(left/right),",",(left % right)).ToString();
+			}
+		}
+
 
 	}
 }

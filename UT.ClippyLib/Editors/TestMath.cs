@@ -108,6 +108,31 @@ namespace UT.ClippyLib.Editors
 			AndCommandIsRan("math");
 			ThenTheClipboardShouldContain("2^4=16");
 		}
+
+		[Test]
+		public void CanModulo()
+		{
+			WhenClipboardContains("4%3");
+			AndCommandIsRan("math");
+			ThenTheClipboardShouldContain("4%3=1");
+		}
+
+		[Test]
+		public void CanDivideWithRemainder()
+		{
+			WhenClipboardContains("73/%12");
+			AndCommandIsRan("math");
+			ThenTheClipboardShouldContain("73/%12=6,1");
+		}
+
+		[Test]
+		public void CanReturnOnlyAnswer()
+		{
+			WhenClipboardContains("73/%12");
+			AndCommandIsRan("math answer");
+			ThenTheClipboardShouldContain("6,1");
+		}
+
 	}
 }
 

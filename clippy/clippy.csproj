@@ -162,6 +162,7 @@
     <None Include=".clippyrc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="ClippyUtility.exe.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClippyLib\ClippyLib.csproj">
