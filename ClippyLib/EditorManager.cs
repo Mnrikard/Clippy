@@ -96,7 +96,7 @@ To obtain a copy of the GNU General Public License, see:
 
 ";
 
-        public string Help(string[] arguments)
+        public EditorDescription Help(string[] arguments)
         {
             if (arguments.Length > 1)
             {
@@ -105,29 +105,36 @@ To obtain a copy of the GNU General Public License, see:
                               select e).FirstOrDefault();
                 if(ClipEditor == null)
                 {
-                	StringBuilder finder = new StringBuilder();
+					EditorDescription foundEditors = new EditorDescription();
                 	foreach(IClipEditor ci in (from e in Editors
                 	                           where e.EditorName.ToLower().Contains(arguments[1].ToLower())
                 	                           || arguments[1].ToLower().Contains(e.EditorName.ToLower())
-                	                           || e.LongDescription.ToLower().Contains(arguments[1].ToLower())
+                	                           || e.LongDescription.Contains(arguments[1].ToLower())
                 	                           select e))
                 	{
-                		finder.AppendLine(ci.EditorName);
+                		foundEditors.Append(EditorDescription.Category.Emphasized, ci.EditorName);
+						foundEditors.AppendLine(EditorDescription.Category.PlainText, String.Concat(" - ", ci.ShortDescription));
                 	}
-                	return finder.ToString();
+					return foundEditors;
                 }
             	return ClipEditor.LongDescription;
             }
-            StringBuilder output = new StringBuilder(Disclaimer);
-            foreach (IClipEditor ce in Editors)
-            {
-                output.AppendFormat("{0}  -  {1}\r\n", ce.EditorName, ce.ShortDescription);
-            }
-            output.Append("---------------------\r\nUser Defined\r\n---------------------\r\n");
-			UserFunctionsList ufl = new UserFunctionsList();
-            ufl.DescribeFunctions(output);
 
-            return output.ToString();
+			var allEditors = new EditorDescription();
+			allEditors.AppendLine(EditorDescription.Category.Warning, Disclaimer);
+            foreach (IClipEditor ce in Editors)
+            {				
+				allEditors.Append(EditorDescription.Category.Emphasized, ce.EditorName);
+				allEditors.AppendLine(EditorDescription.Category.PlainText, String.Concat(" - ", ce.ShortDescription));
+            }
+			allEditors.AppendLine("---------------------");
+			allEditors.AppendLine("User Defined");
+			allEditors.AppendLine("---------------------");
+
+			UserFunctionsList ufl = new UserFunctionsList();
+            ufl.DescribeFunctions(allEditors);
+
+			return allEditors;
         }
 
         public string[] GetArgumentsFromString(string arglist)

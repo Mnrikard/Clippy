@@ -88,6 +88,7 @@
     <Compile Include="RecentCommands\Store.cs" />
     <Compile Include="RecentCommands\FileStore.cs" />
     <Compile Include="Editors\Math.cs" />
+    <Compile Include="EditorDescription.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\ConsoleClippy\udf.xml">

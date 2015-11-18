@@ -35,7 +35,7 @@ namespace ConsoleClippy
             EditorManager manager = new EditorManager();
             if (args.Length > 0 && (args[0].Equals("help", StringComparison.CurrentCultureIgnoreCase) || args[0].Equals("/?", StringComparison.CurrentCultureIgnoreCase)))
             {
-                Console.WriteLine(manager.Help(args));
+                manager.Help(args).PrintToConsole();
                 Console.ReadLine();
             }
             else if(args.Length > 0 && 
@@ -137,7 +137,15 @@ namespace ConsoleClippy
 
         static void HandleResponseFromClippy(object sender, EditorResponseEventArgs e)
         {
-            Console.WriteLine(e.ResponseString);
+			if(e.ResponseDescription == null)
+			{
+				Console.WriteLine(e.ResponseString);
+			}
+			else
+			{
+				e.ResponseDescription.PrintToConsole();
+			}
+
             if(e.RequiresUserAction)
                 Console.ReadKey();
         }

@@ -81,7 +81,7 @@ namespace clippy
             if (isUdf)
                 helpBox.Text = DisplayUdf(editorName);
             else
-                helpBox.Text = clipManager.Help(new string[] { String.Empty, editorName });
+                helpBox.Text = clipManager.Help(new string[] { String.Empty, editorName }).ToString();
         }
 
         private string DisplayUdf(string editorName)

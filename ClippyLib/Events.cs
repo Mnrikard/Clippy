@@ -28,7 +28,7 @@ namespace ClippyLib
     public class EditorResponseEventArgs : System.EventArgs
     {
         public string ResponseString { get; set; }
-
+		public EditorDescription ResponseDescription {get;set;}
         public bool RequiresUserAction { get; set; }
     }
 }

@@ -24,6 +24,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Text;
 using System.Text.RegularExpressions;
+using ClippyLib;
 
 namespace ClippyLib
 {
@@ -45,21 +46,39 @@ namespace ClippyLib
 
 
 		// todo: oooh, what if the example somehow got to be part of the unit test!!!
-        public virtual string LongDescription 
+        public virtual EditorDescription LongDescription 
 		{ 
 			get
 			{
-				return String.Concat(Name, Environment.NewLine,
-				                     "Syntax: ", Name.ToLower() ,SyntaxParameters(), Environment.NewLine,
-				                     Environment.NewLine,
-				                     ShortDescription, Environment.NewLine,
-				                     DescribeParameters(),
-				                     Environment.NewLine,
-				                     "Example:", Environment.NewLine,
-				                     "Original content: ", ClipUnEscape(exampleInput), Environment.NewLine,
-				                     "Command: ", ClipUnEscape(exampleCommand), Environment.NewLine,
-				                     "New content: ", ClipUnEscape(exampleOutput));
+				var em = EditorDescription.Category.Emphasized;
+				var hd = EditorDescription.Category.Header;
 
+				EditorDescription output = new EditorDescription();
+
+				output.AppendLine(em, Name);
+
+				output.Append(em, "Syntax:");
+				output.AppendLine(String.Concat(Name.ToLower(), SyntaxParameters()));
+
+				output.AppendLine();
+				output.AppendLine(ShortDescription.Trim());
+				output.AppendLine();
+
+				DescribeParameters(output);
+				output.AppendLine();
+
+				output.AppendLine(hd, "Example:");
+
+				output.Append(em, "Original content:");
+				output.AppendLine(ClipUnEscape(exampleInput));
+
+				output.Append(em, "Command:");
+				output.AppendLine(ClipUnEscape(exampleCommand));
+
+				output.Append(em, "New content:");
+				output.AppendLine(ClipUnEscape(exampleOutput));
+
+				return output;
 			}
 		}
 
@@ -76,21 +95,22 @@ namespace ClippyLib
 			return output.ToString();
 		}
 
-		private string DescribeParameters()
+		private void DescribeParameters(EditorDescription d)
 		{
-			StringBuilder output = new StringBuilder();
+			var em = EditorDescription.Category.Emphasized;
+			var ww = EditorDescription.Category.Warning;
+
 			foreach(Parameter p in ParameterList)
 			{
-				output.Append(p.ParameterName.Replace(" ",""));
-				output.Append(" - ");
-				output.Append(p.Expecting);
+				d.Append(em, p.ParameterName.Replace(" ",""));
+				d.Append(String.Concat(" - ",p.Expecting));
+
 				if(!p.Required && p.DefaultValue != null)
 				{
-					output.AppendFormat(". Defaults to \"{0}\"", ClipUnEscape(p.DefaultValue));
+					d.Append(ww, String.Concat(". Defaults to \"",ClipUnEscape(p.DefaultValue),"\""));
 				}
-				output.AppendLine();
+				d.AppendLine(String.Empty);
 			}
-			return output.ToString();
 		}
 
 
@@ -119,6 +139,11 @@ namespace ClippyLib
             RespondToExe(message, true);
         }
 
+		protected void RespondToExe(EditorDescription description)
+		{
+			RespondToExe(description, true);
+		}
+
         protected void RespondToExe(string message, bool requiresUserAction)
         {
             EditorResponseEventArgs e = new EditorResponseEventArgs()
@@ -128,6 +153,17 @@ namespace ClippyLib
             };
             OnEditorResponse(e);
         }
+
+		protected void RespondToExe(EditorDescription description, bool requiresUserAction)
+		{
+			EditorResponseEventArgs e = new EditorResponseEventArgs()
+			{
+				ResponseString = description.ToString(),
+				ResponseDescription = description,
+				RequiresUserAction = requiresUserAction
+			};
+			OnEditorResponse(e);
+		}
 
         protected void PersistentRespondToExe(string message, bool requiresUserAction)
         {

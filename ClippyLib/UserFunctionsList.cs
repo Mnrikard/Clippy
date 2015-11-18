@@ -53,14 +53,17 @@ namespace ClippyLib
 			return GetUserFunction(key) != null;
 		}
 
-		public void DescribeFunctions(StringBuilder output)
+		public void DescribeFunctions(EditorDescription output)
 		{
-			foreach (UserFunction udf in this)
+			foreach (UserFunction udf in this.OrderBy(u => u.Name))
 			{
-				output.AppendLine(String.Concat(
-					udf.Name,
-					"  -  ",
-					string.IsNullOrEmpty(udf.Description) ? "No description available" : udf.Description));
+				output.Append(EditorDescription.Category.Emphasized, udf.Name);
+				output.AppendLine(EditorDescription.Category.PlainText, 
+					String.Concat(
+						"  -  ",
+						string.IsNullOrEmpty(udf.Description) ? "No description available" : udf.Description
+					)
+				);
 			}
 		}
 
