@@ -79,8 +79,7 @@ namespace ClippyLib
 			XElement root = new XElement("commands");
 			XDocument saveFile = new XDocument(root);
 
-			this.Sort();
-			foreach(UserFunction uf in this)
+			foreach(UserFunction uf in this.OrderBy(u => u.Name))
 			{
 				XElement command = new XElement("command",new XAttribute("key",uf.Name),
 					new XElement("description",uf.Description)
