@@ -33,7 +33,6 @@ namespace ClippyLib.Editors
     public class UdfEditor : AClipEditor
     {
         private string _udfName;
-        private string[] _arguments;
         private Dictionary<string, string> _udfParameters;
         private List<Parameter> _xmlDefinedParms;
 		private UserFunctionsList _userFunctions;
@@ -53,14 +52,15 @@ namespace ClippyLib.Editors
             _udfParameters = new Dictionary<string, string>();
             _xmlDefinedParms = new List<Parameter>();
 			_userFunctions = new UserFunctionsList();
-			_parameterList = new List<Parameter>();
+			DefineParameters();
         }
         public UdfEditor(string udfName) : this()
         {
             _udfName = udfName;
             _selectedFunction = _userFunctions.GetUserFunction(udfName);
-			InitializeSubParameters(_selectedFunction);
-			SetTheseParameters(_selectedFunction);
+			DiscoverUnnamedParameters(_selectedFunction);
+			ConvertUserParameterToParameter(_selectedFunction);
+			DefineParameters();
         }
         #endregion
 
@@ -75,7 +75,6 @@ namespace ClippyLib.Editors
                 foreach(Parameter p in _xmlDefinedParms)
                 {
                     p.Validator = a => true;
-
                     _parameterList.Add(p);
                 }
             }
@@ -100,14 +99,19 @@ namespace ClippyLib.Editors
         public override void SetParameters(string[] args)
         {
             _udfName = args[0];
-            _arguments = args;
-            if (!_userFunctions.CommandExists(args))
+			_selectedFunction = _selectedFunction ?? _userFunctions.GetUserFunction(_udfName);
+
+            if (null == _selectedFunction)
             {
-                throw new UndefinedFunctionException("Function \"{0}\" does not exist", args[0]);
+                throw new UndefinedFunctionException("Function \"{0}\" does not exist", _udfName);
             }
-            for (int i = 1; i < _arguments.Length; i++)
+
+			DiscoverUnnamedParameters(_selectedFunction);
+			ConvertUserParameterToParameter(_selectedFunction);
+            
+			for (int i = 1; i < args.Length; i++)
             {
-                SetNextParameter(_arguments[i]);
+                SetNextParameter(args[i]);
             }
         }
 
@@ -115,24 +119,28 @@ namespace ClippyLib.Editors
         {
             EditorManager manager = new EditorManager();
             
-            if(_arguments[0].Equals("help", StringComparison.CurrentCultureIgnoreCase))
+			if(ParameterList.Count > 0 && ParameterList[0].Value.Equals("help", StringComparison.CurrentCultureIgnoreCase))
             {
-                RespondToExe(manager.Help(_arguments));
+				string[] parmlist = new string[ParameterList.Count];
+				for(int i=0;i<parmlist.Length;i++)
+				{
+					parmlist[i] = ParameterList[i].Value;
+				}
+                RespondToExe(manager.Help(parmlist));
                 return;
             }
 
-			_selectedFunction = _selectedFunction ?? _userFunctions.GetUserFunction(_arguments);
+			_selectedFunction = _selectedFunction ?? _userFunctions.GetUserFunction(ParameterList[0].Value);
 			if (_selectedFunction == null || _selectedFunction.SubFunctions.Count == 0)
 				throw new UndefinedFunctionException(String.Format("Function:{0} does not exist or is not valid", _udfName));
 
-			InitializeSubParameters(_selectedFunction);
-			SetTheseParameters(_selectedFunction);
-            
+
             ExecuteSubFunctions (manager);
         }
 
 		private void ExecuteSubFunctions (EditorManager manager)
 		{
+
 			while (_selectedFunction.SubFunctions.Any()) 
 			{
 				string function = ReplaceDynamicParameters(_selectedFunction.SubFunctions.Dequeue());
@@ -162,12 +170,6 @@ namespace ClippyLib.Editors
 
 		private string ReplaceDynamicParameters(string function)
 		{
-			for (int i = 1; i < _arguments.Length; i++) 
-			{
-				string dynamicParameter = String.Concat ("%", (i - 1), "%");
-				function = function.Replace (dynamicParameter, _arguments[i]);
-			}
-
 			if(ParameterList != null)
 			{
 				for (int i = 0; i < ParameterList.Count; i++) 
@@ -180,7 +182,7 @@ namespace ClippyLib.Editors
 			return function;
 		}
 
-		private void InitializeSubParameters(UserFunction function)
+		private void DiscoverUnnamedParameters(UserFunction function)
 		{
 			foreach(string cmd in function.SubFunctions)
 			{
@@ -193,18 +195,20 @@ namespace ClippyLib.Editors
 			}
 		}
 
-		private void SetTheseParameters(UserFunction command)
+		private void ConvertUserParameterToParameter(UserFunction command)
 		{
 			foreach(UserFunction.UserParameter parm in command.Parameters)
 			{
-				_xmlDefinedParms.Add(new Parameter()
+				Parameter p = new Parameter()
 			    {
 					ParameterName = parm.Name,
 					Sequence = parm.Sequence,
 					DefaultValue = parm.DefaultValue ?? string.Empty, 
 					Required = parm.Required,
 					Expecting = parm.Description
-				});
+				};
+				_xmlDefinedParms.Add(p);
+				ParameterList.Add(p);
 			}
 		}
 

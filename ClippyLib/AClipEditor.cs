@@ -102,7 +102,7 @@ namespace ClippyLib
 
 			foreach(Parameter p in ParameterList)
 			{
-				d.Append(em, p.ParameterName.Replace(" ",""));
+				d.Append(em, p.ParameterName.Replace(" ","").Trim());
 				d.Append(String.Concat(" - ",p.Expecting));
 
 				if(!p.Required && p.DefaultValue != null)

@@ -12,7 +12,7 @@ namespace UT.ClippyLib.Editors
 		public void CanDescribeItself()
 		{
 			Grep g = new Grep();
-			Assert.IsTrue(g.LongDescription.Contains("PatternType - One of [regex|sql|text]"));
+			Assert.IsTrue(g.LongDescription.ToString().Contains("PatternType - One of [regex|sql|text]"));
 		}
 
 		[Test]

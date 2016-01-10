@@ -53,7 +53,7 @@ namespace ClippyLib
 				}
 				else
 				{
-					output.Append(String.Concat(di.Data," "));
+					output.Append(di.Data);
 				}
 			}
 			return output.ToString();
@@ -70,7 +70,7 @@ namespace ClippyLib
 				}
 				else
 				{
-					Console.Write(String.Concat(di.Data," "));
+					Console.Write(di.Data);
 				}
 				Console.ResetColor();
 			}

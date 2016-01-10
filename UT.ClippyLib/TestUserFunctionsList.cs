@@ -17,7 +17,7 @@ namespace UT.ClippyLib
 		{
 			UserFunctionsList lst = new UserFunctionsList();
 			List<string> actual = lst.GetFunctions();
-			Assert.AreEqual(2, actual.Count);
+			Assert.AreEqual(3, actual.Count);
 			Assert.AreEqual("NumList",actual[0]);
 			Assert.AreEqual("HtmlEncode",actual[1]);
 		}

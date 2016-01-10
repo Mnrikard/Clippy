@@ -38,6 +38,12 @@ namespace UT.ClippyLib
     <description>Encodes to html</description>
     <function>encode html</function>
   </command>
+  <command key=""connstring"">
+    <description>creates a connection string</description>
+    <function><![CDATA[rep [\d\D]+ ""Driver={SQL Server};Server=%0%;Database=%1%;IntegratedSecurity=true;""]]></function>
+    <parameter name=""Server"" default=""MyServer"" required=""True"" parmdesc="""" sequence=""1"" />
+    <parameter name=""Database"" default=""MyDatabase"" required=""False"" parmdesc=""The database"" sequence=""2"" />
+  </command>
 </commands>");
 
 			File.WriteAllText(snippetsLocation, @"<?xml version=""1.0"" encoding=""utf-8"" ?>

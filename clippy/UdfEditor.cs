@@ -112,6 +112,7 @@ namespace clippy
 			else
 			{
 				func.Description = fxDescription.Text;
+				func.SubFunctions.Clear();
 				foreach(string subfunction in fxCommands.Text.Split('\n'))
 				{
 					func.SubFunctions.Enqueue(subfunction.Trim());
