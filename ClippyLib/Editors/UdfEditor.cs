@@ -58,9 +58,9 @@ namespace ClippyLib.Editors
         {
             _udfName = udfName;
             _selectedFunction = _userFunctions.GetUserFunction(udfName);
-			DiscoverUnnamedParameters(_selectedFunction);
 			ConvertUserParameterToParameter(_selectedFunction);
-			DefineParameters();
+			//DiscoverUnnamedParameters(_selectedFunction);
+			//DefineParameters();
         }
         #endregion
 
@@ -106,8 +106,8 @@ namespace ClippyLib.Editors
                 throw new UndefinedFunctionException("Function \"{0}\" does not exist", _udfName);
             }
 
-			DiscoverUnnamedParameters(_selectedFunction);
-			ConvertUserParameterToParameter(_selectedFunction);
+			//DiscoverUnnamedParameters(_selectedFunction);
+			//ConvertUserParameterToParameter(_selectedFunction);
             
 			for (int i = 1; i < args.Length; i++)
             {
@@ -184,6 +184,11 @@ namespace ClippyLib.Editors
 
 		private void DiscoverUnnamedParameters(UserFunction function)
 		{
+			if(null == function)
+			{
+				return;
+			}
+
 			foreach(string cmd in function.SubFunctions)
 			{
 				MatchCollection udfparms = Regex.Matches(cmd, @"%(\d+)%");
@@ -197,6 +202,11 @@ namespace ClippyLib.Editors
 
 		private void ConvertUserParameterToParameter(UserFunction command)
 		{
+			if (null == command)
+			{
+				return;
+			}
+
 			foreach(UserFunction.UserParameter parm in command.Parameters)
 			{
 				Parameter p = new Parameter()

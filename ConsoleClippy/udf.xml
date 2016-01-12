@@ -26,4 +26,11 @@
     <function>encode url reverse</function>
   </command>
   
+  <command key="connstring">
+    <description>connstring</description>
+    <function>SetSourceData "server %0% db %1%"</function>
+    <parameter name="server" parmdesc="server" required="true" sequence="1" />
+    <parameter name="database" parmdesc="database" required="true" sequence="2" />
+  </command>
+  
 </commands>

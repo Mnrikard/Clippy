@@ -28,7 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <StartAction>Project</StartAction>
-    <Commandlineparameters>help</Commandlineparameters>
+    <Commandlineparameters>connstring</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -93,6 +93,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="COPYING" />
+    <None Include=".clippyrc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="snippets.xml">

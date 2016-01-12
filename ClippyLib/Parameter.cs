@@ -36,6 +36,9 @@ namespace ClippyLib
         public bool Required { get; set; }
         public bool Validate(string input)
         {
+			if(null == Validator)
+				return true;
+
             return Validator(input);
         }
         private string _value = null;

@@ -52,6 +52,7 @@ namespace ClippyLib
             Editors.Add(new TabRight());
             Editors.Add(new ToBase());
             Editors.Add(new XmlEdit());
+			Editors.Add(new SetSourceData());
         }
 
         private IClipEditor _clipEditor;

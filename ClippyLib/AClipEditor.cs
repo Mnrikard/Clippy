@@ -266,7 +266,7 @@ namespace ClippyLib
         {
             string newData = SourceData
                 .Replace("\r", String.Empty)
-                .Replace("\n", "\r\n");
+                .Replace("\n", Environment.NewLine);
             if (String.IsNullOrEmpty(newData))
                 return;
             Clipboard.SetText(newData);
