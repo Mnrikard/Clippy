@@ -43,17 +43,17 @@ namespace ClippyLib
 
 		public void Save()
 		{
-			XElement root = new XElement("Snippets");
-			XDocument saveFile = new XDocument(root);
 
-			this.Sort();
-			foreach(Snippet snip in this)
+			XElement root = new XElement("Snippets");
+
+			foreach(Snippet snip in this.OrderBy(s => s.Name))
 			{
 				root.Add(new XElement("Snippet",new XAttribute("Name",snip.Name),
 					new XElement("Description",snip.Description),
 					new XElement("Content",snip.Content)
 				));
 			}
+			XDocument saveFile = new XDocument(root);
 
 			saveFile.Save(_settings.SnippetsLocation);
 		}

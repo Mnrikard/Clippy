@@ -1,25 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ConsoleClippy/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="clippy/SnippetEditor.cs">
     <Files>
-      <File FileName="ClippyLib/Editors/UdfEditor.cs" Line="112" Column="24" />
-      <File FileName="ConsoleClippy/Program.cs" Line="63" Column="4" />
-      <File FileName="ClippyLib/UserFunctionsList.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/UserFunction.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/AClipEditor.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/Parameter.cs" Line="41" Column="4" />
-      <File FileName="ClippyLib/Settings/SettingsObtainer.cs" Line="17" Column="49" />
-      <File FileName="ConsoleClippy/udf.xml" Line="34" Column="13" />
-      <File FileName="ClippyLib/Editors/NewText.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/Editors/SetSourceData.cs" Line="1" Column="1" />
-      <File FileName="ClippyLib/EditorManager.cs" Line="67" Column="1" />
-      <File FileName="ConsoleClippy/.clippyrc" Line="2" Column="38" />
-      <File FileName="ClippyLib/IClipEditor.cs" Line="31" Column="9" />
+      <File FileName="ClippyLib/SnippetsList.cs" Line="14" Column="12" />
+      <File FileName="ClippyLib/UserFunctionsList.cs" Line="31" Column="61" />
+      <File FileName="clippy/SnippetEditor.cs" Line="74" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="ConsoleClippy" expanded="True" selected="True" />
+          <Node name="clippy" expanded="True">
+            <Node name="Form1.cs" expanded="True" />
+            <Node name="SnippetEditor.cs" expanded="True" selected="True" />
+          </Node>
+          <Node name="ClippyLib" expanded="True" />
+          <Node name="ConsoleClippy" expanded="True" />
           <Node name="UT.ClippyLib" expanded="True" />
         </State>
       </Pad>
@@ -56,6 +51,10 @@
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="112" column="5" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ConsoleClippy/Program.cs" line="156" column="30" />
       <Breakpoint file="/home/rugg/GitRepos/Clippy/ConsoleClippy/Program.cs" line="163" column="26" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/clippy/SnippetEditor.cs" line="91" column="8" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/clippy/SnippetEditor.cs" line="90" column="7" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/clippy/SnippetEditor.cs" line="92" column="7" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/clippy/SnippetEditor.cs" line="74" column="14" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
