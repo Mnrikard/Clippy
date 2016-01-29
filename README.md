@@ -25,6 +25,10 @@ of your command line.  Usage is through the standard pipe command and would look
     $> echo "hello" | manip rep "h" "H"
     Hello
     $>
+
+Or, what has made my life more awesome is piping the buffer from [VIM](http://www.vim.org/) into manip
+
+	:%!manip rep "bad-code" "good-code"
     
 ### Commands
 #### Built In Commands
@@ -40,17 +44,20 @@ of your command line.  Usage is through the standard pipe command and would look
 9. Math - evaluates simple math expressions
 10. **Rep** - replaces regex patterns or sql patterns
 11. Reverse - Reverses your text
-12. Snippet - Obtains a predefined snippet of text
-13. Sort - Sorts a list
-14. **Insert** - Copy your SQL output with headers and turn it into an  insert statement
-15. ToBase - Convert a base10 number to another base level (up to 36)
-16. Xml - Pretty print XML (or xml-esque or partial xml)
-17. Help - either print the list of functions, or specifics on a particular function if specified.
+12. SetSourceData - pass in the literal text you wish to insert, useful for user-defined-functions.
+13. Snippet - Obtains a predefined snippet of text
+14. Sort - Sorts a list
+15. **Insert** - Copy your SQL output with headers and turn it into an  insert statement
+16. ToBase - Convert a base10 number to another base level (up to 36)
+17. Xml - Pretty print XML (or xml-esque or partial xml)
+18. Help - either print the list of functions, or specifics on a particular function if specified.
 
 
 #### User Defined Functions
 
-Oftentimes you will find yourself running a specific replace or a series of commands many times over.  One that often turns up is getting a comma separated list of all the numbers on your clipboard.  Clippy lets you define a user defined function for anything that you find yourself doing more than once.
+Oftentimes you will find yourself running a specific replace or a series of commands many times over. 
+One that often turns up is getting a comma separated list of all the numbers on your clipboard.  
+Clippy lets you define a user defined function for anything that you find yourself doing more than once.
 
 `clippy --udf` will bring up a function editor, from which you can select previously ran commands, or enter new ones.
 
