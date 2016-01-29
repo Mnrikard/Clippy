@@ -34,6 +34,7 @@ namespace ClippyLib
 			Name = name;
 			Description = description;
 			Parameters = parameters;
+			SubFunctions = new Queue<string>();
 
 			foreach(string subfunction in subfuncs.Split('\n'))
 			{
