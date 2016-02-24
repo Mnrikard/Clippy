@@ -1,1 +1,1 @@
-Install-ChocolateyPath $env:chocolateyPackageFolder
+﻿Install-ChocolateyPath $env:chocolateyPackageFolder
