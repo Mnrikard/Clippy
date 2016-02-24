@@ -1,4 +1,5 @@
-
-udfLocation:/home/rugg/Clippy/udf.xml
-snippetsLocation:/home/rugg/Clippy/snippets.xml
-CloseFunction:hide
+udfLocation:%USERPROFILE%\Documents\Clippy\udf.xml
+snippetsLocation:%USERPROFILE%\Documents\Clippy\snippets.xml
+recentCommandsLocation:%USERPROFILE%\Documents\Clippy\recentCommands
+CloseFunction:close
+tabString:{TAB}
