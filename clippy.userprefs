@@ -4,7 +4,10 @@
     <Files>
       <File FileName="ClippyLib/SnippetsList.cs" Line="14" Column="12" />
       <File FileName="ClippyLib/UserFunctionsList.cs" Line="31" Column="61" />
-      <File FileName="clippy/SnippetEditor.cs" Line="74" Column="1" />
+      <File FileName="clippy/SnippetEditor.cs" Line="82" Column="95" />
+      <File FileName="ClippyLib/UserFunction.cs" Line="37" Column="39" />
+      <File FileName="clippy/UdfEditor.cs" Line="110" Column="32" />
+      <File FileName="ClippyLib/Snippet.cs" Line="19" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

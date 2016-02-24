@@ -103,11 +103,11 @@ namespace ClippyLib
 			foreach(Parameter p in ParameterList)
 			{
 				d.Append(em, p.ParameterName.Replace(" ","").Trim());
-				d.Append(String.Concat(" - ",p.Expecting));
+				d.Append(String.Concat(" - ",p.Expecting,"."));
 
 				if(!p.Required && p.DefaultValue != null)
 				{
-					d.Append(ww, String.Concat(". Defaults to \"",ClipUnEscape(p.DefaultValue),"\""));
+					d.Append(ww, String.Concat(" Defaults to \"",ClipUnEscape(p.DefaultValue),"\""));
 				}
 				d.AppendLine(String.Empty);
 			}
