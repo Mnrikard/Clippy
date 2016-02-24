@@ -1,23 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="clippy/SnippetEditor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClippyLib/AClipEditor.cs">
     <Files>
       <File FileName="ClippyLib/SnippetsList.cs" Line="14" Column="12" />
-      <File FileName="ClippyLib/UserFunctionsList.cs" Line="31" Column="61" />
+      <File FileName="ClippyLib/UserFunctionsList.cs" Line="1" Column="1" />
       <File FileName="clippy/SnippetEditor.cs" Line="82" Column="95" />
-      <File FileName="ClippyLib/UserFunction.cs" Line="37" Column="39" />
-      <File FileName="clippy/UdfEditor.cs" Line="110" Column="32" />
-      <File FileName="ClippyLib/Snippet.cs" Line="19" Column="3" />
+      <File FileName="ClippyLib/UserFunction.cs" Line="1" Column="1" />
+      <File FileName="clippy/UdfEditor.cs" Line="1" Column="1" />
+      <File FileName="ClippyLib/Snippet.cs" Line="1" Column="1" />
+      <File FileName="ClippyLib/AClipEditor.cs" Line="110" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="clippy" expanded="True">
-            <Node name="Form1.cs" expanded="True" />
-            <Node name="SnippetEditor.cs" expanded="True" selected="True" />
-          </Node>
+          <Node name="clippy" expanded="True" />
           <Node name="ClippyLib" expanded="True" />
           <Node name="ConsoleClippy" expanded="True" />
+          <Node name="Manip" expanded="True" />
           <Node name="UT.ClippyLib" expanded="True" />
         </State>
       </Pad>

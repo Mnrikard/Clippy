@@ -1,29 +1,36 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <commands>
   <command key="NumList">
     <description>Lists all numeric values in a string.</description>
     <function>rep "\D+" ","</function>
     <function>rep "([\d,]{80,90},)" "$1\n"</function>
   </command>
+  
   <command key="HtmlEncode">
     <description>Encodes to html</description>
     <function>encode html</function>
   </command>
+
   <command key="HtmlDecode">
     <description>Decodes html</description>
     <function>encode html reverse</function>
   </command>
+
   <command key="UrlEncode">
     <description>Encodes to Url</description>
     <function>encode url</function>
   </command>
+
   <command key="UrlDecode">
     <description>Decodes url</description>
     <function>encode url reverse</function>
   </command>
-  <command key="cleaninsert">
-    <description>inserts clean</description>
-    <function><![CDATA[insert %0%]]></function>
-    <parameter name="Tablename" default="xxx" required="True" parmdesc="" sequence="1" />
+  
+  <command key="connstring">
+    <description>connstring</description>
+    <function>SetSourceData "server %0% db %1%"</function>
+    <parameter name="server" parmdesc="server" required="true" sequence="1" />
+    <parameter name="database" parmdesc="database" required="true" sequence="2" />
   </command>
+  
 </commands>

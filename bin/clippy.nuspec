@@ -8,9 +8,11 @@
     <description>Clippy is a text manipulation utility for updating the text on your clipboard.</description>
   </metadata>
   <files>
-    <file src="*.dll" target="lib" />
-    <file src="*.exe" target="lib" />
-    <file src="*.exe.config" target="lib" />
-    <file src=".clippyrc" target="lib" />
+    <file src="*.dll" />
+    <file src="*.exe" />
+    <file src="*.exe.config" />
+    <file src=".clippyrc" />
+    <file src="clippy2.ico" />
+    <file src="history.png" />
   </files>
 </package>
