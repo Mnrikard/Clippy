@@ -24,19 +24,21 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
-using Microsoft.Win32;
+using ClippyLib.Settings;
+using System.IO;
+using System.Xml.Linq;
 
 namespace ClippyLib.Editors
 {
     public class UdfEditor : AClipEditor
     {
         private string _udfName;
-        private XmlDocument _udfSettings;
-        private string[] _arguments;
         private Dictionary<string, string> _udfParameters;
         private List<Parameter> _xmlDefinedParms;
+		private UserFunctionsList _userFunctions;
+		private UserFunction _selectedFunction;
 
-        public override string EditorName
+		public override string EditorName
         {
             get { return "Will not be a normal usable function"; }
         }
@@ -44,17 +46,25 @@ namespace ClippyLib.Editors
         #region .ctor
         public UdfEditor()
         {
+			Name = "Will not be a normal usable function";
+			Description = "#";
+
             _udfParameters = new Dictionary<string, string>();
             _xmlDefinedParms = new List<Parameter>();
+			_userFunctions = new UserFunctionsList();
+			DefineParameters();
         }
-        public UdfEditor(string udfName)
+        public UdfEditor(string udfName) : this()
         {
             _udfName = udfName;
-            _udfParameters = new Dictionary<string, string>();
-            _xmlDefinedParms = new List<Parameter>();
-            Udf(new[] { udfName });
+            _selectedFunction = _userFunctions.GetUserFunction(udfName);
+			ConvertUserParameterToParameter(_selectedFunction);
+			//DiscoverUnnamedParameters(_selectedFunction);
+			//DefineParameters();
         }
         #endregion
+
+
 
         public override void DefineParameters()
         {
@@ -65,7 +75,6 @@ namespace ClippyLib.Editors
                 foreach(Parameter p in _xmlDefinedParms)
                 {
                     p.Validator = a => true;
-
                     _parameterList.Add(p);
                 }
             }
@@ -87,27 +96,22 @@ namespace ClippyLib.Editors
             }
         }
 
-        public override string ShortDescription
-        {
-            get { return "Will not be registered"; }
-        }
-
-        public override string LongDescription
-        {
-            get { return @"Will not be registered"; }
-        }
-
         public override void SetParameters(string[] args)
         {
             _udfName = args[0];
-            _arguments = args;
-            if (!CommandExists(args))
+			_selectedFunction = _selectedFunction ?? _userFunctions.GetUserFunction(_udfName);
+
+            if (null == _selectedFunction)
             {
-                throw new UndefinedFunctionException("Function \"{0}\" does not exist", args[0]);
+                throw new UndefinedFunctionException("Function \"{0}\" does not exist", _udfName);
             }
-            for (int i = 1; i < _arguments.Length; i++)
+
+			//DiscoverUnnamedParameters(_selectedFunction);
+			//ConvertUserParameterToParameter(_selectedFunction);
+            
+			for (int i = 1; i < args.Length; i++)
             {
-                SetNextParameter(_arguments[i]);
+                SetNextParameter(args[i]);
             }
         }
 
@@ -115,109 +119,109 @@ namespace ClippyLib.Editors
         {
             EditorManager manager = new EditorManager();
             
-            if(_arguments[0].Equals("help", StringComparison.CurrentCultureIgnoreCase))
+			if(ParameterList.Count > 0 && ParameterList[0].Value.Equals("help", StringComparison.CurrentCultureIgnoreCase))
             {
-                RespondToExe(manager.Help(_arguments));
+				string[] parmlist = new string[ParameterList.Count];
+				for(int i=0;i<parmlist.Length;i++)
+				{
+					parmlist[i] = ParameterList[i].Value;
+				}
+                RespondToExe(manager.Help(parmlist));
                 return;
             }
 
-            List<string> functions = Udf(_arguments);
-            if (functions.Count == 0)
-                throw new UndefinedFunctionException(String.Format("Function:{0} does not exist or is not valid", _udfName));
-            
-            //there could be multiple functions per UDF, one per line
-            for (int fi = 0; fi < functions.Count; fi++)
-            {
-                string function = functions[fi];
-                
-                for (int i = 1; i < _arguments.Length; i++)
-                {
-                    function = function.Replace("%" + (i - 1).ToString() + "%", _arguments[i]);
-                }
-				                
-                for (int i = 0; i < ParameterList.Count; i++)
-                {
-                    function = function.Replace("%" + i.ToString() + "%", ParameterList[i].Value);
-                }
-            
-                string[] fargs = GetArgsFromString(function);
-                manager.GetClipEditor(fargs[0]);
+			_selectedFunction = _selectedFunction ?? _userFunctions.GetUserFunction(ParameterList[0].Value);
+			if (_selectedFunction == null || _selectedFunction.SubFunctions.Count == 0)
+				throw new UndefinedFunctionException(String.Format("Function:{0} does not exist or is not valid", _udfName));
 
-                manager.ClipEditor.EditorResponse += new EventHandler<EditorResponseEventArgs>(HandleResponseFromClippy);
 
-                manager.ClipEditor.DefineParameters();
-                manager.ClipEditor.SetParameters(fargs);
-                if (!manager.ClipEditor.HasAllParameters)
-                {
-                    throw new Exception(String.Format("Not all parameters are passed in the user defined function {0}, function: {1}", _udfName, function));
-                }
-                manager.ClipEditor.SourceData = SourceData;
-                manager.ClipEditor.Edit();
-                SourceData = manager.ClipEditor.SourceData;
-
-                manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
-
-            }
+            ExecuteSubFunctions (manager);
         }
 
-        private void HandleResponseFromClippy(object sender, EditorResponseEventArgs e)
-        {
-            RespondToExe(e.ResponseString, e.RequiresUserAction);
-        }
+		private void ExecuteSubFunctions (EditorManager manager)
+		{
 
-        private List<string> Udf(string[] key)
-        {
-            List<string> output = new List<string>();
+			while (_selectedFunction.SubFunctions.Any()) 
+			{
+				string function = ReplaceDynamicParameters(_selectedFunction.SubFunctions.Dequeue());
 
-            if (_udfSettings == null)
-            {
-                _udfSettings = UdfDocument();
-            }
-            XmlNode cmdNode = _udfSettings.SelectSingleNode("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + key[0].ToLower() + "\"]");
-            if (cmdNode == null)
-            {
-                return output;
-            }
+				string[] fargs = function.ParseArguments();
 
-            XmlNodeList cmdParms = cmdNode.SelectNodes("parameter");
-            XmlNodeList cmds = cmdNode.SelectNodes("function");
-            foreach (XmlNode cmd in cmds)
-            {
-                string currcmd = cmd.InnerText;
-                //for (int i = 1; i < key.Length; i++)
-                //{
-                //    currcmd = currcmd.Replace("%" + (i - 1).ToString() + "%", key[i]);
-                //}
-                output.Add(currcmd);
+				manager.GetClipEditor (fargs[0]);
+				manager.ClipEditor.EditorResponse += HandleResponseFromClippy;
+				manager.ClipEditor.DefineParameters();
+				manager.ClipEditor.SetParameters(fargs);
 
-                if (cmdParms.Count == 0)
-                {
-                    MatchCollection udfparms = Regex.Matches(currcmd, @"%(\d+)%");
-                    foreach (Match udfparm in udfparms)
-                    {
-                        _udfParameters[DescribeParm(udfparm.Groups[1].Value)] = String.Empty;
-                    }
-                }
-            }
+				if (!manager.ClipEditor.HasAllParameters) {
+					throw new Exception(String.Format("Not all parameters are passed in the user defined function {0}, function: {1}", _udfName, function));
+				}
 
+				manager.ClipEditor.SourceData = SourceData;
+				manager.ClipEditor.Edit();
+				SourceData = manager.ClipEditor.SourceData;
+				manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
+			}
+		}
+		
+		private void HandleResponseFromClippy(object sender, EditorResponseEventArgs e)
+		{
+			RespondToExe(e.ResponseString, e.RequiresUserAction);
+		}
 
-            foreach(XmlNode parmnd in cmdParms)
-            {
-                _xmlDefinedParms.Add(new Parameter()
-                {
-                    ParameterName = parmnd.Attributes["name"].Value,
-                    Sequence = Int32.Parse(parmnd.Attributes["sequence"].Value),
-                    DefaultValue = parmnd.Attributes["default"] == null ? String.Empty : parmnd.Attributes["default"].Value,
-                    Required = parmnd.Attributes["required"] == null ? false : Boolean.Parse(parmnd.Attributes["required"].Value),
-                    Expecting = parmnd.Attributes["parmdesc"] == null ? String.Empty : parmnd.Attributes["parmdesc"].Value
-                });
-            }
+		private string ReplaceDynamicParameters(string function)
+		{
+			if(ParameterList != null)
+			{
+				for (int i = 0; i < ParameterList.Count; i++) 
+				{
+					string dynamicParameter = String.Concat("%",i.ToString(),"%");
+					function = function.Replace (dynamicParameter, ParameterList[i].Value);
+				}
+			}
 
-            
-            return output;
-        }
+			return function;
+		}
 
-        
+		private void DiscoverUnnamedParameters(UserFunction function)
+		{
+			if(null == function)
+			{
+				return;
+			}
+
+			foreach(string cmd in function.SubFunctions)
+			{
+				MatchCollection udfparms = Regex.Matches(cmd, @"%(\d+)%");
+				foreach (Match udfparm in udfparms)
+				{
+					string parameterName = DescribeParm(udfparm.Groups[1].Value);
+					_udfParameters[parameterName] = String.Empty;
+				}
+			}
+		}
+
+		private void ConvertUserParameterToParameter(UserFunction command)
+		{
+			if (null == command)
+			{
+				return;
+			}
+
+			foreach(UserFunction.UserParameter parm in command.Parameters)
+			{
+				Parameter p = new Parameter()
+			    {
+					ParameterName = parm.Name,
+					Sequence = parm.Sequence,
+					DefaultValue = parm.DefaultValue ?? string.Empty, 
+					Required = parm.Required,
+					Expecting = parm.Description
+				};
+				_xmlDefinedParms.Add(p);
+				ParameterList.Add(p);
+			}
+		}
+
         private string DescribeParm(string number)
         {
             int parmnum;
@@ -251,135 +255,5 @@ namespace ClippyLib.Editors
         }
 
 
-        private bool CommandExists(string[] key)
-        {
-            if (_udfSettings == null)
-            {
-                _udfSettings = UdfDocument();
-            }
-            XmlNode cmd = _udfSettings.SelectSingleNode("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + key[0].ToLower() + "\"]");
-            return cmd != null;
-        }
-
-        public static string[] GetArgsFromString(string input)
-        {
-            string prevchar = "";
-            bool isInString = false;
-            string currentString = "";
-            List<string> op = new List<string>();
-
-            foreach (char c in input)
-            {
-                if (c == ' ')
-                {
-                    //multiple spaces between words
-                    if (prevchar == " " && currentString.Length == 0 && !isInString)
-                    {
-                        currentString = "";
-                    }
-                    else if (!isInString)
-                    {
-                        op.Add(currentString);
-                        currentString = "";
-                    }
-                    else
-                    {
-                        currentString += c;
-                    }
-                }
-                else if (c == '"')
-                {
-                    if (prevchar != "\\")
-                    {
-                        isInString = !isInString;
-                    }
-                }
-                else if (c == '\\')
-                {
-                    if (prevchar == "\\")
-                    {
-                        prevchar = "backslash";
-                        continue;
-                    }
-                    currentString += c;
-                }
-                else
-                {
-                    currentString += c;
-                }
-                prevchar = c.ToString();
-            }
-
-            op.Add(currentString);
-
-            string[] arrop = op.ToArray();
-            return arrop;
-        }
-
-        public static void DescribeFunctions(StringBuilder output)
-        {
-            XmlDocument descUdf = UdfDocument();
-            XmlNodeList cmds = descUdf.SelectNodes("//command");
-            foreach (XmlNode udf in cmds)
-            {
-                string description = "No description available";
-                XmlNode descriptionNode = udf.SelectSingleNode("description");
-                if (descriptionNode != null)
-                    description = descriptionNode.InnerText;
-                XmlAttribute keyNameNode = udf.Attributes["key"];
-                output.AppendFormat("{0}  -  {1}\r\n", keyNameNode.Value, description);
-            }
-        }
-        
-        public static bool GetUdfDocument(out XmlDocument xdoc)
-        {
-        	RegistryKey hkcu = Registry.CurrentUser;
-            RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
-            
-            if(rkUdfLocation == null)
-            {
-            	xdoc = GetNullUdf();
-            	return false;
-            }
-            
-            object udfLocation = rkUdfLocation.GetValue("udfLocation");
-            
-            if(udfLocation == null || !System.IO.File.Exists(udfLocation.ToString()))
-            {
-            	xdoc = GetNullUdf();
-            	return false;
-            }
-            
-            xdoc = new XmlDocument();
-            xdoc.Load(udfLocation.ToString());
-            return true;
-        }
-
-        public static XmlDocument UdfDocument()
-        {
-            XmlDocument xdoc;
-            GetUdfDocument(out xdoc);
-            return xdoc;
-        }
-        
-        private static XmlDocument GetNullUdf()
-        {
-        	XmlDocument xdoc = new XmlDocument();
-        	xdoc.LoadXml("<commands />");
-
-        	return xdoc;
-        }
-
-        public static List<string> GetFunctions()
-        {
-            XmlDocument descUdf = UdfDocument();
-            XmlNodeList cmds = descUdf.SelectNodes("//command/@key");
-            List<string> output = new List<string>();
-            foreach (XmlNode udf in cmds)
-            {
-                output.Add(udf.Value);
-            }
-            return output;
-        }
     }
 }

@@ -26,11 +26,15 @@ namespace ClippyLib.Editors
 {
     public class Reverse : AClipEditor
     {
-        public override string EditorName
-        {
-            get { return "Reverse"; }
-        }
-
+		public Reverse()
+		{
+			Name = "Reverse";
+			Description = "Reverses a delimited list";
+			exampleInput = "1,2,3,4";
+			exampleCommand = "reverse \",\"";
+			exampleOutput = "4,3,2,1";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -59,33 +63,9 @@ namespace ClippyLib.Editors
 
         public override void Edit()
         {
-            string[] sortable = Regex.Split(SourceData, Regex.Escape(ClipEscape(ParameterList[0].Value)));
+            string[] sortable = Regex.Split(SourceData, ParameterList[0].GetEscapedValueOrDefault());
             Array.Reverse(sortable);
-            SourceData = String.Join(ParameterList[0].Value, sortable);
-        }
-
-
-        public override string ShortDescription
-        {
-            get { return "Reverses the order of a string, based on a string delimiter"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Reverse
-Syntax: reverse [delimiter] 
-Reverses a string based on a string delimiter.
-
-delimiter - any string separator
-Defaults to new line character
-
-Example:
-    clippy reverse "",""
-    will change ""a,b,c"" to ""c,b,a""
-";
-            }
+            SourceData = String.Join(ParameterList[0].GetEscapedValueOrDefault(), sortable);
         }
     }
 }

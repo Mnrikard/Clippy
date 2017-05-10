@@ -29,19 +29,19 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Windows.Forms;
-using Microsoft.Win32;
+using ClippyLib;
+using ClippyLib.Editors;
 
 namespace clippy
 {
     public partial class UdfEditor : Form
     {
+		private UserFunctionsList _functions;
         public UdfEditor()
         {
+			_functions = new UserFunctionsList();
             InitializeComponent();
         }
-
-
-        private XmlDocument _udfDocument = null;
 
         private void UdfEditor_Load(object sender, EventArgs e)
         {
@@ -50,192 +50,77 @@ namespace clippy
 
         private void LoadFunctions()
         {
-            List<string> udFunctions = GetFunctions();
-            udFunctions.Sort();
-            functionList.DataSource = udFunctions;
-        }
-
-        private XmlDocument UdfDocument
-        {
-            get
-            {
-                if (_udfDocument == null)
-                {
-                    _udfDocument = new XmlDocument();
-
-                    RegistryKey hkcu = Registry.CurrentUser;
-                    RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
-                    
-                    if(rkUdfLocation == null)
-                    {
-                    	_udfDocument.LoadXml("<commands />");
-                    	MessageBox.Show("Your User Functions file location has not been set.\r\nOpen Tools > Options to set this file location","Error finding UDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    	Close();
-                    	return _udfDocument;
-                    }
-                    
-                    object udfLocation = rkUdfLocation.GetValue("udfLocation");
-                    
-                    if(udfLocation == null)
-                    {
-                    	_udfDocument.LoadXml("<commands />");
-                    	MessageBox.Show("Your User Functions file location has not been set.\r\nOpen Tools > Options to set this file location","Error finding UDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    	Close();
-                    	return _udfDocument;
-                    }
-                    
-                    if(!File.Exists(udfLocation.ToString()))
-                    {
-                    	using(FileStream fs = File.Create(udfLocation.ToString()))
-                    	{
-                    		using(StreamWriter sw = new StreamWriter(fs))
-                    			sw.Write("<commands />");
-                    	}
-                    }
-                    
-                    _udfDocument.Load(udfLocation.ToString());
-                }
-                return _udfDocument;
-            }
-            set
-            {
-                RegistryKey hkcu = Registry.CurrentUser;
-                RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
-                object udfLocation = rkUdfLocation.GetValue("udfLocation");
-                _udfDocument = value;
-                _udfDocument.Save(udfLocation.ToString());
-            }
-        }
-
-
-        public List<string> GetFunctions()
-        {
-            XmlDocument descUdf = UdfDocument;
-            XmlNodeList cmds = descUdf.SelectNodes("//command/@key");
-            List<string> output = new List<string>();
-            foreach (XmlNode udf in cmds)
-            {
-                output.Add(udf.Value);
-            }
-            return output;
+			functionList.DataSource = (from UserFunction func in _functions
+			                           orderby func.Name
+			                           select func.Name).ToList();
         }
 
         private void functionList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            fxDescription.Text = String.Empty;
-            fxCommands.Text = String.Empty;
-            XmlDocument descUdf = UdfDocument;
-            XmlNode passedInFunc = descUdf.SelectSingleNode("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + functionList.Text.ToLower() + "\"]");
-            if (passedInFunc == null)
-            {
-                return;
-            }
-            XmlNode desc = passedInFunc.SelectSingleNode("description");
-            if(desc != null)
-            {
-                fxDescription.Text = desc.InnerText;
-            }
-            XmlNodeList fxs = passedInFunc.SelectNodes("function");
-            foreach(XmlNode fx in fxs)
-            {
-                fxCommands.Text += fx.InnerText + Environment.NewLine;
-            }
+		{
 
-            XmlNodeList parms = passedInFunc.SelectNodes("parameter");
-            udParms.Rows.Clear();
-            foreach (XmlNode prm in parms)
-            {
-                string pnm = prm.Attributes["name"].Value;
-                string defval = prm.Attributes["default"] == null ? String.Empty : prm.Attributes["default"].Value;
-                bool req = prm.Attributes["required"] == null ? false : Boolean.Parse(prm.Attributes["required"].Value);
-                udParms.Rows.Add(pnm, defval, req);
-            }
-            CommandListLeave(fxCommands, EventArgs.Empty);   
+			if(_functions.CommandExists(functionList.Text))
+			{
+				UserFunction func = _functions.GetUserFunction(functionList.Text);
+				fxDescription.Text = func.Description;
+
+				StringBuilder subFunctions = new StringBuilder();
+				foreach(string subfunc in func.SubFunctions)
+				{
+					subFunctions.AppendLine(subfunc);
+				}
+				fxCommands.Text = subFunctions.ToString();
+
+				foreach (var param in func.Parameters)
+				{
+					udParms.Rows.Add(param.Name, param.DefaultValue, param.Required);
+				}
+				CommandListLeave(fxCommands, EventArgs.Empty);
+				return;
+			}
+
+			fxCommands.Text = String.Empty;
+			fxDescription.Text = String.Empty;
+			udParms.Rows.Clear();            
         }
 
         private void SaveButtonClick(object sender, EventArgs e)
-        {
-            XmlDocument udfs = UdfDocument;
-            XmlNode command = udfs.SelectSingleNode("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + functionList.Text.ToLower() + "\"]");
+		{	
+			var parmlist = new List<UserFunction.UserParameter>();
+			if (_containsParms)
+			{
+				int seq = 1;
+				foreach (DataGridViewRow dr in udParms.Rows)
+				{
+					if (dr.Cells["ParmName"] != null && dr.Cells["ParmName"].Value != null && !String.IsNullOrEmpty(dr.Cells["ParmName"].Value.ToString()))
+					{
+						string nm = dr.Cells["ParmName"].Value.ToString();
+						string dv = dr.Cells["defval"] == null || dr.Cells["defval"].Value == null ? String.Empty : dr.Cells["defval"].Value.ToString();
+						bool req = dr.Cells["Required"] == null || dr.Cells["Required"].Value == null ? false : (bool)dr.Cells["Required"].Value;
 
-            if (command == null)
-            {
-                //new udf
-                command = udfs.CreateElement("command");
-                XmlAttribute key = udfs.CreateAttribute("key");
-                key.Value = functionList.Text;
-                command.Attributes.Append(key);
+						parmlist.Add(new UserFunction.UserParameter(nm, dv, req, string.Empty, seq));
+						seq++;
+					}
+				}
+			}
 
-                XmlNode desc = udfs.CreateElement("description");
-                desc.InnerText = fxDescription.Text;
-                command.AppendChild(desc);
+			UserFunction func = _functions.GetUserFunction(functionList.Text);
 
-                
-                
-                XmlNode cmds = _udfDocument.SelectSingleNode("/commands");
-                cmds.AppendChild(command);
-            }
-            else
-            {                
-                XmlNode desc = command.SelectSingleNode("description");
-                if (desc == null)
-                {
-                    desc = udfs.CreateElement("description");
-                    command.AppendChild(desc);
-                }
-                desc.InnerText = fxDescription.Text;
+			if(func == null)
+			{
+				_functions.Add(new UserFunction(functionList.Text, fxDescription.Text, fxCommands.Text, parmlist));
+			}
+			else
+			{
+				func.Description = fxDescription.Text;
+				func.SubFunctions.Clear();
+				foreach(string subfunction in fxCommands.Text.Split('\n'))
+				{
+					func.SubFunctions.Enqueue(subfunction.Trim());
+				}
+				func.Parameters = parmlist;
+			}
 
-                while(command.SelectSingleNode("function") != null)
-                    command.RemoveChild(command.SelectSingleNode("function"));
-
-                while (command.SelectSingleNode("parameter") != null)
-                    command.RemoveChild(command.SelectSingleNode("parameter"));
-
-            }
-
-            string[] fxs = fxCommands.Text.Split('\n');
-            foreach (string fx in fxs)
-            {
-                if (String.IsNullOrEmpty(fx.Trim()))
-                    continue;
-                XmlCDataSection cdatfx = udfs.CreateCDataSection(fx.Trim());
-                XmlNode fxNd = udfs.CreateElement("function");
-                fxNd.AppendChild(cdatfx);
-                command.AppendChild(fxNd);
-            }
-
-            if (_containsParms)
-            {
-                int seq = 1;
-                foreach (DataGridViewRow dr in udParms.Rows)
-                {
-                    if (dr.Cells["ParmName"] != null && dr.Cells["ParmName"].Value != null && !String.IsNullOrEmpty(dr.Cells["ParmName"].Value.ToString()))
-                    {
-                        string nm = dr.Cells["ParmName"].Value.ToString();
-                        string dv = dr.Cells["defval"] == null || dr.Cells["defval"].Value == null ? String.Empty : dr.Cells["defval"].Value.ToString();
-                        bool req = dr.Cells["Required"] == null || dr.Cells["Required"].Value == null ? false : (bool)dr.Cells["Required"].Value;
-
-                        XmlNode paramnd = udfs.CreateElement("parameter");
-                        XmlAttribute pnm = udfs.CreateAttribute("name");
-                        pnm.Value = nm;
-                        paramnd.Attributes.Append(pnm);
-                        XmlAttribute pdv = udfs.CreateAttribute("default");
-                        pdv.Value = dv;
-                        paramnd.Attributes.Append(pdv);
-                        XmlAttribute prq = udfs.CreateAttribute("required");
-                        prq.Value = req.ToString();
-                        paramnd.Attributes.Append(prq);
-                        XmlAttribute pdsc = udfs.CreateAttribute("parmdesc");
-                        paramnd.Attributes.Append(pdsc);
-                        XmlAttribute pseq = udfs.CreateAttribute("sequence");
-                        pseq.Value = seq.ToString();
-                        paramnd.Attributes.Append(pseq);
-                        seq++;
-                        command.AppendChild(paramnd);
-                    }
-                }
-            }
-            UdfDocument = _udfDocument;
+			_functions.Save();
             this.Close();
         }
 
@@ -256,21 +141,14 @@ namespace clippy
 
         private void DeleteUdf(string functionName)
         {
-            XmlDocument udfs = _udfDocument;
-            XmlNode command = udfs.SelectSingleNode("//command[translate(@key,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + functionName.ToLower() + "\"]");
+			UserFunction func = _functions.GetUserFunction(functionName);
+			if(func == null)
+				return;
 
-            if (command != null)
-            {
-                command.ParentNode.RemoveChild(command);
-                UdfDocument = _udfDocument;
-            }
-            functionList.Text = String.Empty;
-            fxDescription.Text = String.Empty;
-            fxCommands.Text = String.Empty;
-            int position = functionList.SelectedIndex;
-            LoadFunctions();
-            if(position < functionList.Items.Count)
-                functionList.SelectedIndex = position;
+			_functions.Remove(func);
+			_functions.Save();
+
+			LoadFunctions();            
         }
 
         private void deleter_Click(object sender, EventArgs e)

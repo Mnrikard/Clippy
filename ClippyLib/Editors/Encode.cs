@@ -27,51 +27,27 @@ namespace ClippyLib.Editors
 {
     public class Encode : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "Encode"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Encodes/Decodes urls and html"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Encode
-Syntax: clippy encode [url|html] [reverse]
-
-Encodes/Decodes urls and html
-
-url|html|base64 - Encodes either by url, html or base64
-reverse - Decodes instead of encodes
-
-Example:
-    clippy encode url
-    will change the source data from
-    ""specialchars=none""
-    to
-    ""specialchars%3Dnone""
-";
-            }
-        }
-
+		public Encode()
+		{
+			Name = "Encode";
+			Description = "Encodes/Decodes text with different formats";
+			exampleInput = "<xml/>";
+			exampleCommand = "encode xml";
+			exampleOutput = "&lt;xml/&gt;";
+			DefineParameters();
+		}
+        
         public override void DefineParameters()
         {
             _parameterList = new List<Parameter>();
             _parameterList.Add(new Parameter()
             {
-                ParameterName = "Code Type (url|html|base64)",
+                ParameterName = "Code Type",
                 Sequence = 1,
-                Validator = (a => ("url".Equals(a.ToLower()) || "html".Equals(a.ToLower()) || "base64".Equals(a.ToLower()))),
+                Validator = (a => (Regex.IsMatch(a,"(url|html|xml|base64)", RegexOptions.IgnoreCase))),
                 DefaultValue = "url",
                 Required = true,
-                Expecting = "url, html or base64"
+                Expecting = "url, xml, html or base64"
             });
             _parameterList.Add(new Parameter()
             {
@@ -80,13 +56,10 @@ Example:
                 Validator = (a => (String.IsNullOrEmpty(a) || a.Trim().Length == 0 || "reverse".Equals(a, StringComparison.CurrentCultureIgnoreCase))),
                 DefaultValue = String.Empty,
                 Required = false,
-                Expecting = "reverse or empty string"
+                Expecting = "either \"reverse\", \"decode\" or empty string"
             });
         }
 
-        #endregion
-
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for (int i = 0; i < ParameterList.Count; i++)
@@ -106,34 +79,36 @@ Example:
 
         public override void Edit()
         {
-            bool decode = ParameterList[1].Value.Equals("reverse", StringComparison.CurrentCultureIgnoreCase);
-            try
-            {
-                if (ParameterList[0].Value.Equals("url", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    if(decode)
-                        SourceData = SafeUrlDecode(SourceData);
-                    else
-                        SourceData = SafeUrlEncode(SourceData);
-                }
-                else if (ParameterList[0].Value.Equals("base64", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    if (decode)
-                        SourceData = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(SourceData));
-                    else
-                        SourceData = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(SourceData));
-                }
-                else
-                {
-                    if (decode)
-                        SourceData = System.Web.HttpUtility.HtmlDecode(SourceData);
-                    else
-                        SourceData = System.Web.HttpUtility.HtmlEncode(SourceData);
-                }   
-            }
-            catch
-            {
-                RespondToExe("Unable to " + (decode ? "decode" : "encode") + " data");
+            bool decode = ParameterList[1].GetValueOrDefault().Equals("reverse", StringComparison.CurrentCultureIgnoreCase) || 
+				ParameterList[1].GetValueOrDefault().Equals("decode", StringComparison.CurrentCultureIgnoreCase);
+
+			string typeDirection = String.Concat(ParameterList[0].GetValueOrDefault().ToLower()," ",ParameterList[1].GetValueOrDefault().ToLower());
+
+			switch (typeDirection.Trim())
+			{
+				case "url reverse":
+					SourceData = ModifiedUrlDecode(SourceData);
+					break;
+				case "url":
+					SourceData = SafeUrlEncode(SourceData);
+					break;
+				case "base64":
+					SourceData = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(SourceData));
+					break;
+				case "base64 reverse":
+					SourceData = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(SourceData));
+					break;
+				case "html":
+				case "xml":
+					SourceData = System.Web.HttpUtility.HtmlEncode(SourceData);
+					break;
+				case "html reverse":
+				case "xml reverse":
+					SourceData = System.Web.HttpUtility.HtmlDecode(SourceData);
+					break;
+				default:
+					RespondToExe("Unable to " + (decode ? "decode" : "encode") + " data");
+					break;
             }
         }
 
@@ -186,6 +161,24 @@ Example:
             }
             return output.ToString();
         }
+
+		private string ModifiedUrlDecode(string data)
+		{
+			for(int i=0;i<256;i++)
+			{
+				string replacement = String.Concat("%",i.ToString("x").PadLeft(2,'0'));
+				if(data.Contains(replacement.ToUpper()))
+				{
+					data = data.Replace(replacement.ToUpper(), ((char)i).ToString());
+				}
+				if(data.Contains(replacement))
+				{
+					data = data.Replace(replacement, ((char)i).ToString());
+				}
+			}
+
+			return data;
+		}
         
     }
 }

@@ -27,7 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.Win32;
+using ClippyLib.Settings;
 
 namespace clippy
 {
@@ -66,62 +66,26 @@ namespace clippy
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            RegistryKey hkcu = Registry.CurrentUser;
-            RegistryKey clippy = GetRegistryKey(hkcu, "Software\\Rikard\\Clippy");
-            clippy.SetValue("udfLocation", udfLocation.Text, RegistryValueKind.String);
-            clippy.SetValue("snippetsLocation", snippetsLocation.Text, RegistryValueKind.String);
-            clippy.SetValue("CloseFunction", hideAtX.Checked ? "hide" : "close", RegistryValueKind.String);
-            
+			SettingsObtainer obtainer = SettingsObtainer.CreateInstance();
+			obtainer.UdfLocation = udfLocation.Text;
+			obtainer.SnippetsLocation = snippetsLocation.Text;
+			obtainer.ClosesOnExit = !hideAtX.Checked;
+			obtainer.RawTabString = tabStringBox.Text;
             this.Close();
         }
 
-        private RegistryKey GetRegistryKey(RegistryKey parentKey, string subKeyPath)
+		private void OptionsForm_Load(object sender, EventArgs e)
         {
-            List<RegistryKey> keys = new List<RegistryKey>();
-            keys.Add(parentKey);
-            try
-            {
-                foreach (string keyname in subKeyPath.Split('\\'))
-                {
-                    keys.Add(keys[keys.Count - 1].CreateSubKey(keyname));
-                }
-                return keys[keys.Count - 1];
-            }
-            finally
-            {
-                for (int i = 1; i < keys.Count - 1; i++)
-                {
-                    keys[i].Close();
-                }
-            }
-        }
+			SettingsObtainer obtainer = SettingsObtainer.CreateInstance();
+			udfLocation.Text = obtainer.UdfLocation;
+			snippetsLocation.Text = obtainer.SnippetsLocation;
+			tabStringBox.Text = obtainer.RawTabString;
 
-        private void OptionsForm_Load(object sender, EventArgs e)
-        {
-            RegistryKey hkcu = Registry.CurrentUser;
-            RegistryKey clippy = GetRegistryKey(hkcu, "Software\\Rikard\\Clippy");
-            udfLocation.Text = (clippy.GetValue("udfLocation") ?? String.Empty).ToString();
-            snippetsLocation.Text = (clippy.GetValue("snippetsLocation") ?? String.Empty).ToString();
-            if((clippy.GetValue("CloseFunction") ?? String.Empty).ToString() == "hide")
-            {
-            	hideAtX.Checked = true;
-            }
-            else
-            {
-            	closeAtX.Checked = true;
-            }
+			bool closeOnExit = obtainer.ClosesOnExit;
+
+			closeAtX.Checked = closeOnExit;
+			hideAtX.Checked = !closeOnExit;
         }
-        
-        void ChangeCloseFunction(object sender, EventArgs e)
-        {
-        	
-            
-        }
-        
-        
-        void RunAtStartCheckedChanged(object sender, EventArgs e)
-        {
-        	
-        }
+                
     }
 }

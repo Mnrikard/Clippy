@@ -6,6 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 namespace clippy
 {
 	partial class About
@@ -61,6 +62,7 @@ namespace clippy
 			this.Text = "About Clippy";
 			this.ResumeLayout(false);
 			this.PerformLayout();
+			this.Icon = new System.Drawing.Icon(ClippyLib.Extensions.GetLocalFile("clippy2.ico"));
 		}
 		private System.Windows.Forms.TextBox aboutme;
 	}

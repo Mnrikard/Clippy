@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Clippy</id>
+    <version>3.5.0</version>
+    <authors>Matthew Rikard</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Clippy is a text manipulation utility for updating the text on your clipboard.</description>
+  </metadata>
+  <files>
+    <file src="*.dll" />
+    <file src="*.exe" />
+    <file src="*.exe.config" />
+    <file src=".clippyrc" />
+    <file src="clippy2.ico" />
+    <file src="history.png" />
+  </files>
+</package>

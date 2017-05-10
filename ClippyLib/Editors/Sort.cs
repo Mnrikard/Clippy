@@ -26,10 +26,15 @@ namespace ClippyLib.Editors
 {
     public class ClipSort : AClipEditor
     {
-        public override string EditorName
-        {
-            get { return "Sort"; }
-        }
+		public ClipSort()
+		{
+			Name = "Sort";
+			Description = "Sorts a delimited list.";
+			exampleInput = "7,14,23,1,4";
+			exampleCommand = "sort asc ,";
+			exampleOutput = "1,4,7,14,23";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -103,40 +108,11 @@ namespace ClippyLib.Editors
 
         public override void Edit()
         {
-            string[] sortable = Regex.Split(SourceData, Regex.Escape(ClipEscape(ParameterList[1].Value)), RegexOptions.IgnoreCase);
+            string[] sortable = Regex.Split(SourceData, ParameterList[1].GetEscapedValueOrDefault(), RegexOptions.IgnoreCase);
             Array.Sort(sortable, SortUnknown);
-            if (ParameterList[0].Value.Trim().Equals("desc", StringComparison.CurrentCultureIgnoreCase))
+            if (ParameterList[0].GetValueOrDefault().Trim().Equals("desc", StringComparison.CurrentCultureIgnoreCase))
                 Array.Reverse(sortable);
-            SourceData = String.Join(ClipEscape(ParameterList[1].Value), sortable);
-        }
-
-
-        public override string ShortDescription
-        {
-            get { return "Sorts a string"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Sort
-Syntax: sort [sortorder] [delimiter] [ignore case]
-Sorts a string based on a string delimiter and a given sort order
-
-Sort order is expecing either asc or desc
-sort order is asc by default
-
-Delimiter defaults to new line character but can be any string separator
-
-Ignore case is by default true
-this argument accepts either true or false
-
-Example:
-    clippy sort ""\t"" asc true
-    will sort the tab delimited string in ascending order, ignoring case.
-";
-            }
+            SourceData = String.Join(ParameterList[1].GetEscapedValueOrDefault(), sortable);
         }
     }
 }

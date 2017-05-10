@@ -19,13 +19,14 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using ClippyLib;
-using Microsoft.Win32;
-using System.Collections.Generic;
+using ClippyLib.Editors;
+using ClippyLib.Settings;
 
 namespace clippy
 {
@@ -65,36 +66,14 @@ namespace clippy
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-        	RegistryKey hkcu = Registry.CurrentUser;
-            RegistryKey clippy = GetRegistryKey(hkcu, "Software\\Rikard\\Clippy");
-            if((clippy.GetValue("CloseFunction") ?? String.Empty).ToString() == "hide")
-            {
-	            e.Cancel = true;
-    			MinimizeForm();
-            }
+			SettingsObtainer obt = SettingsObtainer.CreateInstance();
+			if(!obt.ClosesOnExit)
+			{
+				e.Cancel = true;
+				MinimizeForm();
+			}
         }
-        
-        private RegistryKey GetRegistryKey(RegistryKey parentKey, string subKeyPath)
-        {
-            List<RegistryKey> keys = new List<RegistryKey>();
-            keys.Add(parentKey);
-            try
-            {
-                foreach (string keyname in subKeyPath.Split('\\'))
-                {
-                    keys.Add(keys[keys.Count - 1].CreateSubKey(keyname));
-                }
-                return keys[keys.Count - 1];
-            }
-            finally
-            {
-                for (int i = 1; i < keys.Count - 1; i++)
-                {
-                    keys[i].Close();
-                }
-            }
-        }
-        
+                
         private void HandleResponseFromClippy(object sender, EditorResponseEventArgs e)
         {
             MessageBox.Show(e.ResponseString, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);            
@@ -261,7 +240,7 @@ namespace clippy
                 MessageBox.Show(udfex.FunctionMessage);
             }
 
-            SaveThisCommand(_currentCommand, parmString.ToString());
+			SaveThisCommand(_currentCommand, parmString.ToString());
 
             clipManager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
             functions.Focus();
@@ -283,12 +262,14 @@ namespace clippy
 		
         private void SaveThisCommand(string editorName, string parms)
         {
-            ClippyLib.RecentCommands.SaveThisCommand(editorName, parms);
+			var commandStore = ClippyLib.RecentCommands.Store.GetInstance();
+            commandStore.SaveThisCommand(editorName, parms);
         }
 
         private string[] GetRecentCommandList()
         {
-            return ClippyLib.RecentCommands.GetRecentCommandList();
+			var commandStore = ClippyLib.RecentCommands.Store.GetInstance();
+			return commandStore.GetRecentCommandList();
         }
 
         private string ParmEscape(string value)
@@ -321,27 +302,6 @@ namespace clippy
             ofrm.StartPosition = FormStartPosition.CenterParent;
             ofrm.ShowDialog(this);
         }
-
-        //private RegistryKey GetRegistryKey(RegistryKey parentKey, string subKeyPath)
-        //{
-        //    List<RegistryKey> keys = new List<RegistryKey>();
-        //    keys.Add(parentKey);
-        //    try
-        //    {
-        //        foreach (string keyname in subKeyPath.Split('\\'))
-        //        {
-        //            keys.Add(keys[keys.Count - 1].CreateSubKey(keyname));
-        //        }
-        //        return keys[keys.Count - 1];
-        //    }
-        //    finally
-        //    {
-        //        for (int i = 1; i < keys.Count - 1; i++)
-        //        {
-        //            keys[i].Close();
-        //        }
-        //    }
-        //}
 
         private void recentCommandsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -391,41 +351,4 @@ namespace clippy
         	}
         }
     }
-    //UserActivityHook actHook;
-    //        void MainFormLoad(object sender, System.EventArgs e)
-    //        {
-    //#if Release
-    //            actHook = new UserActivityHook(); // create an instance with global hooks
-    //            // hang on events
-    //            actHook.KeyDown += new KeyEventHandler(MyKeyDown);
-    //            actHook.KeyUp += new KeyEventHandler(MyKeyUp);
-
-    //            actHook.Start();
-    //#endif
-    //        }
-
-    //public void MyKeyDown(object sender, KeyEventArgs e)
-    //    {
-    //        if (e.KeyCode == (Keys.RButton | Keys.Space | Keys.F17)) IsCtrlDown = true;
-    //        if (e.KeyCode == (Keys.MButton | Keys.Space | Keys.F17)) IsAltDown = true;
-    //        if (e.KeyCode == Keys.RWin || e.KeyCode == Keys.LWin) IsWinDown = true;
-    //    }
-
-
-    //    private bool IsCtrlDown = false;
-    //    private bool IsAltDown = false;
-    //    private bool IsWinDown = false;
-
-    //    public void MyKeyUp(object sender, KeyEventArgs e)
-    //    {
-    //        if (e.KeyCode == (Keys.RButton | Keys.Space | Keys.F17)) IsCtrlDown = false;
-    //        if (e.KeyCode == (Keys.MButton | Keys.Space | Keys.F17)) IsAltDown = false;
-    //        if (e.KeyCode == Keys.RWin || e.KeyCode == Keys.LWin) IsWinDown = false;
-
-    //        if (e.KeyCode == Keys.C && IsWinDown)
-    //        {
-    //            RestoreForm();
-    //        }
-    //    }
-
 }

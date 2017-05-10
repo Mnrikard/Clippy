@@ -22,6 +22,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Text;
+using System.Text.RegularExpressions;
+using ClippyLib;
 
 namespace ClippyLib
 {
@@ -31,11 +34,85 @@ namespace ClippyLib
 
         public abstract void Edit();
 
-        public abstract string EditorName { get; }
+		protected string Name;
+		protected string Description;
+		internal string exampleInput;
+		internal string exampleCommand;
+		internal string exampleOutput;
 
-        public abstract string ShortDescription { get; }
+		public virtual string EditorName { get {return Name;} }
 
-        public abstract string LongDescription { get; }
+		public virtual string ShortDescription { get { return Description; } }
+
+
+		// todo: oooh, what if the example somehow got to be part of the unit test!!!
+        public virtual EditorDescription LongDescription 
+		{ 
+			get
+			{
+				var em = EditorDescription.Category.Emphasized;
+				var hd = EditorDescription.Category.Header;
+
+				EditorDescription output = new EditorDescription();
+
+				output.AppendLine(em, Name);
+
+				output.Append(em, "Syntax:");
+				output.AppendLine(String.Concat(Name.ToLower(), SyntaxParameters()));
+
+				output.AppendLine();
+				output.AppendLine(ShortDescription.Trim());
+				output.AppendLine();
+
+				DescribeParameters(output);
+				output.AppendLine();
+
+				output.AppendLine(hd, "Example:");
+
+				output.Append(em, "Original content:");
+				output.AppendLine(ClipUnEscape(exampleInput));
+
+				output.Append(em, "Command:");
+				output.AppendLine(ClipUnEscape(exampleCommand));
+
+				output.Append(em, "New content:");
+				output.AppendLine(ClipUnEscape(exampleOutput));
+
+				return output;
+			}
+		}
+
+		private string SyntaxParameters()
+		{
+			StringBuilder output = new StringBuilder();
+			foreach(Parameter p in ParameterList)
+			{
+				output.Append(" ");
+				output.Append(p.Required ? "\"" : "[");
+				output.Append(p.ParameterName.Replace(" ",""));
+				output.Append(p.Required ? "\"" : "]");
+			}
+			return output.ToString();
+		}
+
+		private void DescribeParameters(EditorDescription d)
+		{
+			var em = EditorDescription.Category.Emphasized;
+			var ww = EditorDescription.Category.Warning;
+
+			foreach(Parameter p in ParameterList)
+			{
+				d.Append(em, p.ParameterName.Replace(" ","").Trim());
+				d.Append(String.Concat(" - ",p.Expecting,"."));
+
+				if(!p.Required && p.DefaultValue != null)
+				{
+					d.Append(ww, String.Concat(" Defaults to \"",ClipUnEscape(p.DefaultValue),"\""));
+				}
+				d.AppendLine(String.Empty);
+			}
+		}
+
 
         #endregion
 
@@ -62,6 +139,11 @@ namespace ClippyLib
             RespondToExe(message, true);
         }
 
+		protected void RespondToExe(EditorDescription description)
+		{
+			RespondToExe(description, true);
+		}
+
         protected void RespondToExe(string message, bool requiresUserAction)
         {
             EditorResponseEventArgs e = new EditorResponseEventArgs()
@@ -71,6 +153,17 @@ namespace ClippyLib
             };
             OnEditorResponse(e);
         }
+
+		protected void RespondToExe(EditorDescription description, bool requiresUserAction)
+		{
+			EditorResponseEventArgs e = new EditorResponseEventArgs()
+			{
+				ResponseString = description.ToString(),
+				ResponseDescription = description,
+				RequiresUserAction = requiresUserAction
+			};
+			OnEditorResponse(e);
+		}
 
         protected void PersistentRespondToExe(string message, bool requiresUserAction)
         {
@@ -82,7 +175,7 @@ namespace ClippyLib
             OnPersistentEditorResponse(e);
         }
 
-
+		//todo: remove this after replacing all refs with Parameter.GetEscapedValue
         protected string ClipEscape(string input)
         {
             return input.Replace("\\q", "\"")
@@ -90,10 +183,20 @@ namespace ClippyLib
                 .Replace("\\n", "\n");
         }
 
+		protected string ClipUnEscape(string input)
+		{
+			return input.Replace("\"", "\\q")
+				.Replace("\t", "\\t")
+				.Replace("\n", "\\n");
+		}
+
         public bool HasAllParameters
         {
             get
             {
+				if(ParameterList == null)
+					return true;
+
                 foreach (Parameter p in ParameterList)
                 {
                     if (!p.IsValued && p.Required)
@@ -132,6 +235,16 @@ namespace ClippyLib
             parm.Value = parameterValue;
         }
 
+		protected Regex _leadingZero = new Regex("^0\\d");
+		protected bool IsNullOrNumber(string column)
+		{
+			if(_leadingZero.IsMatch(column))
+				return false;
+
+			double numberTester;
+			return (column == "NULL" || Double.TryParse(column, out numberTester));
+		}
+
         public abstract void DefineParameters();
 
         #endregion
@@ -153,7 +266,7 @@ namespace ClippyLib
         {
             string newData = SourceData
                 .Replace("\r", String.Empty)
-                .Replace("\n", "\r\n");
+                .Replace("\n", Environment.NewLine);
             if (String.IsNullOrEmpty(newData))
                 return;
             Clipboard.SetText(newData);

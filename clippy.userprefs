@@ -1,0 +1,63 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClippyLib/AClipEditor.cs">
+    <Files>
+      <File FileName="ClippyLib/SnippetsList.cs" Line="14" Column="12" />
+      <File FileName="ClippyLib/UserFunctionsList.cs" Line="1" Column="1" />
+      <File FileName="clippy/SnippetEditor.cs" Line="82" Column="95" />
+      <File FileName="ClippyLib/UserFunction.cs" Line="1" Column="1" />
+      <File FileName="clippy/UdfEditor.cs" Line="1" Column="1" />
+      <File FileName="ClippyLib/Snippet.cs" Line="1" Column="1" />
+      <File FileName="ClippyLib/AClipEditor.cs" Line="110" Column="35" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="clippy" expanded="True" />
+          <Node name="ClippyLib" expanded="True" />
+          <Node name="ConsoleClippy" expanded="True" />
+          <Node name="Manip" expanded="True" />
+          <Node name="UT.ClippyLib" expanded="True" />
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="22" column="18" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Grep.cs" line="105" column="44" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestGrep.cs" line="15" column="12" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/TestUserFunctionsList.cs" line="18" column="44" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestUdfEditor.cs" line="13" column="15" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="146" column="36" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/Encode.cs" line="170" column="17" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/AClipEditor.cs" line="256" column="22" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/EditorDescription.cs" line="66" column="10" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ConsoleClippy/Program.cs" line="36" column="21" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestUdfEditor.cs" line="21" column="16" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/UT.ClippyLib/Editors/TestUdfEditor.cs" line="29" column="15" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ConsoleClippy/Program.cs" line="53" column="17" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="192" column="9" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="194" column="19" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="114" column="18" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ConsoleClippy/Program.cs" line="151" column="48" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ClippyLib/Editors/UdfEditor.cs" line="112" column="5" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ConsoleClippy/Program.cs" line="156" column="30" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/ConsoleClippy/Program.cs" line="163" column="26" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/clippy/SnippetEditor.cs" line="91" column="8" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/clippy/SnippetEditor.cs" line="90" column="7" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/clippy/SnippetEditor.cs" line="92" column="7" />
+      <Breakpoint file="/home/rugg/GitRepos/Clippy/clippy/SnippetEditor.cs" line="74" column="14" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -25,18 +25,20 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Xml;
 using System.Windows.Forms;
-using Microsoft.Win32;
+using ClippyLib;
+using ClippyLib.Settings;
+using ClippyLib.Editors;
 
 namespace clippy
 {
     public partial class SnippetEditor : Form
     {
-        private XmlDocument _snipDocument = null;
+		internal SnippetsList Snippets;
 
         public SnippetEditor()
         {
+			Snippets = new SnippetsList();
             InitializeComponent();
         }
 
@@ -47,157 +49,47 @@ namespace clippy
 
         private void LoadSnippets()
         {
-            List<string> udFunctions = GetSnippets();
-            udFunctions.Sort();
-            snippetList.DataSource = udFunctions;
-        }
-
-        private XmlDocument SnipDocument
-        {
-            get
-            {
-                if (_snipDocument == null)
-                {
-    	            _snipDocument = new XmlDocument();
-            
-            		RegistryKey hkcu = Registry.CurrentUser;
-		            RegistryKey rkSnipLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
-            
-		            if(rkSnipLocation == null)
-		            {
-		            	_snipDocument.LoadXml("<Snippets />");
-		            	MessageBox.Show("The snippets file has not been defined.  Go to Tools > Options to set up","Snippets file not set", MessageBoxButtons.OK, MessageBoxIcon.Information);
-		            	Close();
-		            	return _snipDocument;
-		            }
-            
-		            object snipLocation = rkSnipLocation.GetValue("snippetsLocation");
-		            if(snipLocation == null)
-		            {
-		            	_snipDocument.LoadXml("<Snippets />");
-		            	MessageBox.Show("The snippets file has not been defined.  Go to Tools > Options to set up","Snippets file not set", MessageBoxButtons.OK, MessageBoxIcon.Information);
-		            	Close();
-		            	return _snipDocument;
-        		    }
-		            
-		            if(!System.IO.File.Exists(snipLocation.ToString()))
-		            {
-		            	_snipDocument.LoadXml("<Snippets />");
-		            	return _snipDocument;
-		            }
-		            
-		            _snipDocument.Load(snipLocation.ToString());		            
-                }
-                return _snipDocument;
-            }
-            
-            set
-            {
-                RegistryKey hkcu = Registry.CurrentUser;
-                RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
-                object udfLocation = rkUdfLocation.GetValue("snippetsLocation");
-                _snipDocument = value;
-                _snipDocument.Save(udfLocation.ToString());
-            }
-        }
-
-
-        public List<string> GetSnippets()
-        {
-            XmlDocument descSnip = SnipDocument;
-            XmlNodeList snips = descSnip.SelectNodes("//Snippet/@Name");
-            List<string> output = new List<string>();
-            foreach (XmlNode snip in snips)
-            {
-                output.Add(snip.Value);
-            }
-            return output;
+			snippetList.DataSource = (from Snippet s in Snippets
+			                          orderby s.Name
+			                          select s.Name).ToList();
         }
 
         private void snippetList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            snippetDescription.Text = String.Empty;
-            snippetContent.Text = String.Empty;
-            XmlDocument descUdf = SnipDocument;
-            XmlNode passedInSnip = descUdf.SelectSingleNode("//Snippet[translate(@Name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + snippetList.Text.ToLower() + "\"]");
-            if (passedInSnip == null)
-            {
-                return;
-            }
-            XmlNode desc = passedInSnip.SelectSingleNode("Description");
-            if(desc != null)
-            {
-                snippetDescription.Text = desc.InnerText;
-            }
-            XmlNode content = passedInSnip.SelectSingleNode("Content");
-            if (content == null)
-                return;
-            snippetContent.Text += content.InnerText;
+			if(Snippets.SnippetExists(snippetList.Text))
+			{
+				Snippet snip = Snippets.GetSnippet(snippetList.Text);
+				snippetDescription.Text = snip.Description;
+				snippetContent.Text = snip.Content;
+				return;
+			}
+			
+			snippetDescription.Text = string.Empty;
+			snippetContent.Text = string.Empty;
+			snippetContent.Text = string.Empty;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            XmlDocument snipdoc = SnipDocument;
-            XmlNode snip = snipdoc.SelectSingleNode("//Snippet[translate(@Name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + snippetList.Text.ToLower() + "\"]");
-            if (snip == null)
-            {
-                //new udf
-                XmlNode command = snipdoc.CreateElement("Snippet");
-                XmlAttribute key = snipdoc.CreateAttribute("Name");
-                key.Value = snippetList.Text;
-                command.Attributes.Append(key);
-
-                XmlNode desc = snipdoc.CreateElement("Description");
-                desc.InnerText = snippetDescription.Text;
-                command.AppendChild(desc);
-
-                XmlCDataSection cdatfx = snipdoc.CreateCDataSection(snippetContent.Text);
-                XmlNode content = snipdoc.CreateElement("Content");
-                content.AppendChild(cdatfx);
-                command.AppendChild(content);
-                XmlNode snips = _snipDocument.SelectSingleNode("/Snippets");
-                snips.AppendChild(command);
-            }
-            else
-            {
-
-                XmlNode desc = snip.SelectSingleNode("Description");
-                if (desc == null)
-                {
-                    desc = snipdoc.CreateElement("Description");
-                    snip.AppendChild(desc);
-                }
-                desc.InnerText = snippetDescription.Text;
-
-                while(snip.SelectSingleNode("Content") != null)
-                    snip.RemoveChild(snip.SelectSingleNode("Content"));
-
-                XmlCDataSection cdatfx = snipdoc.CreateCDataSection(snippetContent.Text);
-                XmlNode content = snipdoc.CreateElement("Content");
-                content.AppendChild(cdatfx);
-                snip.AppendChild(content);
-                
-            }
-            SnipDocument = _snipDocument;
-            this.Close();
+			if(Snippets.SnippetExists(snippetList.Text))
+			{
+				var snip = Snippets.FirstOrDefault(s => s.Name.Equals(snippetList.Text, StringComparison.CurrentCultureIgnoreCase));
+				snip.Content = snippetContent.Text;
+				snip.Description = snippetDescription.Text;
+			}
+			else
+			{
+				Snippets.Add(new Snippet(snippetList.Text, snippetDescription.Text, snippetContent.Text));
+			}
+			Snippets.Save();
+			this.Close();
         }
 
         private void DeleteSnippet(string snippetName)
         {
-            XmlDocument snipdoc = _snipDocument;
-            XmlNode snip = snipdoc.SelectSingleNode("//Snippet[translate(@Name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')=\"" + snippetName.ToLower() + "\"]");
-            if (snip != null)
-            {
-                snip.ParentNode.RemoveChild(snip);
-                SnipDocument = _snipDocument;
-            }
-            snippetList.Text = String.Empty;
-            snippetDescription.Text = String.Empty;
-            snippetContent.Text = String.Empty;
-            int position = snippetList.SelectedIndex;
-            LoadSnippets();
-            if(position < snippetList.Items.Count)
-                snippetList.SelectedIndex = position;
+			Snippets.Remove(Snippets.FirstOrDefault(s => s.Name.Equals(snippetName, StringComparison.CurrentCultureIgnoreCase)));
+			Snippets.Save();
+			LoadSnippets();            
         }
 
         private void deleter_Click(object sender, EventArgs e)

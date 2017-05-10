@@ -25,6 +25,7 @@
 using System;
 using System.Text;
 using ClippyLib;
+using ClippyLib.Editors;
 using System.Linq;
 
 namespace Manip
@@ -46,14 +47,14 @@ namespace Manip
         	
             if (args.Length > 0 && (args[0].Equals("help", StringComparison.CurrentCultureIgnoreCase) || args[0].Equals("/?", StringComparison.CurrentCultureIgnoreCase)))
             {
-                Console.WriteLine(manager.Help(args));
+                manager.Help(args).PrintToConsole();
                 Console.ReadLine();
             }
             else
             {
                 if (args.Length == 0)
                 {
-                    Console.WriteLine(manager.Help(args));
+                    manager.Help(args).PrintToConsole();
                     Console.WriteLine("Awaiting command");
                     args = manager.GetArgumentsFromString(Console.ReadLine());
                 }
@@ -65,8 +66,11 @@ namespace Manip
 
                 if (!manager.ClipEditor.HasAllParameters)
                 {
-                	Console.WriteLine("Y O U   M U S T   P A S S   A L L   R E Q U I R E D   P A R A M E T E R S");
-                	Console.WriteLine(manager.ClipEditor.LongDescription);
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.WriteLine("Y O U   M U S T   P A S S   A L L   R E Q U I R E D   P A R A M E T E R S");
+					Console.ResetColor();
+
+                	manager.ClipEditor.LongDescription.PrintToConsole();
                 	return;
                 }
 
@@ -78,7 +82,8 @@ namespace Manip
 
             }
             
-            Console.WriteLine(content);
+			// write, not writeline here, on purpose (run this with writeline as !Manip inside of VIM and you'll see why)
+            Console.Write(content);
         }
 
 

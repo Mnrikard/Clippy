@@ -26,38 +26,16 @@ namespace ClippyLib.Editors
 {
     public class Grep : AClipEditor
     {
-        #region boilerplate 
+        public Grep()
+		{
+			Name = "Grep";
+			Description = "Gets a match list based on the Regular Expression/SQL/Text pattern passed in";
+			exampleInput = "1 and 2 and 3";
+			exampleCommand = "grep \\d \n regex";
+			exampleOutput = "1\n2\n3";
+			DefineParameters();
+		}
 
-        public override string EditorName
-        {
-            get { return "Grep"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Gets a list of each pattern match."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Grep
-Syntax: grep ""pattern"" [separator] [patternType]
-Gets a Regular Expression match list based on the pattern passed in
-
-Pattern - a regular expression pattern, ignores case
-separator - The delimiter between matchs for the output
-separator defaults to new line character.
-patternType - One of regex, sql or text. Defaults to regex
-
-Example:
-    clippy grep ""\d+""
-    will return each sequence of digits to a line.
-";
-            }
-        }
-        
         public override void DefineParameters()
         {
             _parameterList = new List<Parameter>();
@@ -65,7 +43,7 @@ Example:
             {
                 ParameterName = "Pattern",
                 Sequence = 1,
-                Validator = ValidateRegex,
+                Validator = a => true, //todo: make ValidateRegex work with sql/text patterns too,
                 DefaultValue = null,
                 Required = true,
                 Expecting = "A regular expression pattern"
@@ -102,7 +80,7 @@ Example:
                 return false;
             }
         }
-        #endregion
+
 
         public override void SetParameters(string[] args)
         {
@@ -118,19 +96,20 @@ Example:
         public override void Edit()
         {
          	SuperRegex grepper = null;
-            switch((ParameterList[2].Value ?? ParameterList[2].DefaultValue).ToLower())
+            switch((ParameterList[2].GetValueOrDefault()).ToLower())
             {
                 case "sql":
                     string pattern = Regex.Replace(ParameterList[0].Value, @"(?<esc>[\.\}\{\+\*\\\?\|\)\(\$\^\#])", "\\${esc}");
                     pattern = Regex.Replace(pattern, "(?!\\\\)_", ".");
-                    pattern = Regex.Replace(pattern, "(?!\\\\)%", @"(.|\n)*");
-                    grepper = ClipEscape(pattern).ToSuperRegex();
+                    pattern = Regex.Replace(pattern, "(?!\\\\)%", @".*");
+                    grepper = Parameter.ClipEscape(String.Concat("/",pattern,"/mi")).ToSuperRegex();
+					
                 break;
                 case "text":
-                    grepper = Regex.Escape(ClipEscape(ParameterList[0].Value)).ToSuperRegex();
+                    grepper = Regex.Escape(ParameterList[0].GetEscapedValue()).ToSuperRegex();
                 break;
                 default:
-                    grepper = ClipEscape(ParameterList[0].Value).ToSuperRegex();
+					grepper = ClipEscape(ParameterList[0].Value).ToSuperRegex();
                 break;
             }
             
@@ -144,7 +123,7 @@ Example:
             if (matchlist.Count == 0)
                 RespondToExe("Pattern did not find a match in the string");
             else
-                SourceData = String.Join(ClipEscape(ParameterList[1].Value), matchlist.ToArray());
+                SourceData = String.Join(Parameter.ClipEscape(ParameterList[1].GetValueOrDefault()), matchlist.ToArray());
         }       
         
     }

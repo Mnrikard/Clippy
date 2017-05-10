@@ -130,7 +130,7 @@
             this.Controls.Add(this.snippetDescription);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.snippetList);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = new System.Drawing.Icon(ClippyLib.Extensions.GetLocalFile("clippy2.ico"));
             this.Name = "SnippetEditor";
             this.Text = "SnippetEditor";
             this.Load += new System.EventHandler(this.SnippetEditor_Load);

@@ -26,38 +26,15 @@ namespace ClippyLib.Editors
 {
     public class ChunkText : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "Chunk"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Chunks text into n-sized chunks"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Chunk
-Syntax: Chunk [numberOfChars] [separator]
-Chunks text into n-sized chunks
-
-numberOfChars - An integer representing characters per line
-
-separator - The output separator between chunks
-defaults to new line character
-
-Example:
-    clippy chunk 20 \n
-    will separate the source data into 20 character chunks separated
-    by a new line character
-";
-            }
-        }
+		public ChunkText()
+		{
+			Name = "Chunk";
+			Description = "Chunks text into n character length chunks";
+			exampleInput = "123456789A";
+			exampleCommand = "chunk 5";
+			exampleOutput = "12345\n6789A";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -81,9 +58,6 @@ Example:
             });
         }
 
-        #endregion
-
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for(int i=1;i<ParameterList.Count;i++)
@@ -100,12 +74,12 @@ Example:
 
         public override void Edit()
         {
-            SourceData = Chunk(SourceData, Int32.Parse(ParameterList[0].Value), ClipEscape(ParameterList[1].Value));
+			SourceData = Chunk(SourceData, Int32.Parse(ParameterList[0].GetValueOrDefault()), ClipEscape(ParameterList[1].GetValueOrDefault()));
         }
 
         public static string Chunk(string text, int nchar, string sep)
         {
-            string[] chunkparts = new string[(int)Math.Ceiling(text.Length / (double)nchar)];
+            string[] chunkparts = new string[(int)System.Math.Ceiling(text.Length / (double)nchar)];
             for (var i = 0; i < chunkparts.Length; i++)
             {
                 if (nchar * (i + 1) > text.Length)

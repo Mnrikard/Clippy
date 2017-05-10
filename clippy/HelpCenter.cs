@@ -18,12 +18,12 @@
  *
 */
 
-using ClippyLib;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml;
-using Microsoft.Win32;
+using ClippyLib;
+using ClippyLib.Editors;
 
 namespace clippy
 {
@@ -81,7 +81,7 @@ namespace clippy
             if (isUdf)
                 helpBox.Text = DisplayUdf(editorName);
             else
-                helpBox.Text = clipManager.Help(new string[] { String.Empty, editorName });
+                helpBox.Text = clipManager.Help(new string[] { String.Empty, editorName }).ToString();
         }
 
         private string DisplayUdf(string editorName)
@@ -100,47 +100,14 @@ namespace clippy
             return baseDesc + clipManager.Help(new string[] { });
         }
 
-        private XmlDocument _udfDocument = null;
-
-        private XmlDocument UdfDocument
-        {
-            get
-            {
-                if (_udfDocument == null)
-                {
-                    RegistryKey hkcu = Registry.CurrentUser;
-                    RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
-                    object udfLocation = rkUdfLocation.GetValue("udfLocation");
-                    XmlDocument xdoc = new XmlDocument();
-                    xdoc.Load(udfLocation.ToString());
-                    _udfDocument = xdoc;
-                }
-                return _udfDocument;
-            }
-            set
-            {
-                RegistryKey hkcu = Registry.CurrentUser;
-                RegistryKey rkUdfLocation = hkcu.OpenSubKey("Software\\Rikard\\Clippy", false);
-                object udfLocation = rkUdfLocation.GetValue("udfLocation");
-                _udfDocument = value;
-                _udfDocument.Save(udfLocation.ToString());
-            }
-        }
-
         public Dictionary<string,string> GetFunctions()
         {
-            XmlDocument descUdf = UdfDocument;
-            XmlNodeList cmds = descUdf.SelectNodes("//command");          
-            Dictionary<string, string> output = new Dictionary<string, string>();
-            foreach (XmlNode udf in cmds)
+			UserFunctionsList flist = new UserFunctionsList();
+			Dictionary<string,string> output = new Dictionary<string, string>();
+
+			foreach (UserFunction uf in flist)
             {
-                XmlNode cmdNameNd = udf.SelectSingleNode("@key");
-                XmlNode cmdDescNd = udf.SelectSingleNode("description");
-                if(cmdNameNd != null)
-                {
-                    string desc = cmdDescNd == null ? String.Empty : cmdDescNd.InnerText;
-                    output.Add(cmdNameNd.Value, desc);
-                }
+				output.Add(uf.Name, uf.Description);
             }
             return output;
         }

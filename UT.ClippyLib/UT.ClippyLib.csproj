@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6EF238B8-964A-4B72-9C08-015E8731DD48}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>UT.ClippyLib</RootNamespace>
+    <AssemblyName>UT.ClippyLib</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="NSubstitute">
+      <HintPath>..\lib\NSubstitute.net4.0\NSubstitute.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Test.cs" />
+    <Compile Include="Editors\TestCapitalize.cs" />
+    <Compile Include="Editors\TestChunk.cs" />
+    <Compile Include="Editors\TestColumnAlign.cs" />
+    <Compile Include="Editors\TestCount.cs" />
+    <Compile Include="Editors\TestDedupe.cs" />
+    <Compile Include="Editors\TestSqlInsert.cs" />
+    <Compile Include="Editors\TestEncode.cs" />
+    <Compile Include="Editors\TestGrep.cs" />
+    <Compile Include="Editors\TestNewText.cs" />
+    <Compile Include="Editors\TestRep.cs" />
+    <Compile Include="Editors\AEditorTester.cs" />
+    <Compile Include="Editors\TestReverse.cs" />
+    <Compile Include="Editors\TestSort.cs" />
+    <Compile Include="Editors\TestToBase.cs" />
+    <Compile Include="Editors\TestXmlEdit.cs" />
+    <Compile Include="TestUserFunctionsList.cs" />
+    <Compile Include="AllTestSetup.cs" />
+    <Compile Include="Editors\TestUdfEditor.cs" />
+    <Compile Include="TestConsoleclippy.cs" />
+    <Compile Include="Editors\TestSnippet.cs" />
+    <Compile Include="Editors\TestMath.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Editors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClippyLib\ClippyLib.csproj">
+      <Project>{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}</Project>
+      <Name>ClippyLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConsoleClippy\ConsoleClippy.csproj">
+      <Project>{0C5D6673-5856-4060-9404-E96B4FBEEB9F}</Project>
+      <Name>ConsoleClippy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\ConsoleClippy\udf.xml">
+      <Link>testUdf.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

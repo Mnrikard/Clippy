@@ -1,7 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 4.3
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clippy", "clippy\clippy.csproj", "{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClippyLib", "ClippyLib\ClippyLib.csproj", "{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}"
@@ -9,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClippy", "ConsoleClippy\ConsoleClippy.csproj", "{0C5D6673-5856-4060-9404-E96B4FBEEB9F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manip", "Manip\Manip.csproj", "{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT.ClippyLib", "UT.ClippyLib\UT.ClippyLib.csproj", "{6EF238B8-964A-4B72-9C08-015E8731DD48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,26 +21,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|x86.ActiveCfg = Debug|x86
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|x86.Build.0 = Debug|x86
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|Mixed Platforms.Build.0 = Release|x86
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|x86.ActiveCfg = Release|x86
-		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|x86.Build.0 = Release|x86
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|x86.ActiveCfg = Release|Any CPU
 		{0C5D6673-5856-4060-9404-E96B4FBEEB9F}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{0C5D6673-5856-4060-9404-E96B4FBEEB9F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{0C5D6673-5856-4060-9404-E96B4FBEEB9F}.Debug|Mixed Platforms.Build.0 = Debug|x86
@@ -50,18 +31,92 @@ Global
 		{0C5D6673-5856-4060-9404-E96B4FBEEB9F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{0C5D6673-5856-4060-9404-E96B4FBEEB9F}.Release|x86.ActiveCfg = Release|x86
 		{0C5D6673-5856-4060-9404-E96B4FBEEB9F}.Release|x86.Build.0 = Release|x86
-		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{48E41BEF-AE23-4B85-B6A8-EBBA82632ED7}.Release|x86.ActiveCfg = Release|Any CPU
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|x86.ActiveCfg = Debug|x86
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Debug|x86.Build.0 = Debug|x86
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|Mixed Platforms.Build.0 = Release|x86
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|x86.ActiveCfg = Release|x86
+		{4E15D4CB-6DA4-436C-AFAD-2CF639BBF086}.Release|x86.Build.0 = Release|x86
 		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|x86.Build.0 = Debug|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Debug|x86.Build.0 = Debug|Any CPU
 		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|x86.Build.0 = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|x86.ActiveCfg = Release|Any CPU
+		{655B4974-2B57-4C67-8BF7-27D6BFEED8E7}.Release|x86.Build.0 = Release|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Debug|x86.Build.0 = Debug|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Release|x86.ActiveCfg = Release|Any CPU
+		{6EF238B8-964A-4B72-9C08-015E8731DD48}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ConsoleClippy\ConsoleClippy.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.ElseIfNewLinePlacement = SameLine
+		$2.AfterDelegateDeclarationParameterComma = True
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabsToSpaces = False
+		$3.EolMarker = Windows
+		$3.inheritsSet = VisualStudio
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+		$0.TextStylePolicy = $4
+		$4.inheritsSet = null
+		$4.scope = text/microsoft-resx
+		$0.XmlFormattingPolicy = $5
+		$5.inheritsSet = null
+		$5.scope = text/microsoft-resx
+		$0.TextStylePolicy = $6
+		$6.inheritsSet = null
+		$6.scope = application/xml
+		$0.XmlFormattingPolicy = $7
+		$7.inheritsSet = Mono
+		$7.inheritsScope = application/xml
+		$7.scope = application/xml
+		$0.TextStylePolicy = $8
+		$8.inheritsSet = null
+		$8.scope = application/config+xml
+		$0.XmlFormattingPolicy = $9
+		$9.inheritsSet = null
+		$9.scope = application/config+xml
+		$0.TextStylePolicy = $10
+		$10.inheritsSet = null
+		$10.scope = text/x-copying
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

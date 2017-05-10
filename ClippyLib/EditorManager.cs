@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ClippyLib.Editors;
-using Microsoft.Win32;
 
 namespace ClippyLib
 {
@@ -34,7 +33,8 @@ namespace ClippyLib
         public EditorManager()
         {
             Editors = new List<IClipEditor>();
-
+			
+			//todo: don't make each editor a singleton, make it in an abstract factory
             Editors.Add(new Capitalize());
             Editors.Add(new ClipSort());
             Editors.Add(new ChunkText());
@@ -43,14 +43,16 @@ namespace ClippyLib
             Editors.Add(new Dedupe());
             Editors.Add(new Encode());
             Editors.Add(new Grep());
+			Editors.Add(new Math());
             Editors.Add(new NewText());
             Editors.Add(new Rep());
             Editors.Add(new Reverse());
-            Editors.Add(new Snippet());
+            Editors.Add(new SnippetTextEditor());
             Editors.Add(new SqlInsert());
             Editors.Add(new TabRight());
             Editors.Add(new ToBase());
             Editors.Add(new XmlEdit());
+			Editors.Add(new SetSourceData());
         }
 
         private IClipEditor _clipEditor;
@@ -67,15 +69,15 @@ namespace ClippyLib
                           select e).FirstOrDefault();
             if (ClipEditor == null)
                 ClipEditor = new UdfEditor(editorName);
-            ClipEditor.DefineParameters();
-            return ClipEditor;
+			return ClipEditor;
         }
 
         public string[] GetEditors()
         {
             List<string> eds = (from e in Editors
                                 select e.EditorName).ToList();
-            eds.AddRange(UdfEditor.GetFunctions());
+			UserFunctionsList ufl = new UserFunctionsList();
+            eds.AddRange(ufl.GetFunctions());
             return eds.ToArray();
         }
         
@@ -95,7 +97,7 @@ To obtain a copy of the GNU General Public License, see:
 
 ";
 
-        public string Help(string[] arguments)
+        public EditorDescription Help(string[] arguments)
         {
             if (arguments.Length > 1)
             {
@@ -104,33 +106,41 @@ To obtain a copy of the GNU General Public License, see:
                               select e).FirstOrDefault();
                 if(ClipEditor == null)
                 {
-                	StringBuilder finder = new StringBuilder();
+					EditorDescription foundEditors = new EditorDescription();
                 	foreach(IClipEditor ci in (from e in Editors
                 	                           where e.EditorName.ToLower().Contains(arguments[1].ToLower())
                 	                           || arguments[1].ToLower().Contains(e.EditorName.ToLower())
-                	                           || e.LongDescription.ToLower().Contains(arguments[1].ToLower())
+                	                           || e.LongDescription.Contains(arguments[1].ToLower())
                 	                           select e))
                 	{
-                		finder.AppendLine(ci.EditorName);
+                		foundEditors.Append(EditorDescription.Category.Emphasized, ci.EditorName);
+						foundEditors.AppendLine(EditorDescription.Category.PlainText, String.Concat(" - ", ci.ShortDescription));
                 	}
-                	return finder.ToString();
+					return foundEditors;
                 }
             	return ClipEditor.LongDescription;
             }
-            StringBuilder output = new StringBuilder(Disclaimer);
-            foreach (IClipEditor ce in Editors)
-            {
-                output.AppendFormat("{0}  -  {1}\r\n", ce.EditorName, ce.ShortDescription);
-            }
-            output.Append("---------------------\r\nUser Defined\r\n---------------------\r\n");
-            UdfEditor.DescribeFunctions(output);
 
-            return output.ToString();
+			var allEditors = new EditorDescription();
+			allEditors.AppendLine(EditorDescription.Category.Warning, Disclaimer);
+            foreach (IClipEditor ce in Editors)
+            {				
+				allEditors.Append(EditorDescription.Category.Emphasized, ce.EditorName);
+				allEditors.AppendLine(EditorDescription.Category.PlainText, String.Concat(" - ", ce.ShortDescription));
+            }
+			allEditors.AppendLine("---------------------");
+			allEditors.AppendLine("User Defined");
+			allEditors.AppendLine("---------------------");
+
+			UserFunctionsList ufl = new UserFunctionsList();
+            ufl.DescribeFunctions(allEditors);
+
+			return allEditors;
         }
 
         public string[] GetArgumentsFromString(string arglist)
         {
-            return UdfEditor.GetArgsFromString(arglist);
+            return arglist.ParseArguments();
         }
                 
     }

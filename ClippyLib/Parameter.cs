@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ClippyLib
 {
@@ -35,6 +36,9 @@ namespace ClippyLib
         public bool Required { get; set; }
         public bool Validate(string input)
         {
+			if(null == Validator)
+				return true;
+
             return Validator(input);
         }
         private string _value = null;
@@ -61,6 +65,38 @@ namespace ClippyLib
                 return true;
             }
         }
+
+		public string GetEscapedValue()
+		{
+			return GetEscapedValue(Value);
+		}
+
+		private string GetEscapedValue(string value)
+		{
+			return ClipEscape(Regex.Escape(value));
+		}
+
+		public string GetEscapedValueOrDefault()
+		{
+			return GetEscapedValue(GetValueOrDefault());
+		}
+
+		public string GetValueOrDefault()
+		{
+			if(IsValued)
+				return Value;
+			if(Required)
+				return null;
+
+			return DefaultValue;
+		}
+
+		public static string ClipEscape(string input)
+		{
+			return input.Replace("\\q", "\"")
+				.Replace("\\t", "\t")
+					.Replace("\\n", "\n");
+		}
 
     }
 }

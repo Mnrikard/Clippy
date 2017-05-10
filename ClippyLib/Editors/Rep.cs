@@ -26,58 +26,12 @@ using System.Text.RegularExpressions;
 
 namespace ClippyLib.Editors
 {
-    class Rep : AClipEditor
+    public class Rep : AClipEditor
     {
-        public override string EditorName
-        {
-            get { return "Rep"; }
-        }
-        
-
-        public override void DefineParameters()
-        {
-            _parameterList = new List<Parameter>();
-            _parameterList.Add(new Parameter()
-            {
-                ParameterName = "Regex Pattern",
-                Sequence = 1,
-                Validator = ValidateRegex,
-                Expecting = "a regular expression pattern",
-                Required=true
-            });
-            _parameterList.Add(new Parameter()
-            {
-                ParameterName = "string replacement",
-                Sequence = 2,
-                Validator = (a => (true)),
-                Expecting = "a replacement string",
-                Required = true
-            }); 
-            _parameterList.Add(new Parameter()
-            {
-                ParameterName = "pattern type",
-                Sequence = 3,
-                Validator = (a => (true)),
-                Expecting = "Defaults to \"regex\": either regex, sql, or text",
-                Required = false,
-                DefaultValue = "regex"
-            }); 
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Replaces clipboard text matched by pattern A with replacement string B."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Rep
-Syntax: rep ""A"" ""B"" [regex|sql|text]
-
-Performs a regular expression replacement on the source data
-
+		public Rep()
+		{
+			Name = "Rep";
+			Description = @"Replaces clipboard text matched by pattern A with replacement string B.
 Pattern A is a regular expression with IgnoreCase option set.
 Replacement B is the replacement string
 The final optional parameter defines the pattern type
@@ -104,14 +58,45 @@ Replacement String:
 
     \u replaces the group with upper case version
     \l replaces the group with lower case
-
-Example:
-    clippy rep ""\d"" ""A""
-    will replace every digit in your source data with the letter ""A""
 ";
-            }
+			exampleInput = "sw33t";
+			exampleCommand = "rep \\d e";
+			exampleOutput = "sweet";
+			DefineParameters();
+		}
+
+		public override string ShortDescription { get {return "Replaces clipboard text matched by pattern A with replacement string B.";}}
+
+        public override void DefineParameters()
+        {
+            _parameterList = new List<Parameter>();
+            _parameterList.Add(new Parameter()
+            {
+                ParameterName = "Regex Pattern",
+                Sequence = 1,
+                Validator = a => true,//todo: figure out how to validate this in context of text/sql/regex
+                Expecting = "a regular expression pattern",
+                Required=true
+            });
+            _parameterList.Add(new Parameter()
+            {
+                ParameterName = "string replacement",
+                Sequence = 2,
+                Validator = (a => (true)),
+                Expecting = "a replacement string",
+                Required = true
+            }); 
+            _parameterList.Add(new Parameter()
+            {
+                ParameterName = "pattern type",
+                Sequence = 3,
+                Validator = (a => (true)),
+                Expecting = "either regex, sql, or text",
+                Required = false,
+                DefaultValue = "regex"
+            }); 
         }
-        
+		        
         public override void Edit()
         {
             SuperRegex repper = null;
@@ -139,7 +124,7 @@ Example:
             try
             {
                 //todo: figure out this validation with the new patterns
-                Regex r = new Regex(ClipEscape(pattern));
+                ClipEscape(pattern).ToSuperRegex();
                 return true;
             }
             catch

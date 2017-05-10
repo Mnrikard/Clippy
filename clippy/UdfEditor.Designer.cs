@@ -203,7 +203,7 @@
         	this.Controls.Add(this.fxDescription);
         	this.Controls.Add(this.label1);
         	this.Controls.Add(this.functionList);
-        	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = new System.Drawing.Icon(ClippyLib.Extensions.GetLocalFile("clippy2.ico"));
         	this.Name = "UdfEditor";
         	this.Text = "Function Editor";
         	this.Load += new System.EventHandler(this.UdfEditor_Load);

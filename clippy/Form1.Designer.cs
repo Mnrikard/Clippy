@@ -1,4 +1,6 @@
-﻿namespace clippy
+﻿using System.Drawing;
+
+namespace clippy
 {
     partial class Form1
     {
@@ -62,7 +64,7 @@
         	// clipNotify
         	// 
         	this.clipNotify.ContextMenuStrip = this.notifyMenu;
-        	this.clipNotify.Icon = ((System.Drawing.Icon)(resources.GetObject("clipNotify.Icon")));
+			this.clipNotify.Icon = new System.Drawing.Icon(ClippyLib.Extensions.GetLocalFile("clippy2.ico"));
         	this.clipNotify.Text = "Clippy";
         	this.clipNotify.Visible = true;
         	this.clipNotify.MouseClick += new System.Windows.Forms.MouseEventHandler(this.clipNotify_MouseClick);
@@ -244,7 +246,7 @@
         	// 
         	this.recentCommandsImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
         	this.recentCommandsImage.Cursor = System.Windows.Forms.Cursors.Hand;
-        	this.recentCommandsImage.Image = ((System.Drawing.Image)(resources.GetObject("recentCommandsImage.Image")));
+			this.recentCommandsImage.Image = System.Drawing.Image.FromFile(ClippyLib.Extensions.GetLocalFile("history.png"));
         	this.recentCommandsImage.Location = new System.Drawing.Point(336, 28);
         	this.recentCommandsImage.Name = "recentCommandsImage";
         	this.recentCommandsImage.Size = new System.Drawing.Size(21, 19);
@@ -272,7 +274,7 @@
         	this.Controls.Add(this.parametersGrid);
         	this.Controls.Add(this.menuStrip1);
         	this.Controls.Add(this.functions);
-        	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = new System.Drawing.Icon(ClippyLib.Extensions.GetLocalFile("clippy2.ico"));
         	this.MainMenuStrip = this.menuStrip1;
         	this.Name = "Form1";
         	this.ShowInTaskbar = false;

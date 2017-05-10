@@ -23,41 +23,21 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
+using ClippyLib.Settings;
 
 namespace ClippyLib.Editors
 {
     public class TabRight : AClipEditor
     {
-        #region boilerplate
-
-        public override string EditorName
-        {
-            get { return "tabright"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Tabs c style and vb style text into correctly nested values."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"TabRight [languagetype]
-Syntax: TabRight vb
-Tabs c style and vb style code into correctly nested statements
-based on your preferences for tab characters
-
-languageType - one of vb or c
-defaults to c
-
-Example:
-    clippy tabright vb
-    will correctly nest your vb code.
-";
-            }
-        }
+        public TabRight()
+		{
+			Name = "TabRight";
+			Description = "Tabs c style and vb style text into correctly nested values.";
+			exampleInput = "public int main(){ printf(\"hello\");}";
+			exampleCommand = "tabright c";
+			exampleOutput = "public int main()\n{\n\tprintf(\"hello\");\n}";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -73,9 +53,6 @@ Example:
             });
         }
 
-        #endregion
-
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for(int i=0;i<ParameterList.Count;i++)
@@ -111,7 +88,8 @@ Example:
         /// <param name="tabcount">Number of tabs to assume for base.</param>
         private static string TabRightCold(string text, int tabcount)
         {
-            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
+			SettingsObtainer obt = SettingsObtainer.CreateInstance();
+			string tabstr = obt.TabString;
             text = Regex.Replace(text, @"\n\s*", String.Empty).Replace("{", "{\n").Replace("}", "\n}\n").Replace(";", ";\n");
             string[] rows = text.Split('\n');
 
@@ -146,7 +124,9 @@ Example:
             bool blockComment = false;
             string prevChar = String.Empty;
             string setPrvChr = String.Empty;
-            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
+
+			SettingsObtainer obt = SettingsObtainer.CreateInstance();
+			string tabstr = obt.TabString;
 
             StringReader sr = new StringReader(code);
             StringBuilder codeOut = new StringBuilder();
@@ -329,7 +309,9 @@ Example:
             //special instructions for "select case" statements
             Regex casebound = new Regex(@"^(select case|end select)", RegexOptions.IgnoreCase);
             Regex caseitem = new Regex(@"^case\s", RegexOptions.IgnoreCase);
-            string tabstr = System.Configuration.ConfigurationManager.AppSettings["tabString"];
+
+			SettingsObtainer obt = SettingsObtainer.CreateInstance();
+			string tabstr = obt.TabString;
             bool incase = false;
 
             //get rid of multiline rows

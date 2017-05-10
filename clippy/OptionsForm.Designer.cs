@@ -120,7 +120,6 @@
         	this.hideAtX.TabStop = true;
         	this.hideAtX.Text = "Hide";
         	this.hideAtX.UseVisualStyleBackColor = true;
-        	this.hideAtX.CheckedChanged += new System.EventHandler(this.ChangeCloseFunction);
         	// 
         	// closeAtX
         	// 
@@ -131,7 +130,23 @@
         	this.closeAtX.TabStop = true;
         	this.closeAtX.Text = "Close";
         	this.closeAtX.UseVisualStyleBackColor = true;
-        	this.closeAtX.CheckedChanged += new System.EventHandler(this.ChangeCloseFunction);
+			//
+			// tabStringLabel
+			//
+			this.tabStringLabel = new System.Windows.Forms.Label();
+			this.tabStringLabel.Location = new System.Drawing.Point(150,85);
+			this.tabStringLabel.Name = "tabStringLabel";
+			this.tabStringLabel.Size = new System.Drawing.Size(135,23);
+			this.tabStringLabel.Text = "Tab String";
+			//
+			// tabStringBox
+			//
+			this.tabStringBox = new System.Windows.Forms.TextBox();
+			this.tabStringBox.Name = "tabStringBox";
+			this.tabStringBox.Location = new System.Drawing.Point(150,102);
+			this.tabStringBox.Size = new System.Drawing.Size(100,24);
+			this.tabStringBox.TabIndex = 8;
+			this.tabStringBox.TabStop = true;
         	// 
         	// OptionsForm
         	// 
@@ -148,8 +163,10 @@
         	this.Controls.Add(this.udfLocation);
         	this.Controls.Add(this.label2);
         	this.Controls.Add(this.label1);
+			this.Controls.Add(this.tabStringBox);
+			this.Controls.Add(this.tabStringLabel);
         	this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-        	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = new System.Drawing.Icon(ClippyLib.Extensions.GetLocalFile("clippy2.ico"));
         	this.MaximizeBox = false;
         	this.MaximumSize = new System.Drawing.Size(483, 347);
         	this.MinimizeBox = false;
@@ -173,5 +190,7 @@
         private System.Windows.Forms.Button browseSnippets;
         private System.Windows.Forms.TextBox snippetsLocation;
         private System.Windows.Forms.Button saveButton;
+		private System.Windows.Forms.Label tabStringLabel;
+		private System.Windows.Forms.TextBox tabStringBox;
     }
 }

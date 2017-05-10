@@ -22,93 +22,133 @@ using System;
 using System.Linq;
 using clippy;
 using ClippyLib;
+using ClippyLib.Editors;
 using System.Windows.Forms;
 
 namespace ConsoleClippy
 {
     class Program
     {
+		private static EditorManager _manager;
         [STAThread]
         static void Main(string[] args)
         {
-            EditorManager manager = new EditorManager();
-            if (args.Length > 0 && (args[0].Equals("help", StringComparison.CurrentCultureIgnoreCase) || args[0].Equals("/?", StringComparison.CurrentCultureIgnoreCase)))
-            {
-                Console.WriteLine(manager.Help(args));
-                Console.ReadLine();
-            }
-            else if(args.Length > 0 && 
-                    (args[0].Equals("--udfeditor", StringComparison.CurrentCultureIgnoreCase)
-                     || args[0].Equals("--udf", StringComparison.CurrentCultureIgnoreCase)))
-            {
-            	UdfEditor editorForm = new UdfEditor();
-            	editorForm.ShowDialog();
-            }
-            else
-            {
-                if (args.Length == 0)
-                {
-                    Console.WriteLine(manager.Help(args));
-                    Console.WriteLine("Awaiting command");
-                    args = manager.GetArgumentsFromString(Console.ReadLine());
-                }
-                manager.GetClipEditor(args[0]);
-                manager.ClipEditor.EditorResponse += HandleResponseFromClippy;
-                manager.ClipEditor.PersistentEditorResponse += HandleResponseFromClippy;
+            _manager = new EditorManager();
+			if(ShowingHelp(args) || ShowingUdfEditor(args))
+			{
+				return;
+			}
 
-                SetParameters(manager, args);
-                
-                // if you've supplied at least one parameter, then set the rest, otherwise prompt
-                if(args.Length > 1)
-                {
-	                foreach (Parameter parmWithDefault in (from Parameter p in manager.ClipEditor.ParameterList
-	                                                       where !p.IsValued && p.DefaultValue != null
-	                                                       select p))
-	                {
-	                	parmWithDefault.Value = parmWithDefault.DefaultValue;
-	                }
-                }
-
-                while (!manager.ClipEditor.HasAllParameters)
-                {
-                	Parameter nextOne = manager.ClipEditor.GetNextParameter();
-                	Console.WriteLine(String.Concat(nextOne.ParameterName, " [",nextOne.Expecting,"]:"));
-                	
-                    try
-                    {
-                        manager.ClipEditor.SetNextParameter(Console.ReadLine());
-                    }
-                    catch (InvalidParameterException ipe)
-                    {
-                        Console.WriteLine(ipe.ParameterMessage);
-                        continue;
-                    }
-                }
-                manager.ClipEditor.GetClipboardContent();
-                manager.ClipEditor.Edit();
-                manager.ClipEditor.SetClipboardContent();
-                manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
-                manager.ClipEditor.PersistentEditorResponse -= HandleResponseFromClippy;
-
-                SaveThisCommand(args[0], manager.ClipEditor);
+            if (args.Length == 0)
+            {
+                Console.WriteLine(_manager.Help(args));
+                Console.WriteLine("Awaiting command");
+                args = _manager.GetArgumentsFromString(Console.ReadLine());
             }
+
+            _manager.GetClipEditor(args[0]);
+            _manager.ClipEditor.EditorResponse += HandleResponseFromClippy;
+            _manager.ClipEditor.PersistentEditorResponse += HandleResponseFromClippy;
+
+			SetParametersObtainedFromConsole(args);
+
+			if(AtLeastOneParameterPassedIn(args))
+				UseDefaultForRemainingParameters(args);
+
+			PromptForRemainingParameters();
+			
+			_manager.ClipEditor.GetClipboardContent();
+            _manager.ClipEditor.Edit();
+            _manager.ClipEditor.SetClipboardContent();
+
+            SaveThisCommand(args[0]);
+
+			
+			_manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
+			_manager.ClipEditor.PersistentEditorResponse -= HandleResponseFromClippy;
         }
 
-        private static void SaveThisCommand(string commandName, IClipEditor editor)
+		private static bool AtLeastOneParameterPassedIn(string[] args)
+		{
+			return (args.Length > 1);
+		}
+
+		private static bool ShowingHelp(string[] args)
+		{
+			if (args.Length > 0 && (args[0].Equals("help", StringComparison.CurrentCultureIgnoreCase) || args[0].Equals("/?", StringComparison.CurrentCultureIgnoreCase)))
+			{
+				_manager.Help(args).PrintToConsole();
+				Console.ReadLine();
+				return true;
+			}
+
+			return false;
+		}
+
+		private static bool ShowingUdfEditor(string[] args)
+		{
+			if(args.Length > 0 && 
+			   (args[0].Equals("--udfeditor", StringComparison.CurrentCultureIgnoreCase)
+			 || args[0].Equals("--udf", StringComparison.CurrentCultureIgnoreCase)))
+			{
+				clippy.UdfEditor editorForm = new clippy.UdfEditor();
+				editorForm.ShowDialog();
+				return true;
+			}
+
+			return false;
+		}
+
+		private static void UseDefaultForRemainingParameters(string[] args)
+		{
+			if(args.Length > 1)
+			{
+				foreach (Parameter parmWithDefault in (from Parameter p in _manager.ClipEditor.ParameterList
+				                                       where !p.IsValued && p.DefaultValue != null
+				                                       select p))
+				{
+					parmWithDefault.Value = parmWithDefault.DefaultValue;
+				}
+			}
+		}
+
+		private static void PromptForRemainingParameters()
+		{
+			while (!_manager.ClipEditor.HasAllParameters)
+			{
+				Parameter nextOne = _manager.ClipEditor.GetNextParameter();
+				Console.WriteLine(String.Concat(nextOne.ParameterName, " [",nextOne.Expecting,"]:"));
+
+				try
+				{
+					_manager.ClipEditor.SetNextParameter(Console.ReadLine());
+				}
+				catch (InvalidParameterException ipe)
+				{
+					Console.WriteLine(ipe.ParameterMessage);
+					continue;
+				}
+			}
+		}
+
+        private static void SaveThisCommand(string commandName)
         {
-            string[] parms = (from Parameter p in editor.ParameterList
+            string[] parms = (from Parameter p in _manager.ClipEditor.ParameterList
                               orderby p.Sequence
                               select "\"" + (p.Value ?? p.DefaultValue ?? String.Empty).Replace("\"","\\q")+"\"").ToArray();
-            ClippyLib.RecentCommands.SaveThisCommand(commandName, String.Join(" ", parms));
+			string args = String.Join(" ", parms);
+
+			var commandStore = ClippyLib.RecentCommands.Store.GetInstance();
+			commandStore.SaveThisCommand(commandName, args);
         }
 
-        private static void SetParameters(EditorManager manager, string[] args)
+        private static void SetParametersObtainedFromConsole(string[] args)
         {
             while (true)
             {
                 try
                 {
-                    manager.ClipEditor.SetParameters(args);
+                    _manager.ClipEditor.SetParameters(args);
                     break;
                 }
                 catch (ClippyLib.InvalidParameterException pe)
@@ -120,20 +160,28 @@ namespace ConsoleClippy
                 }
                 catch (ClippyLib.UndefinedFunctionException udfe)
                 {
-                    manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
+                    _manager.ClipEditor.EditorResponse -= HandleResponseFromClippy;
                     Console.WriteLine(udfe.FunctionMessage);
-                    Console.WriteLine(manager.Help(args));
+                    Console.WriteLine(_manager.Help(args));
                     Console.WriteLine("Awaiting command");
-                    args = manager.GetArgumentsFromString(Console.ReadLine());
-                    manager.GetClipEditor(args[0]);
-                    manager.ClipEditor.EditorResponse += new EventHandler<EditorResponseEventArgs>(HandleResponseFromClippy);
+                    args = _manager.GetArgumentsFromString(Console.ReadLine());
+                    _manager.GetClipEditor(args[0]);
+                    _manager.ClipEditor.EditorResponse += HandleResponseFromClippy;
                 }
             }
         }
 
         static void HandleResponseFromClippy(object sender, EditorResponseEventArgs e)
         {
-            Console.WriteLine(e.ResponseString);
+			if(e.ResponseDescription == null)
+			{
+				Console.WriteLine(e.ResponseString);
+			}
+			else
+			{
+				e.ResponseDescription.PrintToConsole();
+			}
+
             if(e.RequiresUserAction)
                 Console.ReadKey();
         }

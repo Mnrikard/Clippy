@@ -62,7 +62,7 @@
             this.ClientSize = new System.Drawing.Size(292, 273);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.commandList);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = new System.Drawing.Icon(ClippyLib.Extensions.GetLocalFile("clippy2.ico"));
             this.Name = "RecentCommands";
             this.Opacity = 0.9D;
             this.Text = "Recent Commands";

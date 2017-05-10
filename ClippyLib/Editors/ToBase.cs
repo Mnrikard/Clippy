@@ -26,77 +26,39 @@ namespace ClippyLib.Editors
 {
     public class ToBase : AClipEditor
     {
-        #region boilerplate
+        public ToBase()
+		{
+			Name = "ToBase";
+			Description = "Converts from decimal to a base number system and back";
+			exampleInput = "254";
+			exampleCommand = "tobase 16";
+			exampleOutput = "FE";
+			DefineParameters();
+		}
 
-        public override string EditorName
-        {
-            get { return "ToBase"; }
-        }
+		public override void DefineParameters()
+		{
+			_parameterList = new List<Parameter>();
+			_parameterList.Add(new Parameter()
+			                   {
+				ParameterName = "Base Number",
+				Sequence = 1,
+				Validator = IsBaseNumber,
+				DefaultValue = "16",
+				Required = true,
+				Expecting = "A number between 2 and 36"
+			});
+			_parameterList.Add(new Parameter()
+			                   {
+				ParameterName = "Reverse",
+				Sequence = 2,
+				Validator = a => (a.Trim()==String.Empty || "reverse".Equals(a, StringComparison.CurrentCultureIgnoreCase)),
+				DefaultValue = String.Empty,
+				Required = false,
+				Expecting = "the word \"reverse\""
+			});
+		}
 
-        public override string ShortDescription
-        {
-            get { return "Converts from/to base integers"; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"ToBase
-Syntax: clippy tobase [baseint] [reverse]
-Description
-
-Converts from decimal to a base number system and back
-For instance 
-clippy tobase 16 will convert 255 to FF
-clippy tobase 16 -1 will convert FF to 255
-
-baseint - The base number: for example binary would be 2
-          Octal would be 8
-          Hexidecimal would be 16
-
-reverse - To convert back from a base to the decimal use ""reverse""
-";
-            }
-        }
-
-        private static bool IsBaseNumber(string b)
-        {
-            byte bb;
-            if (Byte.TryParse(b, out bb))
-            {
-                if (bb <= 36 && bb >= 2)
-                    return true;
-            }
-            return false;
-        }
-
-        public override void DefineParameters()
-        {
-            _parameterList = new List<Parameter>();
-            _parameterList.Add(new Parameter()
-            {
-                ParameterName = "Base Number",
-                Sequence = 1,
-                Validator = IsBaseNumber,
-                DefaultValue = "16",
-                Required = true,
-                Expecting = "A number between 2 and 36"
-            });
-            _parameterList.Add(new Parameter()
-            {
-                ParameterName = "Reverse",
-                Sequence = 2,
-                Validator = a => (a.Trim()==String.Empty || "reverse".Equals(a, StringComparison.CurrentCultureIgnoreCase)),
-                DefaultValue = String.Empty,
-                Required = false,
-                Expecting = "the word \"reverse\""
-            });
-        }
-
-        #endregion
-
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for(int i=1;i<ParameterList.Count;i++)
@@ -112,50 +74,63 @@ reverse - To convert back from a base to the decimal use ""reverse""
         public override void Edit()
         {
             byte basenum;
-            if (!Byte.TryParse(ParameterList[0].Value, out basenum))
+            if (!Byte.TryParse(ParameterList[0].GetValueOrDefault(), out basenum))
             {
                 RespondToExe("Base number is not a number");
                 return;
             }
-            if (ParameterList[1].Value.Equals("reverse", StringComparison.CurrentCultureIgnoreCase))
+
+			Func<string,int,string> numberConverter;
+			if(ParameterList[1].GetValueOrDefault().Equals("reverse", StringComparison.CurrentCultureIgnoreCase))
+				numberConverter = ConvertToDecimal;
+			else
+				numberConverter = ConvertToBase;
+
+			try
             {
-                try
-                {
-                    long output = ToDecimal(SourceData, basenum);
-                    SourceData = output.ToString();
-                }
-                catch
-                {
-                    RespondToExe("Source data cannot be converted to a number");
-                    return;
-                }
+				SourceData = numberConverter(SourceData, basenum);
             }
-            else
+            catch
             {
-                int sourceint;
-                if (!Int32.TryParse(SourceData, out sourceint))
-                {
-                    RespondToExe("Cannot convert source data to an integer(64 bit)");
-                    return;
-                }
-                SourceData = ConvertToBase(sourceint, basenum);
+                RespondToExe("Source data is not a number");
+                return;
             }
         }
+		
+		private static bool IsBaseNumber(string b)
+		{
+			byte bb;
+			if (Byte.TryParse(b, out bb))
+			{
+				if (bb <= 36 && bb >= 2)
+					return true;
+			}
+			return false;
+		}
 
         private const string baseChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        private static string ConvertToBase(int decNum, int baseNum)
+        private string ConvertToBase(string input, int baseNum)
         {
+			long decNum = Int64.Parse(input);
             if (decNum < baseNum)
-                return baseChars[decNum].ToString();
-            return ConvertToBase((int)Math.Floor((decimal)(decNum / baseNum)), baseNum) + baseChars[decNum % baseNum];
+                return baseChars[(int)decNum].ToString();
+            return ConvertToBase(
+				((int)System.Math.Floor((decimal)(decNum / baseNum))).ToString(), 
+				baseNum) 
+				+ baseChars[(int)(decNum % baseNum)];
         }
 
-        private static long ToDecimal(string baseString, int baseNum)
+		private string ConvertToDecimal(string input, int baseNum)
+		{
+			return ToDecimal(input, baseNum).ToString();
+		}
+
+        private long ToDecimal(string baseString, int baseNum)
         {
             if (baseString.Length == 1)
                 return baseChars.IndexOf(baseString.ToUpper());
-            return (baseChars.IndexOf(baseString.ToUpper()[0]) * ((long)Math.Pow(baseNum, (baseString.Length - 1)))) + ToDecimal(baseString.Substring(1), baseNum);
+            return (baseChars.IndexOf(baseString.ToUpper()[0]) * ((long)System.Math.Pow(baseNum, (baseString.Length - 1)))) + ToDecimal(baseString.Substring(1), baseNum);
         }
 
         

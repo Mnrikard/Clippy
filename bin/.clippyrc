@@ -1,0 +1,5 @@
+udfLocation:%USERPROFILE%\Documents\Clippy\udf.xml
+snippetsLocation:%USERPROFILE%\Documents\Clippy\snippets.xml
+recentCommandsLocation:%USERPROFILE%\Documents\Clippy\recentCommands
+CloseFunction:close
+tabString:{TAB}

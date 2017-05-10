@@ -31,7 +31,7 @@ namespace ClippyLib
         void SetParameters(string[] arguments);
         string EditorName { get; }
         string ShortDescription { get; }
-        string LongDescription { get; }
+		EditorDescription LongDescription { get; }
         string SourceData { get; set; }
 
         bool HasAllParameters { get; }

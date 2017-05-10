@@ -26,52 +26,19 @@ namespace ClippyLib.Editors
 {
     public class ColumnAlign : AClipEditor
     {
-        #region boilerplate
+		private Regex _colSplitter;
+		private List<int> _columnLengths;
 
-        public override string EditorName
-        {
-            get { return "ColumnAlign"; }
-        }
-
-        public override string ShortDescription
-        {
-            get { return "Takes delimited text and transforms it to fixed width."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"ColumnAlign
-Syntax: clippy columnAlign [numberOfSpaces] [originalDelimiter]
-
-Takes delimited data (such as from a grid, or csv) and converts it to line up the columns
-when printed with a fixed width font.
-
-numberOfSpaces - a number defining the number of spaces between each column.
-Defaults to 2
-
-originalDelimiter - a string delimiter of the original text.
-for instance for csv use "",""
-Defaults to tab character
-
-Example:
-    clippy columnalign 3 \t
-    will align tab delimited text with 3 spaces between each column.
-";
-            }
-        }
-
-        private bool IsPositiveInteger(string n)
-        {
-            short s;
-            if (Int16.TryParse(n, out s))
-            {
-                if (s >= 0)
-                    return true;
-            }
-            return false;
-        }
+		public ColumnAlign()
+		{
+			Name = "ColumnAlign";
+			Description = "Takes delimited data (such as from a grid, or csv) and converts it to line up the columns when printed with a fixed width font.";
+			exampleInput = "column1\tcolumn2\n1\t2";
+			exampleCommand = "columnalign";
+			exampleOutput = "column1  column2\n" +
+			                "1        2";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -92,13 +59,22 @@ Example:
                 Validator = a => true,
                 DefaultValue = "\t",
                 Required = false,
-                Expecting = "an string delimiter"
+                Expecting = "a string delimiter"
             });
         }
 
-        #endregion
+		
+		private bool IsPositiveInteger(string n)
+		{
+			short s;
+			if (Int16.TryParse(n, out s))
+			{
+				if (s >= 0)
+					return true;
+			}
+			return false;
+		}
 
-        //you don't need to override this
         public override void SetParameters(string[] args)
         {
             for(int i=0;i<ParameterList.Count;i++)
@@ -109,42 +85,50 @@ Example:
                 SetParameter(2, args[2]);
         }
 
+
         public override void Edit()
         {
-            List<int> columnLengths = new List<int>();
-            string[] rows = SourceData.Split('\n');
-            Regex colSplitter = new Regex(Regex.Escape(ClipEscape(ParameterList[1].Value)), RegexOptions.IgnoreCase);
-            
-            //round 1: define the lengths
-            string[] cols = colSplitter.Split(rows[0]);
-            foreach (string col in cols)
-                columnLengths.Add(col.Length);
-            for (int r = 1; r < rows.Length; r++)
-            {
-                cols = colSplitter.Split(rows[r]);
-                for (int c = 0; c < cols.Length; c++)
-                {
-                    if (c >= columnLengths.Count)
-                        columnLengths.Add(cols[c].Length);
-                    columnLengths[c] = Math.Max(columnLengths[c], cols[c].Length);
-                }
-            }
-            //set the defined length between
-            for (int c = 0; c < columnLengths.Count; c++)
-                columnLengths[c] += Int16.Parse(ParameterList[0].Value);
+			_colSplitter = new Regex(ParameterList[1].GetEscapedValueOrDefault(), RegexOptions.IgnoreCase);
 
-            //round 2: display
-            for (int r = 0; r < rows.Length; r++)
-            {
-                cols = colSplitter.Split(rows[r]);
-                for (int c = 0; c < cols.Length; c++)
-                {
-                    cols[c] = cols[c].PadRight(columnLengths[c], ' ');
-                }
-                rows[r] = String.Join(String.Empty, cols);
-            }
+			//todo: \r should be accounted for in each of the IClipEditors
+            string[] rows = SourceData.Split('\n');
+            
+            
+            DefineColumnLengths (rows);
+			RebuildRows (rows);
             SourceData = String.Join("\n", rows);
         }       
         
+		private void DefineColumnLengths (string[] rows)
+		{
+			_columnLengths = new List<int>();
+			for (int r = 0; r < rows.Length; r++) 
+			{
+				string[] cols = _colSplitter.Split (rows [r]);
+				for (int c = 0; c < cols.Length; c++) 
+				{
+					if (c >= _columnLengths.Count)
+					{
+						_columnLengths.Add(cols[c].Length);
+					}
+					_columnLengths[c] = System.Math.Max(_columnLengths[c], cols[c].Length);
+				}
+			}
+		}
+
+		private void RebuildRows (string[] rows)
+		{
+			string columnSeparator = new System.String(' ', Int32.Parse (ParameterList[0].GetValueOrDefault()));
+
+			for (int r = 0; r < rows.Length; r++) 
+			{
+				string[] cols = _colSplitter.Split(rows[r]);
+				for (int c = 0; c < cols.Length; c++) 
+				{
+					cols[c] = cols[c].PadRight(_columnLengths[c],' ');
+				}
+				rows[r] = String.Join(columnSeparator, cols).Trim();
+			}
+		}
     }
 }

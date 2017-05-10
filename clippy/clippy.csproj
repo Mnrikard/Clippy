@@ -38,7 +38,7 @@
     <ApplicationIcon>clippy2.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\</OutputPath>
@@ -62,7 +62,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -114,39 +113,6 @@
     <Compile Include="UdfEditor.Designer.cs">
       <DependentUpon>UdfEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserActivityHook.cs" />
-    <EmbeddedResource Include="About.resx" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HelpCenter.resx">
-      <DependentUpon>HelpCenter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OptionsForm.resx">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PersistentInformation.resx">
-      <DependentUpon>PersistentInformation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <EmbeddedResource Include="RecentCommands.resx">
-      <DependentUpon>RecentCommands.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SnippetEditor.resx">
-      <DependentUpon>SnippetEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UdfEditor.resx">
-      <DependentUpon>UdfEditor.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -160,6 +126,43 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </None>
+    <None Include="About.resx" />
+    <None Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </None>
+    <None Include="HelpCenter.resx">
+      <DependentUpon>HelpCenter.cs</DependentUpon>
+    </None>
+    <None Include="OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </None>
+    <None Include="PersistentInformation.resx">
+      <DependentUpon>PersistentInformation.cs</DependentUpon>
+    </None>
+    <None Include="RecentCommands.resx">
+      <DependentUpon>RecentCommands.cs</DependentUpon>
+    </None>
+    <None Include="SnippetEditor.resx">
+      <DependentUpon>SnippetEditor.cs</DependentUpon>
+    </None>
+    <None Include="UdfEditor.resx">
+      <DependentUpon>UdfEditor.cs</DependentUpon>
+    </None>
+    <None Include="history.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include=".clippyrc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ClippyUtility.exe.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClippyLib\ClippyLib.csproj">
@@ -169,7 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="clippy.ico" />
-    <Content Include="clippy2.ico" />
+    <Content Include="clippy2.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RGrader.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

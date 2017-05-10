@@ -26,13 +26,17 @@ using System.Text.RegularExpressions;
 
 namespace ClippyLib.Editors
 {
-    class Count : AClipEditor
+    internal class Count : AClipEditor
     {
-        public override string EditorName
-        {
-            get { return "Count"; }
-        }
-        
+		public Count()
+		{
+			Name = "Count";
+			Description = "Counts either the characters in the data, or the number of lines, reports but doesn't change the data.";
+			exampleInput = "abcdefg";
+			exampleCommand = "count";
+			exampleOutput = "abcdefg";
+			DefineParameters();
+		}
 
         public override void DefineParameters()
         {
@@ -49,42 +53,16 @@ namespace ClippyLib.Editors
 
         }
 
-        public override string ShortDescription
-        {
-            get { return "Counts the number of characters or lines."; }
-        }
-
-        public override string LongDescription
-        {
-            get
-            {
-                return @"Syntax: count [countType]
-Counts either the characters in the data, or the number of lines
-
-countType - one of either ""char"" or ""line""
-defaults to ""char""
-
-Example:
-    clippy count
-    will display a message stating ""x characters""
-    and
-    clippy count line
-    will display a message stating ""x lines""
-";
-            }
-        }
-        
         public override void Edit()
         {
             if (ParameterList.Count > 0 && ParameterList[0].Value != null && ParameterList[0].Value.StartsWith("line", StringComparison.CurrentCultureIgnoreCase))
             {
-                int lines = String.IsNullOrEmpty(SourceData) ? 0 : 1;
-                int currchar = 0;
-                while ((currchar = SourceData.IndexOf('\n', currchar)) != -1)
-                {
-                    currchar++;//increment so we don't keep hitting the same new line char
-                    lines++;
-                }
+				int lines = 0;
+				if(!String.IsNullOrEmpty(SourceData))
+				{
+					lines = SourceData.Split('\n').Length;
+				}
+
                 RespondToExe(String.Format("{0} lines", lines.ToString()));
             }
             else
@@ -93,8 +71,6 @@ Example:
             }
             //note: this particular edit doesn't change the sourcedata
             //that is on purpose
-        }
-
-           
+        }           
     }
 }
